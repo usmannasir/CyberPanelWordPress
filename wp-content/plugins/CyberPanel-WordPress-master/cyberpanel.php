@@ -1,12 +1,12 @@
 <?php
 
 /*
-Plugin Name: Cyberpanel
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
-Description: A brief description of the Plugin.
+Plugin Name: CyberPanelWordPress
+Plugin URI: http://www.cyberwordpress.com
+Description: WordPress Plugin that allows you to manage CyberPanel Remotely.
 Version: 1.0
 Author: humzayunas
-Author URI: http://URI_Of_The_Plugin_Author
+Author URI: http://www.cyberwordpress.com
 License: A "Slug" license name e.g. GPL2
 */
 
