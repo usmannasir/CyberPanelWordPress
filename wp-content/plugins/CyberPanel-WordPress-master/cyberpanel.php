@@ -5,7 +5,7 @@ Plugin Name: CyberPanel
 Plugin URI: http://www.cyberwordpress.com
 Description: WordPress Plugin that allows you to manage CyberPanel Remotely.
 Version: 1.0
-Author: humzayunas
+Author: humzayunas,Usman Nasir
 Author URI: http://www.cyberwordpress.com
 License: A "Slug" license name e.g. GPL2
 */
