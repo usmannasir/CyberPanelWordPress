@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: CyberPanelWordPress
+Plugin Name: CyberPanel
 Plugin URI: http://www.cyberwordpress.com
 Description: WordPress Plugin that allows you to manage CyberPanel Remotely.
 Version: 1.0
