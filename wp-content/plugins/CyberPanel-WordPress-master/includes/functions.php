@@ -2,6 +2,8 @@
 include( CyberPanel_PLUGINDIR . "/api/requestBuilder.php" );
 require( CyberPanel_PLUGINDIR . "/includes/settingtable.php" );
 include( CyberPanel_PLUGINDIR . "/includes/models/settingsModel.php" );
+
+
 add_action( 'admin_post_cyberpanel_verify', 'cyberPanel_connect_verify' );
 
 function cyberPanel_connect_verify() {
@@ -16,7 +18,6 @@ function cyberPanel_connect_verify() {
 	}else{
 		$settings->insertSetting( $args );
 	}
-
 
 	wp_redirect( 'admin.php?page=cyberpanel-hosting-config' );
 }
