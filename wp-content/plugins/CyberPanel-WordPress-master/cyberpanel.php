@@ -10,7 +10,7 @@ Author URI: https://www.cyberwordpress.com
 License: GPL2
 */
 
-defined('ABSPATH') or die("Kindly don't try to hack.");
+//defined('ABSPATH') or die("Kindly don't try to hack.");
 
 define( 'CyberPanel_PLUGINDIR', plugin_dir_path( __FILE__ ) );
 define('CyberPanel_PLUGINDIR_URL' , plugin_dir_url(__FILE__));
