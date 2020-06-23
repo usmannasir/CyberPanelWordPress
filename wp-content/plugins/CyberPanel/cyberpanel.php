@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       CyberPanel
  * Plugin URI:        https://cyberwp.com
- * Description:       Manage multiple CyberPanel installations via command line.
+ * Description:       Manage multiple CyberPanel installations via WordPress.
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.1
