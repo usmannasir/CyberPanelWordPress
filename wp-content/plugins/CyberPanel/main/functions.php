@@ -12,7 +12,7 @@ function Main_CyberPanel()
         'cyberpanel_main_html' //Callback to print html
     );
 }
-function admin_page_html() {
+function cyberpanel_main_html() {
     // check user capabilities
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
