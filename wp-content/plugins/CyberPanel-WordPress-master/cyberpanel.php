@@ -19,7 +19,7 @@ require_once( CyberPanel_PLUGINDIR . '/includes/init.php' );
 register_activation_hook( __FILE__, 'on_activation' );
 function on_activation() {
 	global $wpdb;
-	$sql = "CREATE TABLE " . $wpdb->prefix . "cyberpanel_settings (id bigint(20) NOT NULL auto_increment,userName TEXT(50) , username TEXT(500), PRIMARY KEY (id))";
+	$sql = "CREATE TABLE " . $wpdb->prefix . "cyberpanel_settings (id bigint(20) NOT NULL auto_increment,userName TEXT(50) , token TEXT(500), PRIMARY KEY (id))";
 	if ( $wpdb->query( $sql )){
 		echo "Plugin Successfully activated";
 	}else{
