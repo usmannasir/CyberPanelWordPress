@@ -17,7 +17,7 @@ if (! defined('WPINC')){
     die("Please don't run via command line.");
 }
 
-if (! defined(CPWP_PLUGIN_DIR)){
+if (! defined('CPWP_PLUGIN_DIR')){
     define ('CPWP_PLUGIN_DIR', plugin_dir_url(__FILE__));
 }
 
