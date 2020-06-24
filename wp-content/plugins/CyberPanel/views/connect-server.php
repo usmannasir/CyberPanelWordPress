@@ -1,6 +1,6 @@
 <?php include( "header.php" ); ?>
 
-<div class="card">
+<div id="target" class="card">
     <div class="card-header">
         Featured
     </div>
