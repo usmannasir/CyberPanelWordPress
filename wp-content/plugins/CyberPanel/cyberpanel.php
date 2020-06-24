@@ -43,5 +43,5 @@ function on_activation()
 )";
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
+    //dbDelta( $sql );
 }
