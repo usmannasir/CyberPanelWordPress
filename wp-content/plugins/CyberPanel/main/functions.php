@@ -9,7 +9,7 @@ function CPWP_load_js(){
     wp_enqueue_script('CPJS', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel.js', 'jQuery');
 }
 
-add_action('wp_enqueue_scripts', 'CPWP_load_js');
+add_action('admin_enqueue_scripts', 'CPWP_load_js');
 
 function Main_CyberPanel()
 {
