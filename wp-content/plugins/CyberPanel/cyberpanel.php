@@ -23,9 +23,3 @@ if (! defined('CPWP_PLUGIN_DIR')){
 }
 
 require_once( CPWP_PLUGIN_DIR . 'main/functions.php' );
-
-function CPWP_load_js(){
-    wp_enqueue_script('CPJS', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel.js', 'jQuery');
-}
-
-add_action('wp_enqueue_scripts', 'CPWP_load_js');
