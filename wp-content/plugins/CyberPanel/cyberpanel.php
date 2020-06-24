@@ -30,7 +30,6 @@ register_activation_hook(__FILE__, 'on_activation');
 function on_activation()
 {
     global $wpdb;
-
     $table_name = $wpdb->prefix . 'cyberpanel_servers';
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (

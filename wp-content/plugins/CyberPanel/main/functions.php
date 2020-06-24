@@ -4,6 +4,8 @@
 /// Load all required JS and CSS files for this plugin
 
 function CPWP_load_js(){
+    wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' );
+    wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
     wp_enqueue_script('CPJS', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel.js', 'jQuery');
 }
 
@@ -38,9 +40,9 @@ function cyberpanel_main_html() {
     if (gettype ($type) != "boolean"){
         $result = $type;
     }
-    include( CyberPanel_PLUGINDIR . '/views/main_settings_page.php' );*/
+    */
+    include( CPWP_PLUGIN_DIR . '/views/connect-server.php' );
 
-    echo "hello world";
 }
 
 
