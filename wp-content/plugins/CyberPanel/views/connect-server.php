@@ -1,4 +1,4 @@
-<?php include( CPWP_PLUGIN_DIR_URL . "/views/header.php" ); ?>
+<?php include( CPWP_PLUGIN_DIR . "/views/header.php" ); ?>
 
 <div class="card">
     <div class="card-header">
