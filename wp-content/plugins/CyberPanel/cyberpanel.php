@@ -22,16 +22,6 @@ if (!defined('CPWP_PLUGIN_DIR')) {
     define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-/// Load all required JS and CSS files for this plugin
-
-function CPWP_load_js(){
-    wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' );
-    wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
-    wp_enqueue_script('CPJS', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel.js', 'jQuery');
-}
-
-add_action('wp_enqueue_scripts', 'CPWP_load_js');
-
 require_once(CPWP_PLUGIN_DIR . '/main/functions.php');
 
 // Create Table where Connected servers will be stored

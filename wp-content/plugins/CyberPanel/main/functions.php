@@ -1,6 +1,16 @@
 <?php
 
 
+/// Load all required JS and CSS files for this plugin
+
+function CPWP_load_js(){
+    wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' );
+    wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
+    wp_enqueue_script('CPJS', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel.js', 'jQuery');
+}
+
+add_action('wp_enqueue_scripts', 'CPWP_load_js');
+
 function Main_CyberPanel()
 {
     add_menu_page(
@@ -11,10 +21,10 @@ function Main_CyberPanel()
         'cyberpanel_main_html' //Callback to print html
     );
 
-    add_submenu_page("cyberpanel","Connect Server",
-        "Connect Server","manage_options","cyberpanel-connect-servers"
-        ,"cyberpanel_main_html"
-    );
+//    add_submenu_page("cyberpanel", "Connect Server",
+//        "Connect Server", "manage_options", "cyberpanel-connect-servers"
+//        , "cyberpanel_main_html"
+//    );
 }
 
 // This function will generate HTML
@@ -25,7 +35,7 @@ function cyberpanel_main_html() {
         return;
     }
 
-    include( CPWP_PLUGIN_DIR . '/views/connect-server.php' );
+    include( CPWP_PLUGIN_DIR . 'views/connect-server.php' );
 
 }
 
