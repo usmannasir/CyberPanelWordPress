@@ -13,13 +13,39 @@
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-if (! defined('WPINC')){
+if (!defined('WPINC')) {
     die("Please don't run via command line.");
 }
 
-if (! defined('CPWP_PLUGIN_DIR')){
-    define ('CPWP_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
-    define ('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
+if (!defined('CPWP_PLUGIN_DIR')) {
+    define('CPWP_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
+    define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-require_once( CPWP_PLUGIN_DIR . 'main/functions.php' );
+require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
+
+// Create Table where Connected servers will be stored
+
+register_activation_hook(__FILE__, 'on_activation');
+function on_activation()
+{
+    global $wpdb;
+    $sql = "CREATE TABLE " . $wpdb->prefix . "cyberpanel_settings (id bigint(20) NOT NULL auto_increment,userName TEXT(50) , token TEXT(500), PRIMARY KEY (id))";
+
+    $table_name = $wpdb->prefix . 'cyberpanel_servers';
+
+    $sql = "CREATE TABLE $table_name (
+  id mediumint(9) NOT NULL AUTO_INCREMENT,
+  name varchar(500) DEFAULT '' NOT NULL,
+  userName varchar(500) DEFAULT '' NOT NULL,
+  token varchar(500) DEFAULT '' NOT NULL,
+  PRIMARY KEY  (id),
+  UNIQUE (name)
+)";
+
+    if ($wpdb->query($sql)) {
+        echo "Plugin Successfully activated";
+    } else {
+        echo "There was an error";
+    }
+}
