@@ -30,7 +30,6 @@ register_activation_hook(__FILE__, 'on_activation');
 function on_activation()
 {
     global $wpdb;
-    $sql = "CREATE TABLE " . $wpdb->prefix . "cyberpanel_settings (id bigint(20) NOT NULL auto_increment,userName TEXT(50) , token TEXT(500), PRIMARY KEY (id))";
 
     $table_name = $wpdb->prefix . 'cyberpanel_servers';
 
@@ -42,10 +41,7 @@ function on_activation()
   PRIMARY KEY  (id),
   UNIQUE (name)
 )";
-
-    if ($wpdb->query($sql)) {
-        echo "Plugin Successfully activated";
-    } else {
-        echo "There was an error";
-    }
+    try {
+        $wpdb->query($sql);
+    }catch(Exception $e) {}
 }
