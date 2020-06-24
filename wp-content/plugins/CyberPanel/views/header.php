@@ -1,9 +1,9 @@
-<ul style="margin-top: 3%" class="nav justify-content-center">
+<ul class="nav nav-pills nav-justified">
     <li class="nav-item">
         <a class="nav-link active" href="#">Active</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Much longer nav link</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="#">Link</a>
