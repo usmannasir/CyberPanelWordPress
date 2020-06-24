@@ -42,5 +42,6 @@ function on_activation()
   UNIQUE (name)
 )";
 
-    try {$wpdb->query($sql);}catch(Exception $e) {}
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
 }
