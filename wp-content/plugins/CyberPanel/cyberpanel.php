@@ -33,7 +33,7 @@ function on_activation()
 
     $table_name = $wpdb->prefix . 'cyberpanel_servers';
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   name varchar(500) DEFAULT '' NOT NULL,
   userName varchar(500) DEFAULT '' NOT NULL,
@@ -43,5 +43,5 @@ function on_activation()
 )";
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    //dbDelta( $sql );
+    dbDelta( $sql );
 }
