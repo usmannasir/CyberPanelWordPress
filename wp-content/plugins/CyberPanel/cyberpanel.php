@@ -41,7 +41,6 @@ function on_activation()
   PRIMARY KEY  (id),
   UNIQUE (name)
 )";
-    try {
-        $wpdb->query($sql);
-    }catch(Exception $e) {}
+
+    try {$wpdb->query($sql);}catch(Exception $e) {}
 }
