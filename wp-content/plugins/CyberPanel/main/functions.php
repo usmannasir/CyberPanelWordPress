@@ -35,7 +35,7 @@ function cyberpanel_main_html() {
         return;
     }
 
-    include( CPWP_PLUGIN_DIR . 'views/connect-server.php' );
+    include( CPWP_PLUGIN_DIR . '/connect-server.php' );
 
 }
 
