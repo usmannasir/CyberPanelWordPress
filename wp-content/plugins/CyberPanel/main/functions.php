@@ -34,16 +34,9 @@ function cyberpanel_main_html() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-    /*$result = null;
-    $setting = new settingtable();
-    $type = $setting->getSettings();
-    if (gettype ($type) != "boolean"){
-        $result = $type;
-    }
-    */
+
     include( CPWP_PLUGIN_DIR . '/views/connect-server.php' );
 
 }
-
 
 add_action('admin_menu', 'Main_CyberPanel');
