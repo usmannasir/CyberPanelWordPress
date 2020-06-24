@@ -22,7 +22,7 @@ if (!defined('CPWP_PLUGIN_DIR')) {
     define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 }
 
-require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
+require_once(CPWP_PLUGIN_DIR . '/functions.php');
 
 // Create Table where Connected servers will be stored
 
