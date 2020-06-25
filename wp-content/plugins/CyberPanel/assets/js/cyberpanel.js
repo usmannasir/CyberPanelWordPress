@@ -14,13 +14,15 @@ function GlobalAjax(dataContent) {
     });
 }
 
-$("#connectServer").click(function () {
-    var dataContent = {
-        _ajax_nonce: CPWP.nonce,
-        action: 'connectServer',
-        hostname: $("#hostname").val(),
-        username: $("#username").val(),
-        password: $("#password").val()
-    }
-    GlobalAjax(dataContent);
+jQuery(document).ready(function ($) {
+    $("#connectServer").click(function () {
+        var dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'connectServer',
+            hostname: $("#hostname").val(),
+            username: $("#username").val(),
+            password: $("#password").val()
+        }
+        GlobalAjax(dataContent);
+    });
 });
