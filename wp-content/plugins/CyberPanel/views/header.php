@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-justified">
+<ul class="nav nav-pills nav-justified cyberpane-nav">
     <li class="nav-item">
         <a class="nav-link active" href="#">Connect</a>
     </li>
