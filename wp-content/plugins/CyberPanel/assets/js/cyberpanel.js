@@ -3,7 +3,7 @@ function GlobalAjax(dataContent) {
         $.post(CPWP.ajax_url, dataContent
             , function (data) {                    //callback
                 try{
-                    var jsonData = JSON.parse(data.body);
+                    var jsonData = data;
                 }catch (e) {
                     var jsonData = data;
                 }

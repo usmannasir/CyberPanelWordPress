@@ -35,32 +35,40 @@ class CyberPanelManager
     }
     function VerifyConnection(){
 
-        $this->body = array(
-            'controller' => 'verifyLogin',
-            'serverUserName' => $this->username
-        );
+        /// Check if hostname alrady exists
+        global $wpdb;
 
-        $response = $this->HTTPPostCall();
+        $result = $wpdb->get_row( "SELECT name FROM wp_cyberpanel_servers WHERE name = '$this->serverHostname'" );
 
-        $data = json_decode(wp_remote_retrieve_body( $response ));
+        if ($result != null) {
 
-        if ($data->status == 1){
-            global $wpdb;
-            $wpdb->insert(
-                'wp_cyberpanel_servers',
-                array(
-                    'name' => $this->serverHostname,
-                    'userName' => $this->username,
-                    'token' => $this->userToken
-                ),
-                array(
-                    '%s',
-                    '%s',
-                    '%s'
-                )
+            $this->body = array(
+                'controller' => 'verifyLogin',
+                'serverUserName' => $this->username
             );
-        }
 
-        return $response;
+            $response = $this->HTTPPostCall();
+
+            $data = json_decode(wp_remote_retrieve_body($response));
+
+            if ($data->status == 1) {
+                $wpdb->insert(
+                    'wp_cyberpanel_servers',
+                    array(
+                        'name' => $this->serverHostname,
+                        'userName' => $this->username,
+                        'token' => $this->userToken
+                    ),
+                    array(
+                        '%s',
+                        '%s',
+                        '%s'
+                    )
+                );
+            }
+        }else{
+            $data = json_encode(array('status' => 0, 'error_message' => 'Already exists.'));
+        }
+        return $data;
     }
 }
