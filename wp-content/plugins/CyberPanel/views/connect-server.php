@@ -18,7 +18,7 @@
                 <form class="form-signin">
                     <h1 class="h3 mb-3 font-weight-normal">Connect Servers</h1>
                     <label for="hostname" class="sr-only">Hostname</label>
-                    <input type="text" id="hostname" class="form-control" placeholder="Hostname" required autofocus>
+                    <input type="text" id="hostname" class="form-control" placeholder="Hostname" required>
                     <label for="inputEmail" class="sr-only">Username</label>
                     <input type="text" id="username" class="form-control" placeholder="Username" required>
                     <label for="inputPassword" class="sr-only">Password</label>

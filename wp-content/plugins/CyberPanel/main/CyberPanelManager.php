@@ -40,6 +40,27 @@ class CyberPanelManager
             'serverUserName' => $this->username
         );
 
+        $response = $this->HTTPPostCall();
+
+        $data = json_decode($response);
+
+        if ($data['status'] == 1){
+            global $wpdb;
+            $wpdb->insert(
+                'wp_cyberpanel_servers',
+                array(
+                    'name' => $this->serverHostname,
+                    'userName' => $this->username,
+                    'token' => $this->userToken
+                ),
+                array(
+                    '%s',
+                    '%s',
+                    '%s'
+                )
+            );
+        }
+
         return $this->HTTPPostCall();
     }
 }
