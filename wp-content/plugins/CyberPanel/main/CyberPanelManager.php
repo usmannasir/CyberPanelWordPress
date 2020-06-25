@@ -61,6 +61,6 @@ class CyberPanelManager
             );
         }
 
-        return $this->HTTPPostCall();
+        return $response;
     }
 }
