@@ -55,7 +55,7 @@ function on_activation()
   description varchar(500) DEFAULT '' NOT NULL,
   status mediumint(9) DEFAULT 0 NOT NULL,
   percentage mediumint(9),
-  date datetime(6) datetime DEFAULT NOW(),
+  date datetime(6) DEFAULT NOW(),
   PRIMARY KEY  (id)
 )";
     dbDelta( $sql );
