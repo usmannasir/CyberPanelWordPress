@@ -1,6 +1,6 @@
 <?php
 
-
+require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
 /// Load all required JS and CSS files for this plugin
 
 function CPWP_load_js(){
@@ -52,13 +52,24 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
 
+//// Ajax to fetch job status
+
 function ajax_Connect_Server() {
     // Handle the ajax request
 
     check_ajax_referer( 'CPWP' );
 
-    require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
-
     $cpjm = new CPJobManager('VerifyConnection', $_POST, 'Verifying connection to: ' . $_POST['hostname']);
+    $cpjm->RunJob();
+}
+
+add_action( 'wp_ajax_jobStatus', 'ajax_jobStatus' );
+
+function ajax_jobStatus() {
+    // Handle the ajax request
+
+    check_ajax_referer( 'CPWP' );
+
+    $cpjm = new CPJobManager('jobStatus', 0,  0);
     $cpjm->RunJob();
 }

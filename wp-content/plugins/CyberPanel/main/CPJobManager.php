@@ -20,30 +20,49 @@ class CPJobManager
         $this->data = $data;
         $this->description = $description;
 
-        global $wpdb;
-
-        $wpdb->insert(
-            'wp_cyberpanel_jobs',
-            array(
-                'function' => $this->function,
-                'description' => $this->description,
-                'status' => CPJobManager::$StartingJob,
-                'percentage' => 0
-            ),
-            array(
-                '%s',
-                '%s',
-                '%d',
-                '%d'
-            )
-        );
-        $this->jobid = $wpdb->insert_id;
+        if ($description != 0) {
+            global $wpdb;
+            $wpdb->insert(
+                'wp_cyberpanel_jobs',
+                array(
+                    'function' => $this->function,
+                    'description' => $this->description,
+                    'status' => CPJobManager::$StartingJob,
+                    'percentage' => 0
+                ),
+                array(
+                    '%s',
+                    '%s',
+                    '%d',
+                    '%d'
+                )
+            );
+            $this->jobid = $wpdb->insert_id;
+        }
 
     }
 
-    function RunJob(){
+    function jobStatus()
+    {
+        global $wpdb;
+        $results = $wpdb->get_results('select * from wp_cyberpanel_jobs');
 
-        if($this->function = 'VerifyConnection'){
+        $finalResult = '';
+
+        foreach ($results as $result) {
+            $finalResult = $finalResult . '<br>' . $result->description;
+
+        }
+        $data = array('status' => 1,
+            'result' => $finalResult
+        );
+        wp_send_json(json_encode($data));
+    }
+
+    function RunJob()
+    {
+
+        if ($this->function = 'VerifyConnection') {
 
             $hostname = $this->data['hostname'];
             $username = $this->data['username'];
@@ -53,8 +72,11 @@ class CPJobManager
 
             require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
             $cpm = new CyberPanelManager($hostname, $username, $token);
-            wp_send_json( $cpm->VerifyConnection() );
+            wp_send_json($cpm->VerifyConnection());
 
+        } elseif ($this->function = 'VerifyConnection') {
+            $this->jobStatus();
         }
+
     }
 }

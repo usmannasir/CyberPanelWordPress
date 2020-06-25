@@ -6,7 +6,9 @@ function GlobalAjax(dataContent) {
                 alert(jsonData.status);             //insert server response
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
+                        try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
                         $("#myToast").toast('show');
+
                     });
 
                 }
@@ -23,6 +25,13 @@ jQuery(document).ready(function ($) {
             username: $("#username").val(),
             password: $("#password").val()
         }
+        GlobalAjax(dataContent);
+
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'jobStatus'
+        }
+
         GlobalAjax(dataContent);
     });
 });
