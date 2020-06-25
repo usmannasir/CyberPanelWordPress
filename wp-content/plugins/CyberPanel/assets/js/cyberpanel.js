@@ -1,14 +1,26 @@
-jQuery(document).ready(function($) {           //wrapper
-    $( "#connectServer" ).click(function() {
-        $.post(CPWP.ajax_url, {         //POST request
-            _ajax_nonce: CPWP.nonce,     //nonce
-            action: "connectServer",            //action
-            hostname: $("#hostname").val(),                  //data
-            username: $("#username").val(),
-            password: $("#password").val(),
-        }, function(data) {                    //callback
-            var jsonData = JSON.parse(data.body);
-            alert(jsonData.status);             //insert server response
-        });
+function GlobalAjax(dataContent) {
+    jQuery(document).ready(function ($) {           //wrapper
+        $.post(CPWP.ajax_url, dataContent
+            , function (data) {                    //callback
+                var jsonData = JSON.parse(data.body);
+                alert(jsonData.status);             //insert server response
+                if (jsonData.status === 1) {
+                    $(document).ready(function () {
+                        $("#myToast").toast('show');
+                    });
+
+                }
+            });
     });
+}
+
+$("#connectServer").click(function () {
+    var dataContent = {
+        _ajax_nonce: CPWP.nonce,
+        action: 'connectServer',
+        hostname: $("#hostname").val(),
+        username: $("#username").val(),
+        password: $("#password").val()
+    }
+    GlobalAjax(dataContent);
 });
