@@ -9,6 +9,8 @@
 <div class="container">
     <div class="card-deck mb-3 text-center">
         <div class="card mb-4 shadow-sm">
+        </div>
+        <div class="card mb-7 shadow-sm">
             <div class="card-header">
                 <h4 class="my-0 font-weight-normal">Connect</h4>
             </div>

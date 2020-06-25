@@ -39,6 +39,7 @@ class CyberPanelManager
             'controller' => 'verifyLogin',
             'serverUserName' => $this->username
         );
+
         return $this->HTTPPostCall();
     }
 }
