@@ -5,7 +5,7 @@ function GlobalAjax(dataContent) {
                 try{
                     var jsonData = JSON.parse(data.body);
                 }catch (e) {
-                    var jsonData = JSON.parse(data);
+                    var jsonData = data;
                 }
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
