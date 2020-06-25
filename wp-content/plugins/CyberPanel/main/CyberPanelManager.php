@@ -44,7 +44,7 @@ class CyberPanelManager
 
         $data = json_decode(wp_remote_retrieve_body( $response ));
 
-        if ($data['status'] == 0){
+        if ($data->status == 1){
             global $wpdb;
             $wpdb->insert(
                 'wp_cyberpanel_servers',
