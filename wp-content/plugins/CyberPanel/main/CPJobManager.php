@@ -62,7 +62,7 @@ class CPJobManager
     function RunJob()
     {
 
-        if ($this->function = 'VerifyConnection') {
+        if ($this->function == 'VerifyConnection') {
 
             $hostname = $this->data['hostname'];
             $username = $this->data['username'];
@@ -74,7 +74,7 @@ class CPJobManager
             $cpm = new CyberPanelManager($hostname, $username, $token);
             wp_send_json($cpm->VerifyConnection());
 
-        } elseif ($this->function = 'jobStatus') {
+        } elseif ($this->function == 'jobStatus') {
             $this->jobStatus();
         }
 
