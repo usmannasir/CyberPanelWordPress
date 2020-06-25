@@ -11,7 +11,7 @@
     <a class="btn btn-outline-primary" href="#">Manage Servers</a>
 </div>
 
-<!--<div class="toast" id="myToast">
+<div class="toast" id="myToast">
     <div class="toast-header">
         <strong class="mr-auto"><i class="fa fa-grav"></i> We miss you!</strong>
         <small>11 mins ago</small>
@@ -20,4 +20,4 @@
     <div id="jobStatusResult" class="toast-body">
         It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
     </div>
-</div>-->
+</div>
