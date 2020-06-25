@@ -40,7 +40,7 @@ class CyberPanelManager
 
         $result = $wpdb->get_row( "SELECT name FROM wp_cyberpanel_servers WHERE name = '$this->serverHostname'" );
 
-        if ($result != null) {
+        if ($result == null) {
 
             $this->body = array(
                 'controller' => 'verifyLogin',
