@@ -54,7 +54,7 @@ function on_activation()
   function varchar(50) DEFAULT '' NOT NULL,
   description varchar(500) DEFAULT '' NOT NULL,
   status mediumint(9) DEFAULT 0 NOT NULL,
-  percentage mediumint(9),
+  percentage mediumint(9) DEFAULT 0,
   date datetime(6) DEFAULT NOW(),
   PRIMARY KEY  (id)
 )";
