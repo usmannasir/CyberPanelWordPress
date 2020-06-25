@@ -59,6 +59,6 @@ function ajax_Connect_Server() {
 
     require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
 
-    $cpjm = new CPJobManager('VerifyConnection', $_POST);
+    $cpjm = new CPJobManager('VerifyConnection', $_POST, 'Verifying connection to: ' . $_POST['hostname']);
     $cpjm->RunJob();
 }
