@@ -50,17 +50,24 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 //// Ajax handler
 
-add_action( 'wp_ajax_my_tag_count', 'my_ajax_handler' );
-function my_ajax_handler() {
+add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
+
+require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
+
+function ajax_Connect_Server() {
     // Handle the ajax request
 
-    check_ajax_referer( 'title_example' );
-    update_user_meta( get_current_user_id(), 'title_preference', 'hello world' );
-    $args = array(
-        'tag' => 'hello world',
-    );
-    $the_query = 'query';
-    wp_send_json( 'title' . ' (' . 'query cound' . ') ' );
+    check_ajax_referer( 'CPWP' );
+
+    $hostname = $_POST['hostname'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $token = 'Basic ' . base64_encode($username . ':' . $password);
+
+    $cpm = new CyberPanelManager($hostname, $username, $token);
+
+    wp_send_json( $cpm->VerifyConnection() );
 
     wp_die(); // All ajax handlers die when finished
 }

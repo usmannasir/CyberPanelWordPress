@@ -1,13 +1,13 @@
 jQuery(document).ready(function($) {           //wrapper
-    $( "#target" ).click(function() {             //event
-        var this2 = this;                      //use in callback
+    $( "#connectServer" ).click(function() {
         $.post(CPWP.ajax_url, {         //POST request
             _ajax_nonce: CPWP.nonce,     //nonce
-            action: "my_tag_count",            //action
-            title: this.value                  //data
+            action: "connectServer",            //action
+            hostname: $("#hostname").val(),                  //data
+            username: $("#username").val(),
+            password: $("#password").val(),
         }, function(data) {                    //callback
-            this2.nextSibling.remove();        //remove current title
-            $(this2).after(data);              //insert server response
+            alert(data)             //insert server response
         });
     });
 });
