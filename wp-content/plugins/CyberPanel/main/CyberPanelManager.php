@@ -34,6 +34,7 @@ class CyberPanelManager
 
     }
     function VerifyConnection(){
+
         $this->body = array(
             'controller' => 'verifyLogin',
             'serverUserName' => $this->username
