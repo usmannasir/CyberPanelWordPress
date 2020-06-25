@@ -14,13 +14,13 @@ class CPJobManager
     protected $data;
     protected $description;
 
-    function __construct($function, $data, $description)
+    function __construct($function, $data = null, $description = null)
     {
         $this->function = $function;
         $this->data = $data;
         $this->description = $description;
 
-        if ($this->description != 0) {
+        if ($description != null) {
             global $wpdb;
             $wpdb->insert(
                 'wp_cyberpanel_jobs',
