@@ -8,7 +8,7 @@
 
 <div class="container">
     <div class="card-deck mb-3 text-center">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
         </div>
         <div class="card mb-7 shadow-sm">
             <div class="card-header">
