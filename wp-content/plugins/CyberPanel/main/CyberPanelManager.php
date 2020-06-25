@@ -1,5 +1,6 @@
 <?php
 
+require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class CyberPanelManager
 {
@@ -48,7 +49,6 @@ class CyberPanelManager
             );
 
             $response = $this->HTTPPostCall();
-
             $data = json_decode(wp_remote_retrieve_body($response));
 
             if ($data->status == 1) {
@@ -65,10 +65,14 @@ class CyberPanelManager
                         '%s'
                     )
                 );
+            }else{
+                $cu = new CommonUtils(0, $data->error_message);
+                return $cu->fetchJson();
             }
+            return $data;
         }else{
-            $data = json_encode(array('status' => 0, 'error_message' => 'Already exists.'));
+            $cu = new CommonUtils(0, 'Already exists.');
+            return $cu->fetchJson();
         }
-        return $data;
     }
 }
