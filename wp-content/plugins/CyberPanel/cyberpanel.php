@@ -28,7 +28,11 @@ require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 register_activation_hook(__FILE__, 'on_activation');
 function on_activation()
 {
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     global $wpdb;
+
+    /// Tables that contain details of CyberPanel Server.
+
     $table_name = $wpdb->prefix . 'cyberpanel_servers';
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -39,7 +43,20 @@ function on_activation()
   PRIMARY KEY  (id),
   UNIQUE (name)
 )";
+    dbDelta( $sql );
 
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    /// Table that will contain details of currently queued jobs.
+
+    $table_name = $wpdb->prefix . 'cyberpanel_jobs';
+
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+  id mediumint(9) NOT NULL AUTO_INCREMENT,
+  function varchar(50) DEFAULT '' NOT NULL,
+  description varchar(500) DEFAULT '' NOT NULL,
+  status mediumint(9) DEFAULT 0 NOT NULL,
+  percentage mediumint(9),
+  `date` datetime(6) datetime DEFAULT NOW(),
+  PRIMARY KEY  (id)
+)";
     dbDelta( $sql );
 }

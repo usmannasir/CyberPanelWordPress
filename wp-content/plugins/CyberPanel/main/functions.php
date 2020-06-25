@@ -68,6 +68,4 @@ function ajax_Connect_Server() {
     $cpm = new CyberPanelManager($hostname, $username, $token);
 
     wp_send_json( $cpm->VerifyConnection() );
-
-    wp_die(); // All ajax handlers die when finished
 }
