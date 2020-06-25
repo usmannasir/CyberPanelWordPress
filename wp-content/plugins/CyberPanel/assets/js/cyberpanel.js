@@ -7,7 +7,8 @@ jQuery(document).ready(function($) {           //wrapper
             username: $("#username").val(),
             password: $("#password").val(),
         }, function(data) {                    //callback
-            alert(data)             //insert server response
+            var jsonData = JSON.parse(data);
+            alert(jsonData.response.status);             //insert server response
         });
     });
 });
