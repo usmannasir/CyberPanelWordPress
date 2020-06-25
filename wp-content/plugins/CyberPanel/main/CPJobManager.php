@@ -20,7 +20,7 @@ class CPJobManager
         $this->data = $data;
         $this->description = $description;
 
-        if ($description != 0) {
+        if ($this->description != 0) {
             global $wpdb;
             $wpdb->insert(
                 'wp_cyberpanel_jobs',
