@@ -74,7 +74,7 @@ class CPJobManager
             $cpm = new CyberPanelManager($hostname, $username, $token);
             wp_send_json($cpm->VerifyConnection());
 
-        } elseif ($this->function = 'VerifyConnection') {
+        } elseif ($this->function = 'jobStatus') {
             $this->jobStatus();
         }
 
