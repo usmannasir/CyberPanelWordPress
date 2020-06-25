@@ -52,20 +52,13 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
 
-require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
-
 function ajax_Connect_Server() {
     // Handle the ajax request
 
     check_ajax_referer( 'CPWP' );
 
-    $hostname = $_POST['hostname'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
 
-    $token = 'Basic ' . base64_encode($username . ':' . $password);
-
-    $cpm = new CyberPanelManager($hostname, $username, $token);
-
-    wp_send_json( $cpm->VerifyConnection() );
+    $cpjm = new CPJobManager('VerifyConnection', $_POST);
+    $cpjm->RunJob();
 }
