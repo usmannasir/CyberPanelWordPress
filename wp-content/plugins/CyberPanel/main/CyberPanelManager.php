@@ -42,7 +42,7 @@ class CyberPanelManager
 
         $response = $this->HTTPPostCall();
 
-        $data = json_decode($response.$this->body);
+        $data = json_decode(wp_remote_retrieve_body( $response ));
 
         if ($data['status'] == 1){
             global $wpdb;
