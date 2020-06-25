@@ -3,7 +3,6 @@ function GlobalAjax(dataContent) {
         $.post(CPWP.ajax_url, dataContent
             , function (data) {                    //callback
                 var jsonData = JSON.parse(data.body);
-                alert(jsonData.status);             //insert server response
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
                         try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}

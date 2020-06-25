@@ -51,12 +51,12 @@ class CPJobManager
 
         foreach ($results as $result) {
             $finalResult = $finalResult . '<br>' . $result->description;
-
         }
-        $data = array('status' => 1,
+        $data = array(
+            'status' => 1,
             'result' => $finalResult
         );
-        wp_send_json(json_encode($data));
+        wp_send_json($data);
     }
 
     function RunJob()
