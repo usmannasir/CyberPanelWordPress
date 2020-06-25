@@ -3,12 +3,12 @@
     <img src="https://cyberpanel.net/wp-content/uploads/2018/07/logo-e1532873145641.png"> <h5
             class="my-0 mr-md-auto font-weight-normal"></h5>
     <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="#">Add Servers</a>
+        <a class="p-2 text-dark" href="<?php echo admin_url( "admin.php?page=cyberpanel" ); ?>">Add Servers</a>
         <!--<a class="p-2 text-dark" href="#">Enterprise</a>
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn btn-outline-primary" href="#">Manage Servers</a>
+    <a class="btn btn-outline-primary" href="<?php echo admin_url( "admin.php?page=cyberpanel-manage" ); ?>">Manage Servers</a>
 </div>
 
 <div class="toast" id="myToast">
@@ -18,6 +18,5 @@
         <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
     </div>
     <div id="jobStatusResult" class="toast-body">
-        It's been a long time since you visited us. We've something special for you. <a href="#">Click here!</a>
     </div>
 </div>
