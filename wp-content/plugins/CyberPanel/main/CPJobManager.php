@@ -1,6 +1,7 @@
 <?php
 
 require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
+require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class CPJobManager
 {
@@ -24,7 +25,7 @@ class CPJobManager
         if ($description != null) {
             global $wpdb;
             $wpdb->insert(
-                $wpdb->prefix.TN_CYBERPANEL_JOBS,
+                $wpdb->prefix . TN_CYBERPANEL_JOBS,
                 array(
                     'function' => $this->function,
                     'description' => $this->description,
@@ -60,20 +61,25 @@ class CPJobManager
     }
     function RunJob()
     {
+        try {
 
-        if ($this->function == 'VerifyConnection') {
+            if ($this->function == 'VerifyConnection') {
 
-            $hostname = $this->data['hostname'];
-            $username = $this->data['username'];
-            $password = $this->data['password'];
+                $hostname = $this->data['hostname'];
+                $username = $this->data['username'];
+                $password = $this->data['password'];
 
-            $token = 'Basic ' . base64_encode($username . ':' . $password);
+                $token = 'Basic ' . base64_encode($username . ':' . $password);
 
-            $cpm = new CyberPanelManager($this->jobid, $hostname, $username, $token);
-            wp_send_json($cpm->VerifyConnection());
+                $cpm = new CyberPanelManager($this->jobid, $hostname, $username, $token);
+                wp_send_json($cpm->VerifyConnection());
 
-        } elseif ($this->function == 'jobStatus') {
-            $this->jobStatus();
+            } elseif ($this->function == 'jobStatus') {
+                $this->jobStatus();
+            }
+        }catch (Exception $e) {
+            $cu = new CommonUtils(0, $e->getMessage());
+            return $cu->fetchJson();
         }
 
     }
