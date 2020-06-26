@@ -79,7 +79,7 @@ class CPJobManager
             }
         }catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
-            return $cu->fetchJson();
+            $cu->fetchJson();
         }
 
     }

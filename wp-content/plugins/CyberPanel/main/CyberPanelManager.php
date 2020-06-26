@@ -70,12 +70,12 @@ class CyberPanelManager
                 );
             }else{
                 $cu = new CommonUtils(0, $data->error_message);
-                return $cu->fetchJson();
+                $cu->fetchJson();
             }
             return $data;
         }else{
             $cu = new CommonUtils(0, 'Already exists.');
-            return $cu->fetchJson();
+            $cu->fetchJson();
         }
     }
 }

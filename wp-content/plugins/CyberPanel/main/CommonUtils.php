@@ -11,6 +11,6 @@ class CommonUtils
     }
 
     function fetchJson(){
-        return $this->json;
+        wp_send_json($this->json);
     }
 }
