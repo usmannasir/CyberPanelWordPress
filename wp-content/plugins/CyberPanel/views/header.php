@@ -22,7 +22,6 @@
             </button>
         </div>
         <div id="jobStatusResult" class="toast-body">
-            Hello, world! This is a toast message.
         </div>
     </div>
 </div>

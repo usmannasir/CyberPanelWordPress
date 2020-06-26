@@ -7,7 +7,7 @@ function GlobalAjax(dataContent) {
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
                         try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
-                        $("#myToast").toast('show');
+                        $(".toast").toast('show');
 
                     });
                 }
