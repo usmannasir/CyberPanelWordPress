@@ -12,7 +12,7 @@
 </div>
 
 <div aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
-    <div class="toast" style="position: absolute; top: 100%; right: 0;">
+    <div data-autohide="false" class="toast" style="position: absolute; top: 100%; right: 0;">
         <div class="toast-header">
             <img src="..." class="rounded mr-2" alt="...">
             <strong class="mr-auto">Bootstrap</strong>
