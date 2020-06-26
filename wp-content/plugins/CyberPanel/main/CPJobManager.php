@@ -42,10 +42,11 @@ class CPJobManager
                 );
                 $this->jobid = $wpdb->insert_id;
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
-        }
+        };
 
     }
 
@@ -84,7 +85,8 @@ class CPJobManager
             } elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();
             }
-        } catch (Exception $e) {
+        }
+        catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
         }
