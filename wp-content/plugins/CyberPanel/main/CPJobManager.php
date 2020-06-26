@@ -22,27 +22,33 @@ class CPJobManager
         $this->data = $data;
         $this->description = $description;
 
-        if ($description != null) {
-            global $wpdb;
-            $wpdb->insert(
-                $wpdb->prefix . TN_CYBERPANEL_JOBS,
-                array(
-                    'function' => $this->function,
-                    'description' => $this->description,
-                    'status' => CPJobManager::$StartingJob,
-                    'percentage' => 0
-                ),
-                array(
-                    '%s',
-                    '%s',
-                    '%d',
-                    '%d'
-                )
-            );
-            $this->jobid = $wpdb->insert_id;
+        try {
+            if ($description != null) {
+                global $wpdb;
+                $wpdb->insert(
+                    $wpdb->prefix . TN_CYBERPANEL_JOBS,
+                    array(
+                        'function' => $this->function,
+                        'description' => $this->description,
+                        'status' => CPJobManager::$StartingJob,
+                        'percentage' => 0
+                    ),
+                    array(
+                        '%s',
+                        '%s',
+                        '%d',
+                        '%d'
+                    )
+                );
+                $this->jobid = $wpdb->insert_id;
+            }
+        } catch (Exception $e) {
+            $cu = new CommonUtils(0, $e->getMessage());
+            $cu->fetchJson();
         }
 
     }
+
     function jobStatus()
     {
         global $wpdb;
@@ -59,6 +65,7 @@ class CPJobManager
         );
         wp_send_json($data);
     }
+
     function RunJob()
     {
         try {
@@ -77,7 +84,7 @@ class CPJobManager
             } elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();
             }
-        }catch (Exception $e) {
+        } catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
         }
