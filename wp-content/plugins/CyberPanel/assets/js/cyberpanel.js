@@ -6,19 +6,8 @@ function GlobalAjax(dataContent) {
 
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
-                        try {
-                            $.toast({
-                                title: 'Current Jobs',
-                                subtitle: '11 mins ago',
-                                content: jsonData.result,
-                                type: 'info',
-                                position: 'bottom-right',
-                                delay: 5000
-                            });
-                        } catch (e) {
-                        }
-
-
+                        try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
+                        $(".toast").toast('show');
                     });
                 }
             });
