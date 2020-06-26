@@ -58,7 +58,9 @@ class CPJobManager
         $finalResult = '';
 
         foreach ($results as $result) {
-            $finalResult = $finalResult . '<br>' . $result->description;
+            $finalResult = $result->description . '<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: {$result->percentage}%" aria-valuenow="{$result->percentage}" aria-valuemin="0" aria-valuemax="100"></div>
+</div>' . $finalResult;
         }
         $data = array(
             'status' => 1,
