@@ -56,7 +56,7 @@ class CyberPanelManager
 
             if ($data->status == 1) {
                 $wpdb->insert(
-                    $wpdb->prefix . TN_CYBERPANEL_SERVERS,
+                    $wpdb->prefix.TN_CYBERPANEL_SERVERS,
                     array(
                         'name' => $this->serverHostname,
                         'userName' => $this->username,

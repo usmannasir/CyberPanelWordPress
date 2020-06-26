@@ -24,7 +24,7 @@ class CPJobManager
         if ($description != null) {
             global $wpdb;
             $wpdb->insert(
-                $wpdb->prefix . TN_CYBERPANEL_JOBS,
+                $wpdb->prefix.TN_CYBERPANEL_JOBS,
                 array(
                     'function' => $this->function,
                     'description' => $this->description,
