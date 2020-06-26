@@ -53,7 +53,8 @@ class CPJobManager
     function jobStatus()
     {
         global $wpdb;
-        $results = $wpdb->get_results('select * from {$wpdb->prefix}cyberpanel_jobs');
+        $tablename = $wpdb->prefix . 'cyberpanel_jobs';
+        $results = $wpdb->get_results('select * from $tablename');
 
         $finalResult = '';
 
