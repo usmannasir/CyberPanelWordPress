@@ -1,12 +1,9 @@
 function GlobalAjax(dataContent) {
     jQuery(document).ready(function ($) {           //wrapper
         $.post(CPWP.ajax_url, dataContent
-            , function (data) {                    //callback
-                try{
-                    var jsonData = data;
-                }catch (e) {
-                    var jsonData = data;
-                }
+            , function (data) {
+                var jsonData = data;
+
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
                         try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
