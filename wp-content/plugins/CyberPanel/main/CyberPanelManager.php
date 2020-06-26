@@ -41,7 +41,7 @@ class CyberPanelManager
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM $wpdb->prefix . TN_CYBERPANEL_SERVERS WHERE name = '$this->serverHostname'" );
+        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_servers WHERE name = '$this->serverHostname'" );
 
         if ($result == null) {
 
