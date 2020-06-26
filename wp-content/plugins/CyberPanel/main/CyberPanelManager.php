@@ -50,7 +50,6 @@ class CyberPanelManager
                 'serverUserName' => $this->username
             );
 
-
             $response = $this->HTTPPostCall();
             $data = json_decode(wp_remote_retrieve_body($response));
 
@@ -68,12 +67,14 @@ class CyberPanelManager
                         '%s'
                     )
                 );
-            }else{
+                return $data;
+            }
+            else{
                 $cu = new CommonUtils(0, $data->error_message);
                 $cu->fetchJson();
             }
-            return $data;
-        }else{
+        }
+        else{
             $cu = new CommonUtils(0, 'Already exists.');
             $cu->fetchJson();
         }

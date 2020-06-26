@@ -13,7 +13,6 @@ function GlobalAjax(dataContent) {
                         $("#myToast").toast('show');
 
                     });
-
                 }
             });
     });

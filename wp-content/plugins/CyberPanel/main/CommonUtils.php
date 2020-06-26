@@ -7,7 +7,7 @@ class CommonUtils
 
     function __construct($status, $error)
     {
-        $this->json = json_encode(array('status' => $status, 'error_message' => $error));
+        $this->json = json_encode(array('status' => $status, 'result' => $error));
     }
 
     function fetchJson(){
