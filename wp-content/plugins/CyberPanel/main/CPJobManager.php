@@ -1,5 +1,6 @@
 <?php
 
+require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
 
 class CPJobManager
 {
@@ -23,7 +24,7 @@ class CPJobManager
         if ($description != null) {
             global $wpdb;
             $wpdb->insert(
-                'wp_cyberpanel_jobs',
+                $wpdb->prefix . TN_CYBERPANEL_JOBS,
                 array(
                     'function' => $this->function,
                     'description' => $this->description,
@@ -41,11 +42,10 @@ class CPJobManager
         }
 
     }
-
     function jobStatus()
     {
         global $wpdb;
-        $results = $wpdb->get_results('select * from wp_cyberpanel_jobs');
+        $results = $wpdb->get_results('select * from $wpdb->prefix . TN_CYBERPANEL_JOBS');
 
         $finalResult = '';
 
@@ -58,7 +58,6 @@ class CPJobManager
         );
         wp_send_json($data);
     }
-
     function RunJob()
     {
 
@@ -70,8 +69,7 @@ class CPJobManager
 
             $token = 'Basic ' . base64_encode($username . ':' . $password);
 
-            require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
-            $cpm = new CyberPanelManager($hostname, $username, $token);
+            $cpm = new CyberPanelManager($this->jobid, $hostname, $username, $token);
             wp_send_json($cpm->VerifyConnection());
 
         } elseif ($this->function == 'jobStatus') {

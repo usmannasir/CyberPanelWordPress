@@ -20,6 +20,9 @@ if (!defined('WPINC')) {
 define('CPWP_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
+define('TN_CYBERPANEL_SERVERS', 'cyberpanel_servers');
+define('TN_CYBERPANEL_JOBS', 'cyberpanel_jobs');
+
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 
@@ -33,7 +36,7 @@ function on_activation()
 
     /// Tables that contain details of CyberPanel Server.
 
-    $table_name = $wpdb->prefix . 'cyberpanel_servers';
+    $table_name = $wpdb->prefix . TN_CYBERPANEL_SERVERS;
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -47,7 +50,7 @@ function on_activation()
 
     /// Table that will contain details of currently queued jobs.
 
-    $table_name = $wpdb->prefix . 'cyberpanel_jobs';
+    $table_name = $wpdb->prefix . TN_CYBERPANEL_JOBS;
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,

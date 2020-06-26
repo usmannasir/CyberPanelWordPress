@@ -4,13 +4,15 @@ require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class CyberPanelManager
 {
+    protected $jobid;
     protected $serverHostname;
     protected $username;
     protected $userToken;
     protected $body;
 
-    function __construct($serverHostname, $username, $userToken)
+    function __construct($jobid, $serverHostname, $username, $userToken)
     {
+        $this->jobid = $jobid;
         $this->serverHostname = $serverHostname;
         $this->username = $username;
         $this->userToken = $userToken;
@@ -39,7 +41,7 @@ class CyberPanelManager
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM wp_cyberpanel_servers WHERE name = '$this->serverHostname'" );
+        $result = $wpdb->get_row( "SELECT name FROM $wpdb->prefix . TN_CYBERPANEL_SERVERS WHERE name = '$this->serverHostname'" );
 
         if ($result == null) {
 
@@ -53,7 +55,7 @@ class CyberPanelManager
 
             if ($data->status == 1) {
                 $wpdb->insert(
-                    'wp_cyberpanel_servers',
+                    $wpdb->prefix . TN_CYBERPANEL_SERVERS,
                     array(
                         'name' => $this->serverHostname,
                         'userName' => $this->username,

@@ -1,6 +1,8 @@
 <?php
 
 require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
+require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
+
 /// Load all required JS and CSS files for this plugin
 
 function CPWP_load_js(){
@@ -28,11 +30,6 @@ function Main_CyberPanel()
         'cyberpanel', //Page slug
         'cyberpanel_main_html' //Callback to print html
     );
-
-//    add_submenu_page("cyberpanel", "Connect Server",
-//        "Connect Server", "manage_options", "cyberpanel-connect-servers"
-//        , "cyberpanel_main_html"
-//    );
 }
 
 // This function will generate HTML
@@ -42,6 +39,9 @@ function cyberpanel_main_html() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
+
+    $cc = new CapabilityCheck('cyberpanel_main_html');
+    if( ! $cc->checkCapability()){return;}
 
     include( CPWP_PLUGIN_DIR . 'views/connect-server.php' );
 
@@ -58,8 +58,10 @@ add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
 function ajax_Connect_Server() {
     // Handle the ajax request
 
-    check_ajax_referer( 'CPWP' );
+    $cc = new CapabilityCheck('ajax_Connect_Server');
+    if( ! $cc->checkCapability()){return;}
 
+    check_ajax_referer( 'CPWP' );
     $cpjm = new CPJobManager('VerifyConnection', $_POST, 'Verifying connection to: ' . $_POST['hostname']);
     $cpjm->RunJob();
 }
@@ -68,6 +70,9 @@ add_action( 'wp_ajax_jobStatus', 'ajax_jobStatus' );
 
 function ajax_jobStatus() {
     // Handle the ajax request
+
+    $cc = new CapabilityCheck('ajax_jobStatus');
+    if( ! $cc->checkCapability()){return;}
 
     check_ajax_referer( 'CPWP' );
 
