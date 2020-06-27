@@ -46,3 +46,8 @@ body{
 .WPCPHeader > h4{
     color: #59acb5;
 }
+
+.WPCPContainer{
+    padding-left: 0px;
+    padding-right: 0px;
+}
