@@ -37,3 +37,9 @@ html {
 body{
     background: #f1f1f1;
 }
+
+.WPCPHeader{
+    margin-top: 2%;
+    margin-right: 2%;
+    border: 1px solid gainsboro;
+}
