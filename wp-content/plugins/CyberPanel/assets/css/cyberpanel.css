@@ -40,11 +40,9 @@ body{
 
 .WPCPHeader{
     margin-top: 2%;
-    margin-right: 2%;
     border: 1px solid gainsboro;
 }
 
 .WPCPHeader > h4{
     color: #59acb5;
-    margin-left: 1%;
 }
