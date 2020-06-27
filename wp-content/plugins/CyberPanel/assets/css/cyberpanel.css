@@ -50,4 +50,6 @@ body{
 .WPCPContainer{
     padding-left: 0px;
     padding-right: 0px;
+    background: white;
+    border: 1px solid gainsboro;
 }
