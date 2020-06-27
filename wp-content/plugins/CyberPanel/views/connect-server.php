@@ -14,12 +14,12 @@
             <div class="form-group">
                 <label for="inputEmail" class="sr-only">Username</label>
                 <input type="text" id="username" class="form-control" placeholder="Username" required>
-                <small id="emailHelp" class="form-text text-muted">Hostname excluding http protocol</small>
+                <small id="emailHelp" class="form-text text-muted">CyberPanel Username</small>
             </div>
             <div class="form-group">
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" id="password" class="form-control" placeholder="Password" required>
-                <small id="emailHelp" class="form-text text-muted">Hostname excluding http protocol</small>
+                <small id="emailHelp" class="form-text text-muted">CyberPanel password. (We will not store your passwords)</small>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
