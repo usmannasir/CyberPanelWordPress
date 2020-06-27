@@ -8,6 +8,7 @@ function GlobalAjax(dataContent) {
                     $(document).ready(function () {
                         try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
                         $(".toast").toast('show');
+                        $("#toastCustom").toast('show');
                     });
                 }
             });

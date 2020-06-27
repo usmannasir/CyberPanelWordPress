@@ -21,7 +21,7 @@
                 <input type="password" id="password" class="form-control" placeholder="Password" required>
                 <small id="emailHelp" class="form-text text-muted">CyberPanel password. (We will not store your passwords)</small>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button id="connectServer" type="button" class="btn btn-primary">Save</button>
         </form>
     </div>
 </div>
