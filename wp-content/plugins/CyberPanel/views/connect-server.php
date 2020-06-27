@@ -1,6 +1,6 @@
 <?php include("header.php"); ?>
 
-<div class="container">
+<div class="container-fluid">
     <div class="card-header">
         <h4 class="my-0 font-weight-normal">Connect</h4>
     </div>
