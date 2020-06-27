@@ -9,10 +9,6 @@ function CPWP_load_static($hook){
 
     $screen = get_current_screen();
 
-    if ( $screen != $hook ) {
-        return;
-    }
-
     wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' );
     wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
     wp_enqueue_style( 'CPCSS', CPWP_PLUGIN_DIR_URL . 'assets/css/cyberpanel.css' );
