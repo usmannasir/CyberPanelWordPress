@@ -1,5 +1,7 @@
 function jobStatus(data) {
     jQuery(document).ready(function ($) {
+        $("#WPCPSpinner").hide();
+        $("#WPCPSpinnerModal").hide();
         if (data.status === 1) {
             $("#jobStatusResult").html(data.result);
             $("#jobsModal").modal('show');

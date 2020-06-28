@@ -24,17 +24,17 @@ class CPJobManager
                 $wpdb->insert(
                     $wpdb->prefix . TN_CYBERPANEL_JOBS,
                     array(
-                        'userid ' => get_current_user_id(),
                         'function' => $this->function,
                         'description' => $this->description,
                         'status' => WPCP_StartingJob,
                         'percentage' => 0,
+                        'userid ' => get_current_user_id(),
                         'token' => wp_get_session_token(),
                     ),
                     array(
+                        '%s',
+                        '%s',
                         '%d',
-                        '%s',
-                        '%s',
                         '%d',
                         '%d',
                         '%s',
