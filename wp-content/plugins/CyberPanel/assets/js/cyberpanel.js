@@ -7,14 +7,18 @@ function GlobalAjax(dataContent) {
                 $("#WPCPSpinner").hide();
                 $("#WPCPSpinnerModal").hide();
 
-                if (typeof data == "string") {
-                    var jsonData = JSON.parse(data);
-                }
-                {
-                    var jsonData = data;
+                if (dataContent.action !== 'jobStatus'){
+
+                    dataContent = {
+                        _ajax_nonce: CPWP.nonce,
+                        action: 'jobStatus'
+                    }
+
+                    GlobalAjax(dataContent);
+                    return;
                 }
 
-                if (jsonData.status === 1) {
+                if (data.status === 1) {
                     $(document).ready(function () {
                         try {
                             $("#jobStatusResult").html(jsonData.result);
@@ -37,13 +41,6 @@ jQuery(document).ready(function ($) {
             username: $("#username").val(),
             password: $("#password").val()
         }
-        GlobalAjax(dataContent);
-
-        dataContent = {
-            _ajax_nonce: CPWP.nonce,
-            action: 'jobStatus'
-        }
-
         GlobalAjax(dataContent);
     });
     $("#viewJobs").click(function (){
