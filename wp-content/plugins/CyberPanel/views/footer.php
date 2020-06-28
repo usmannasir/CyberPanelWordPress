@@ -2,13 +2,7 @@
     <img src="https://cyberpanel.net/wp-content/uploads/2018/07/logo-e1532873145641.png"> <h4
         class="my-0 mr-md-auto font-weight-normal"><span style="margin-left: 5%">CyberPanel</span></h4>
     <nav class="my-2 my-md-0 mr-md-3">
-        <div id="WPCPSpinner" class="spinner-border text-info" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
         <a class="p-2 text-dark" href="<?php echo admin_url("admin.php?page=cyberpanel"); ?>">Add Servers</a>
-        <!--<a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
     <a class="btn btn-outline-primary" href="<?php echo admin_url("admin.php?page=cyberpanel-manage"); ?>">Manage
         Servers</a>
