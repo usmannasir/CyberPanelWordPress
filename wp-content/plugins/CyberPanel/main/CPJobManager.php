@@ -61,10 +61,10 @@ class CPJobManager
         $token = wp_get_session_token();
 
         if(is_admin()) {
-            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' ORDER BY `id` ASC");
+            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' ORDER BY `id` DESC");
         }else{
             $userid = get_current_user_id();
-            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' and where userid = '$userid' ORDER BY `id` ASC");
+            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' and where userid = '$userid' ORDER BY `id` DESC");
         }
         $tableHead = '<table class="table">
   <thead>
