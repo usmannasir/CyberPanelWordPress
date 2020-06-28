@@ -3,6 +3,7 @@
 require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
+require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelHetzner.php');
 
 class CPJobManager
 {
@@ -132,8 +133,14 @@ class CPJobManager
                 $cpm = new CyberPanelManager($this, $hostname, $username, $token);
                 wp_send_json($cpm->VerifyConnection());
 
-            } elseif ($this->function == 'jobStatus') {
+            }
+            elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();
+            }
+            elseif ($this->function == 'connectHetzner') {
+
+                $cph = new CyberPanelHetzner($this, $this->data);
+                wp_send_json($cph->connectHetzner());
             }
         } catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());

@@ -65,6 +65,18 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, jobStatus, jobStatus);
 
     });
+
+    /// Hetzner
+
+    $("#connectHetzner").click(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'connectHetzner',
+            Name: $("#Name").val(),
+            Token: $("#Token").val(),
+        }
+        GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
+    });
 });
 
 ///
