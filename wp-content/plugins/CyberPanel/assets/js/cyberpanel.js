@@ -6,6 +6,7 @@ function jobStatus(data){
 }
 
 function verifyConnectionCB(data){
+    alert('hello world');
     $("#WPCPSpinner").hide();
     $("#WPCPSpinnerModal").hide();
 
