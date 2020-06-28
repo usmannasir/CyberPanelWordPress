@@ -18,7 +18,7 @@ function GlobalAjax(dataContent) {
                             $("#jobStatusResult").html(jsonData.result);
                         } catch (e) {
                         }
-                        $(".toast").toast('show');
+                        $("#jobsModal").modal('show')
                     });
                 }
             });
@@ -43,6 +43,16 @@ jQuery(document).ready(function ($) {
         }
 
         GlobalAjax(dataContent);
+    });
+    $("#viewJobs").click(function (){
+
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'jobStatus'
+        }
+
+        GlobalAjax(dataContent);
+
     });
 });
 

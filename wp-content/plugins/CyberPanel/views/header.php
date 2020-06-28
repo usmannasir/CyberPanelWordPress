@@ -5,23 +5,36 @@
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-        <a class="p-2 text-dark" href="<?php echo admin_url( "admin.php?page=cyberpanel" ); ?>">Add Servers</a>
+        <a class="p-2 text-dark" href="<?php echo admin_url("admin.php?page=cyberpanel"); ?>">Add Servers</a>
         <!--<a class="p-2 text-dark" href="#">Enterprise</a>
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn btn-outline-primary" href="<?php echo admin_url( "admin.php?page=cyberpanel-manage" ); ?>">Manage Servers</a>
+    <a class="btn btn-outline-primary" href="<?php echo admin_url("admin.php?page=cyberpanel-manage"); ?>">Manage
+        Servers</a>
+    <a id="viewJobs" class="btn btn-outline-info" href="#">View Jobs</a>
 </div>
 
-<div aria-live="polite" aria-atomic="true" style="position: relative;">
-    <div data-autohide="false" class="toast WPCPToast" style="position: absolute; top: 0; right: 0;">
-        <div class="toast-header">
-            <strong class="mr-auto">Jobs..</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div id="jobStatusResult" class="toast-body">
+<div id="jobsModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Jobs Pending/Completed
+                    <div id="WPCPSpinner" class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="jobStatusResult" class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
         </div>
     </div>
 </div>

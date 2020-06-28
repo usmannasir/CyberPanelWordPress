@@ -68,7 +68,7 @@ class CyberPanelManager
                     )
                 );
 
-                $this->job->setDescription($this->serverHostname . 'Successfully added.');
+                $this->job->setDescription($this->serverHostname . ' successfully added.');
                 $this->job->updateJobStatus(WPCP_JobSuccess, 100);
 
                 return $data;
