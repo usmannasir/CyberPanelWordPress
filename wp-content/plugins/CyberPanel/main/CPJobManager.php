@@ -82,7 +82,7 @@ class CPJobManager
         foreach ($results as $result) {
             $id = sprintf('<tr><th scope="row">%d</th>', $result->id);
             $function = sprintf('<td scope="row">%s</td>', $result->function);
-            if($result->percentage == 100 or $result->status == WPCP_JobRunning){
+            if($result->percentage == 100 or $result->status != WPCP_JobRunning){
                 $status = sprintf('<td scope="row">%s</td>', $result->description);
             }else{
                 $status = sprintf('<td scope="row"><div class="progress">
