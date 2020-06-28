@@ -5,11 +5,6 @@ require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class CPJobManager
 {
-    /// Job status variables
-    static public $StartingJob = 0;
-    static public $JobFailed = 1;
-    static public $JobSuccess = 2;
-    static public $JobRunning = 3;
 
     protected $function;
     protected $jobid;
@@ -30,7 +25,7 @@ class CPJobManager
                     array(
                         'function' => $this->function,
                         'description' => $this->description,
-                        'status' => CPJobManager::$StartingJob,
+                        'status' => WPCP_StartingJob,
                         'percentage' => 0
                     ),
                     array(
@@ -48,6 +43,14 @@ class CPJobManager
             $cu->fetchJson();
         };
 
+    }
+
+    /**
+     * @param null $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
     function jobStatus()
@@ -82,7 +85,7 @@ class CPJobManager
 
                 $token = 'Basic ' . base64_encode($username . ':' . $password);
 
-                $cpm = new CyberPanelManager($this->jobid, $hostname, $username, $token);
+                $cpm = new CyberPanelManager($this, $hostname, $username, $token);
                 wp_send_json($cpm->VerifyConnection());
 
             } elseif ($this->function == 'jobStatus') {
@@ -93,6 +96,28 @@ class CPJobManager
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
         }
+
+    }
+
+    function updateJobStatus($status, $percentage){
+
+        global $wpdb;
+
+        $wpdb->update(
+            $wpdb->prefix . TN_CYBERPANEL_JOBS,
+            array(
+                'description' => $this->description,	// string
+                'status' => $status,
+                'percentage' => $percentage
+            ),
+            array( 'id' => $this->jobid ),
+            array(
+                '%s',
+                '%d',
+                '%d'
+            ),
+            array( '%d' )
+        );
 
     }
 }

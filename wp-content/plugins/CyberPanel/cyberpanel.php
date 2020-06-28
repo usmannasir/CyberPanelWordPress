@@ -23,6 +23,15 @@ define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('TN_CYBERPANEL_SERVERS', 'cyberpanel_servers');
 define('TN_CYBERPANEL_JOBS', 'cyberpanel_jobs');
 
+/// JOBS
+
+define('WPCP_StartingJob', 0);
+define('WPCP_JobFailed', 1);
+define('WPCP_JobSuccess', 2);
+define('WPCP_JobRunning', 3);
+
+
+
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 

@@ -4,15 +4,15 @@ require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class CyberPanelManager
 {
-    protected $jobid;
+    protected $job;
     protected $serverHostname;
     protected $username;
     protected $userToken;
     protected $body;
 
-    function __construct($jobid, $serverHostname, $username, $userToken)
+    function __construct($job, $serverHostname, $username, $userToken)
     {
-        $this->jobid = $jobid;
+        $this->job = $job;
         $this->serverHostname = $serverHostname;
         $this->username = $username;
         $this->userToken = $userToken;
@@ -67,14 +67,26 @@ class CyberPanelManager
                         '%s'
                     )
                 );
+
+                $this->job->setDescription($this->serverHostname . 'Successfully added.');
+                $this->job->updateJobStatus(WPCP_JobSuccess, 100);
+
                 return $data;
             }
             else{
+
+                $this->job->setDescription('Failed to add: ' . $this->serverHostname . ' Error message: ' . $data->error_message);
+                $this->job->updateJobStatus(WPCP_JobFailed, 0);
+
                 $cu = new CommonUtils(0, $data->error_message);
                 $cu->fetchJson();
             }
         }
         else{
+
+            $this->job->setDescription('Failed to add: ' . $this->serverHostname . ' Error message: This server already exists.');
+            $this->job->updateJobStatus(WPCP_JobFailed, 0);
+
             $cu = new CommonUtils(0, 'Already exists.');
             $cu->fetchJson();
         }
