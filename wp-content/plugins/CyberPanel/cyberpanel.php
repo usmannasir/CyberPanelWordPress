@@ -31,9 +31,8 @@ define('WPCP_JobSuccess', 2);
 define('WPCP_JobRunning', 3);
 
 
-
-
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
+require_once(CPWP_PLUGIN_DIR . 'main/hetzner.php');
 
 // Create Table where Connected servers will be stored
 
