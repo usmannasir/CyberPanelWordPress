@@ -76,9 +76,9 @@ class CPJobManager
 
             if ($this->function == 'VerifyConnection') {
 
-                $hostname = $this->data['hostname'];
-                $username = $this->data['username'];
-                $password = $this->data['password'];
+                $hostname = sanitize_text_field($this->data['hostname']);
+                $username = sanitize_text_field($this->data['username']);
+                $password = sanitize_text_field($this->data['password']);
 
                 $token = 'Basic ' . base64_encode($username . ':' . $password);
 

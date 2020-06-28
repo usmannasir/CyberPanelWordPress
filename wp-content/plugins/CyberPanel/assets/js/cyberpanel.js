@@ -4,6 +4,9 @@ function GlobalAjax(dataContent) {
             , function (data) {
                 var jsonData = data;
 
+                console.log(jsonData);
+                console.log(typeof jsonData);
+
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
                         try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
