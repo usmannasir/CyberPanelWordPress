@@ -49,6 +49,7 @@ function on_activation()
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
+  userid mediumint(9) NOT NULL AUTO_INCREMENT,
   name varchar(500) DEFAULT '' NOT NULL,
   userName varchar(500) DEFAULT '' NOT NULL,
   token varchar(500) DEFAULT '' NOT NULL,
@@ -63,10 +64,12 @@ function on_activation()
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
+  userid mediumint(9) NOT NULL AUTO_INCREMENT,
   function varchar(50) DEFAULT '' NOT NULL,
   description varchar(500) DEFAULT '' NOT NULL,
   status mediumint(9) DEFAULT 0 NOT NULL,
   percentage mediumint(9) DEFAULT 0,
+  token varchar(200) DEFAULT '' NOT NULL,
   date datetime(6) DEFAULT NOW(),
   PRIMARY KEY  (id)
 )";

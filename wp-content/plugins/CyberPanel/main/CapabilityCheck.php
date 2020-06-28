@@ -9,4 +9,6 @@ class CapabilityCheck
         return 1;
     }
 
+    function jobOwnerShipCheck($jobid){return 1;}
+
 }

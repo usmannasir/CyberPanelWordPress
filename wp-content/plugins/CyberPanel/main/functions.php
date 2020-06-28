@@ -79,6 +79,6 @@ function ajax_jobStatus() {
 
     check_ajax_referer( 'CPWP' );
 
-    $cpjm = new CPJobManager('jobStatus');
+    $cpjm = new CPJobManager('jobStatus', $_POST);
     $cpjm->RunJob();
 }

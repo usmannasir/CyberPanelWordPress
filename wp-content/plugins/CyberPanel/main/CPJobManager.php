@@ -2,6 +2,7 @@
 
 require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
+require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
 
 class CPJobManager
 {
@@ -23,22 +24,25 @@ class CPJobManager
                 $wpdb->insert(
                     $wpdb->prefix . TN_CYBERPANEL_JOBS,
                     array(
+                        'userid ' => get_current_user_id(),
                         'function' => $this->function,
                         'description' => $this->description,
                         'status' => WPCP_StartingJob,
-                        'percentage' => 0
+                        'percentage' => 0,
+                        'token' => wp_get_session_token(),
                     ),
                     array(
+                        '%d',
                         '%s',
                         '%s',
                         '%d',
-                        '%d'
+                        '%d',
+                        '%s',
                     )
                 );
                 $this->jobid = $wpdb->insert_id;
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
         };
@@ -56,8 +60,14 @@ class CPJobManager
     function jobStatus()
     {
         global $wpdb;
-        $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs ORDER BY `id` ASC");
+        $token = wp_get_session_token();
 
+        if(is_admin()) {
+            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' ORDER BY `id` ASC");
+        }else{
+            $userid = get_current_user_id();
+            $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' and where userid = '$userid' ORDER BY `id` ASC");
+        }
         $finalResult = '';
 
         foreach ($results as $result) {
@@ -91,32 +101,32 @@ class CPJobManager
             } elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();
             }
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());
             $cu->fetchJson();
         }
 
     }
 
-    function updateJobStatus($status, $percentage){
+    function updateJobStatus($status, $percentage)
+    {
 
         global $wpdb;
 
         $wpdb->update(
             $wpdb->prefix . TN_CYBERPANEL_JOBS,
             array(
-                'description' => $this->description,	// string
+                'description' => $this->description,    // string
                 'status' => $status,
                 'percentage' => $percentage
             ),
-            array( 'id' => $this->jobid ),
+            array('id' => $this->jobid),
             array(
                 '%s',
                 '%d',
                 '%d'
             ),
-            array( '%d' )
+            array('%d')
         );
 
     }

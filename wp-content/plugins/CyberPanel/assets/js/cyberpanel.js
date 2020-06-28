@@ -1,31 +1,32 @@
-function GlobalAjax(dataContent) {
+function jobStatus(data){
+    if (data.status === 1) {
+        $("#jobStatusResult").html(data.result);
+        $("#jobsModal").modal('show');
+    }
+}
+
+function verifyConnectionCB(data){
+    $("#WPCPSpinner").hide();
+    $("#WPCPSpinnerModal").hide();
+
+    dataContent = {
+        _ajax_nonce: CPWP.nonce,
+        action: 'jobStatus',
+    }
+    GlobalAjax(dataContent, jobStatus, jobStatus);
+}
+
+function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").show();
         $("#WPCPSpinnerModal").show();
-        $.post(CPWP.ajax_url, dataContent
-            , function (data) {
-                $("#WPCPSpinner").hide();
-                $("#WPCPSpinnerModal").hide();
-                if (dataContent.action !== 'jobStatus') {
-
-                    dataContent = {
-                        _ajax_nonce: CPWP.nonce,
-                        action: 'jobStatus'
-                    }
-
-                    GlobalAjax(dataContent);
-                    return;
-                }
-                if (data.status === 1) {
-                    $("#jobStatusResult").html(data.result);
-                    $("#jobsModal").modal('show');
-                }
-            });
+        $.post(CPWP.ajax_url, dataContent, callbackSuccess, callBackFailure);
     });
 }
 
 jQuery(document).ready(function ($) {
     $("#WPCPSpinner").hide();
+
     $("#connectServer").click(function () {
         var dataContent = {
             _ajax_nonce: CPWP.nonce,
@@ -34,16 +35,16 @@ jQuery(document).ready(function ($) {
             username: $("#username").val(),
             password: $("#password").val()
         }
-        GlobalAjax(dataContent);
+        GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });
     $("#viewJobs").click(function () {
 
         dataContent = {
             _ajax_nonce: CPWP.nonce,
-            action: 'jobStatus'
+            action: 'jobStatus',
         }
 
-        GlobalAjax(dataContent);
+        GlobalAjax(dataContent, jobStatus, jobStatus);
 
     });
     $("#viewJobsModal").click(function () {
@@ -53,7 +54,7 @@ jQuery(document).ready(function ($) {
             action: 'jobStatus'
         }
 
-        GlobalAjax(dataContent);
+        GlobalAjax(dataContent, jobStatus, jobStatus);
 
     });
 });
