@@ -10,11 +10,6 @@ function jobStatus(data) {
 }
 
 function verifyConnectionCB(data) {
-    jQuery(document).ready(function ($) {
-        $("#WPCPSpinner").hide();
-        $("#WPCPSpinnerModal").hide();
-    });
-
     var dataContent = {
         _ajax_nonce: CPWP.nonce,
         action: 'jobStatus',

@@ -66,14 +66,48 @@ class CPJobManager
             $userid = get_current_user_id();
             $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_jobs where token = '$token' and where userid = '$userid' ORDER BY `id` ASC");
         }
-        $finalResult = '';
+        $tableHead = '<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Function</th>
+      <th scope="col">Status</th>
+      <th scope="col">State</th>
+    </tr>
+  </thead>
+  <tbody>';
+        $tableFooter = '</tbody></table>';
+        $finalResult = $tableHead;
 
         foreach ($results as $result) {
-            $currentValue = sprintf('<div class="progress">
+            $id = sprintf('<tr><th scope="row">%d</th>', $result->id);
+            $function = sprintf('<td scope="row">%s</td>', $result->function);
+            if($result->percentage == 100){
+                $status = sprintf('<td scope="row">%s</td>', $result->description);
+            }else{
+                $status = sprintf('<td scope="row"><div class="progress">
   <div class="progress-bar" role="progressbar" style="width: %d%%" aria-valuenow="%d" aria-valuemin="0" aria-valuemax="100"></div>
-</div>', $result->percentage, $result->percentage);
-            $finalResult = $result->description . $currentValue . $finalResult;
+</div></td>', $result->percentage, $result->percentage);
+            }
+
+            if($result->status == WPCP_StartingJob){
+                $jobStatus = 'Job starter..';
+            }elseif ($result->status == WPCP_JobFailed){
+                $jobStatus = 'Job failed.';
+            }
+            elseif ($result->status == WPCP_JobSuccess){
+                $jobStatus = 'Job successful.';
+            }
+            elseif ($result->status == WPCP_JobRunning){
+                $jobStatus = 'Job running..';
+            }
+            $jobStatus = sprintf('<td scope="row">%s</td>', $jobStatus);
+
+            $finalResult = $finalResult . $id . $function . $status . $jobStatus;
         }
+
+        $finalResult = $finalResult . $tableFooter;
+
         $data = array(
             'status' => 1,
             'result' => $finalResult
