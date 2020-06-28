@@ -59,12 +59,14 @@ class CyberPanelManager
                     array(
                         'name' => $this->serverHostname,
                         'userName' => $this->username,
-                        'token' => $this->userToken
+                        'token' => $this->userToken,
+                        'userid' => get_current_user_id()
                     ),
                     array(
                         '%s',
                         '%s',
-                        '%s'
+                        '%s',
+                        '%d'
                     )
                 );
 
