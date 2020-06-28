@@ -1,15 +1,17 @@
-function jobStatus(data){
-    alert('hello world');
-    console.log(data);
-    if (data.status === 1) {
-        $("#jobStatusResult").html(data.result);
-        $("#jobsModal").modal('show');
-    }
+function jobStatus(data) {
+    jQuery(document).ready(function ($) {
+        if (data.status === 1) {
+            $("#jobStatusResult").html(data.result);
+            $("#jobsModal").modal('show');
+        }
+    });
 }
 
-function verifyConnectionCB(data){
-    $("#WPCPSpinner").hide();
-    $("#WPCPSpinnerModal").hide();
+function verifyConnectionCB(data) {
+    jQuery(document).ready(function ($) {
+        $("#WPCPSpinner").hide();
+        $("#WPCPSpinnerModal").hide();
+    });
 
     var dataContent = {
         _ajax_nonce: CPWP.nonce,
