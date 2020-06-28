@@ -1,6 +1,7 @@
 function GlobalAjax(dataContent) {
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").show();
+        $("#WPCPSpinnerModal").show();
         $.post(CPWP.ajax_url, dataContent
             , function (data) {
                 $("#WPCPSpinner").hide();
