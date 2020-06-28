@@ -18,6 +18,9 @@
 <div id="jobsModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
         <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
             <div id="jobStatusResult" class="modal-body">
                 <p>Modal body text goes here.</p>
             </div>
