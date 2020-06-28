@@ -56,6 +56,7 @@ body{
 
 .WPCPToast{
     width: 600px;
+    margin-right: 2%;
 }
 
 .WPCPToast .toast-header {
