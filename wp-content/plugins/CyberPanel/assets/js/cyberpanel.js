@@ -1,7 +1,9 @@
 function GlobalAjax(dataContent) {
+    $("#WPCPSpinner").show();
     jQuery(document).ready(function ($) {           //wrapper
         $.post(CPWP.ajax_url, dataContent
             , function (data) {
+                $("#WPCPSpinner").hide();
                 var jsonData = data;
 
                 console.log(jsonData);
@@ -9,7 +11,10 @@ function GlobalAjax(dataContent) {
 
                 if (jsonData.status === 1) {
                     $(document).ready(function () {
-                        try {$("#jobStatusResult").html(jsonData.result);}catch (e) {}
+                        try {
+                            $("#jobStatusResult").html(jsonData.result);
+                        } catch (e) {
+                        }
                         $(".toast").toast('show');
                         $("#toastCustom").toast('show');
                     });
@@ -19,6 +24,7 @@ function GlobalAjax(dataContent) {
 }
 
 jQuery(document).ready(function ($) {
+    $("#WPCPSpinner").hide();
     $("#connectServer").click(function () {
         var dataContent = {
             _ajax_nonce: CPWP.nonce,
