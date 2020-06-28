@@ -1,4 +1,6 @@
 function jobStatus(data){
+    alert('hello world');
+    console.log(data);
     if (data.status === 1) {
         $("#jobStatusResult").html(data.result);
         $("#jobsModal").modal('show');
@@ -6,7 +8,6 @@ function jobStatus(data){
 }
 
 function verifyConnectionCB(data){
-    alert('hello world');
     $("#WPCPSpinner").hide();
     $("#WPCPSpinnerModal").hide();
 
@@ -27,9 +28,10 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 
 jQuery(document).ready(function ($) {
     $("#WPCPSpinner").hide();
+    var dataContent;
 
     $("#connectServer").click(function () {
-        var dataContent = {
+        dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'connectServer',
             hostname: $("#hostname").val(),
