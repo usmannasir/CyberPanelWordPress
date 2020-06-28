@@ -7,7 +7,7 @@ function GlobalAjax(dataContent) {
                 $("#WPCPSpinner").hide();
                 $("#WPCPSpinnerModal").hide();
 
-                if (dataContent.action !== 'jobStatus'){
+                if (dataContent.action !== 'jobStatus') {
 
                     dataContent = {
                         _ajax_nonce: CPWP.nonce,
@@ -19,13 +19,11 @@ function GlobalAjax(dataContent) {
                 }
 
                 if (data.status === 1) {
-                    $(document).ready(function () {
-                        try {
-                            $("#jobStatusResult").html(jsonData.result);
-                        } catch (e) {
-                        }
-                        $("#jobsModal").modal('show')
-                    });
+                    try {
+                        $("#jobStatusResult").html(dataContent.result);
+                    } catch (e) {
+                    }
+                    $("#jobsModal").modal('show');
                 }
             });
     });
@@ -43,7 +41,7 @@ jQuery(document).ready(function ($) {
         }
         GlobalAjax(dataContent);
     });
-    $("#viewJobs").click(function (){
+    $("#viewJobs").click(function () {
 
         dataContent = {
             _ajax_nonce: CPWP.nonce,
@@ -53,7 +51,7 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent);
 
     });
-    $("#viewJobsModal").click(function (){
+    $("#viewJobsModal").click(function () {
 
         dataContent = {
             _ajax_nonce: CPWP.nonce,
