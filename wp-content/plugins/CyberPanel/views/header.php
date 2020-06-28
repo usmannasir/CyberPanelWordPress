@@ -13,7 +13,7 @@
     <a class="btn btn-outline-primary" href="<?php echo admin_url( "admin.php?page=cyberpanel-manage" ); ?>">Manage Servers</a>
 </div>
 
-<div id="toastCustom" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px; display: none">
+<div id="toastCustom" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
     <div data-autohide="false" class="toast" style="position: absolute; top: 0; right: 0;">
         <div class="toast-header">
             <img src="..." class="rounded mr-2" alt="...">
