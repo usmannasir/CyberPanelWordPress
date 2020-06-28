@@ -19,10 +19,7 @@ function GlobalAjax(dataContent) {
                 }
 
                 if (data.status === 1) {
-                    try {
-                        $("#jobStatusResult").html(dataContent.result);
-                    } catch (e) {
-                    }
+                    $("#jobStatusResult").html(dataContent.result);
                     $("#jobsModal").modal('show');
                 }
             });
