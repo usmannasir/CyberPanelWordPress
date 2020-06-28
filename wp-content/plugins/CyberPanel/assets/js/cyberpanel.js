@@ -5,7 +5,7 @@ function GlobalAjax(dataContent) {
             , function (data) {
                 $("#WPCPSpinner").hide();
 
-                if(typeof data == "string"){
+                if (typeof data == "string") {
                     var jsonData = JSON.parse(data);
                 }
                 {
@@ -19,7 +19,6 @@ function GlobalAjax(dataContent) {
                         } catch (e) {
                         }
                         $(".toast").toast('show');
-                        $("#toastCustom").toast('show');
                     });
                 }
             });
