@@ -33,7 +33,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button id="viewJobsModal" type="button" class="btn btn-primary">Refresh Status</button>
             </div>
         </div>
     </div>

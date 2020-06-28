@@ -55,6 +55,16 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent);
 
     });
+    $("#viewJobsModal").click(function (){
+
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'jobStatus'
+        }
+
+        GlobalAjax(dataContent);
+
+    });
 });
 
 ///
