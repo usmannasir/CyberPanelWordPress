@@ -53,3 +53,11 @@ body{
     background: white;
     border: 1px solid gainsboro;
 }
+
+.WPCPToast{
+    width: 600px;
+}
+
+.WPCPToast .toast-header {
+    background: #00a0d2;
+}

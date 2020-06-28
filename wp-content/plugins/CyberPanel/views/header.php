@@ -14,17 +14,14 @@
 </div>
 
 <div aria-live="polite" aria-atomic="true" style="position: relative;">
-    <div data-autohide="false" class="toast" style="position: absolute; top: 0; right: 0;">
+    <div data-autohide="false" class="toast WPCPToast" style="position: absolute; top: 0; right: 0;">
         <div class="toast-header">
-            <img src="..." class="rounded mr-2" alt="...">
-            <strong class="mr-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
+            <strong class="mr-auto">Jobs..</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div id="jobStatusResult" class="toast-body">
-
         </div>
     </div>
 </div>
