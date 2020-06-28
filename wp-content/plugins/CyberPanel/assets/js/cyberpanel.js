@@ -6,7 +6,6 @@ function GlobalAjax(dataContent) {
             , function (data) {
                 $("#WPCPSpinner").hide();
                 $("#WPCPSpinnerModal").hide();
-
                 if (dataContent.action !== 'jobStatus') {
 
                     dataContent = {
@@ -17,9 +16,8 @@ function GlobalAjax(dataContent) {
                     GlobalAjax(dataContent);
                     return;
                 }
-
                 if (data.status === 1) {
-                    $("#jobStatusResult").html(dataContent.result);
+                    $("#jobStatusResult").html(data.result);
                     $("#jobsModal").modal('show');
                 }
             });
