@@ -20,7 +20,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Jobs Pending/Completed
-                    <div id="WPCPSpinner" class="spinner-border text-info" role="status">
+                    <div id="WPCPSpinnerModal" class="spinner-border text-info" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
                 </h5>

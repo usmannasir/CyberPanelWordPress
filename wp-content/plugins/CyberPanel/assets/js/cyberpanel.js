@@ -4,6 +4,7 @@ function GlobalAjax(dataContent) {
         $.post(CPWP.ajax_url, dataContent
             , function (data) {
                 $("#WPCPSpinner").hide();
+                $("#WPCPSpinnerModal").hide();
 
                 if (typeof data == "string") {
                     var jsonData = JSON.parse(data);
