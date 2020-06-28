@@ -8,7 +8,7 @@
             <form>
                 <div class="form-group">
                     <label for="hostname" class="sr-only">Name</label>
-                    <input type="text" id="name" class="form-control" placeholder="Name" required>
+                    <input type="text" id="Name" class="form-control" placeholder="Name" required>
                     <small id="Name" class="form-text text-muted">Give Name to this API Token.</small>
                 </div>
                 <div class="form-group">
