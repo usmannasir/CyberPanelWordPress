@@ -10,7 +10,7 @@ function verifyConnectionCB(data){
     $("#WPCPSpinner").hide();
     $("#WPCPSpinnerModal").hide();
 
-    dataContent = {
+    var dataContent = {
         _ajax_nonce: CPWP.nonce,
         action: 'jobStatus',
     }
