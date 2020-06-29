@@ -5,9 +5,7 @@ require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
 
 /// Load all required JS and CSS files for this plugin
 
-function CPWP_load_static($hook){
-
-    $screen = get_current_screen();
+function CPWP_load_static(){
 
     wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' );
     wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
