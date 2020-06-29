@@ -170,7 +170,7 @@ function wpcp_custom_box_html($post)
     <select name="wporg_field" id="wpcp_provider" class="postbox">
         <?php
         foreach ($results as $result){
-            sprintf('<option value="">%s</option>', $result->name);
+            echo sprintf('<option value="">%s</option>', $result->name);
         }?>
     </select>
     <?php
