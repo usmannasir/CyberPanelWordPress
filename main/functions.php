@@ -185,7 +185,7 @@ function wpcp_custom_box_html($post)
 
 // Ajax for fetching provider plans
 
-add_action('wp_fetchProviderPlans', 'ajax_fetchProviderPlans');
+add_action('wp_ajax_fetchProviderPlans', 'ajax_fetchProviderPlans');
 
 function ajax_fetchProviderPlans()
 {
