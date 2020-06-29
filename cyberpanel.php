@@ -57,7 +57,7 @@ function on_activation()
   PRIMARY KEY  (id),
   UNIQUE (name)
 )";
-    dbDelta( $sql );
+    $wpdb->query( $sql );
 
     /// Table that will contain details of currently queued jobs.
 
@@ -74,7 +74,7 @@ function on_activation()
   date datetime(6) DEFAULT NOW(),
   PRIMARY KEY  (id)
 )";
-    dbDelta( $sql );
+    $wpdb->query( $sql );
 
     $table_name = $wpdb->prefix . TN_CYBERPANEL_PVD;
 
@@ -87,5 +87,5 @@ function on_activation()
   UNIQUE (name)
 )";
 
-    dbDelta( $sql );
+    $wpdb->query( $sql );
 }
