@@ -15,7 +15,7 @@ class CyberPanelHetzner extends WPCPHTTP
 
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
+        $result = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
 
         $token = json_decode($result->apidetails)->token;
 
