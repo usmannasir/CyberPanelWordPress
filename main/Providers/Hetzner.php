@@ -13,9 +13,11 @@ class CyberPanelHetzner extends WPCPHTTP
 
     function fetchPlans(){
 
+        $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
+
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
+        $result = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'" );
 
         $token = json_decode($result->apidetails)->token;
 
