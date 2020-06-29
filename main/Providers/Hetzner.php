@@ -9,8 +9,6 @@ class CyberPanelHetzner extends WPCPHTTP
     {
         $this->job = $job;
         $this->data = $data;
-        $hostname = sanitize_text_field($this->data['hostname']);
-        $this->url = 'https://' . $hostname . ':8090/cloudAPI/';
     }
 
     function fetchPlans(){
@@ -19,14 +17,14 @@ class CyberPanelHetzner extends WPCPHTTP
 
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
+        //$result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
 
-        $token = json_decode($result->apidetails)->token;
+        //$token = json_decode($result->apidetails)->token;
+
+        $token = 'Bearer qQyRuvISbepOGjDmdyJBakqXSDAQIVTsK7nLhYpouxaE8rq19kqfZdphei9nfn87';
 
         $response = $this->HTTPPostCall($token);
 
-        $message = $token;
-        error_log(json_decode($result->apidetails), 3, CPWP_ERROR_LOGS);
         error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
 
         $data = json_decode(wp_remote_retrieve_body($response));
