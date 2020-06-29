@@ -20,11 +20,13 @@ if (!defined('WPINC')) {
 define('CPWP_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
+// Table names for CyberPanel
+
 define('TN_CYBERPANEL_SERVERS', 'cyberpanel_servers');
 define('TN_CYBERPANEL_JOBS', 'cyberpanel_jobs');
 define('TN_CYBERPANEL_PVD', 'cyberpanel_providers');
 
-/// JOBS
+/// Jobs Statues
 
 define('WPCP_StartingJob', 0);
 define('WPCP_JobFailed', 1);
