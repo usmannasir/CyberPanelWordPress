@@ -2,13 +2,13 @@
 
 /**
  * Plugin Name:       CyberPanel
- * Plugin URI:        https://cyberwp.com
+ * Plugin URI:        https://cyberwp.cloud
  * Description:       Manage multiple CyberPanel installations via WordPress.
  * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.1
  * Author:            Usman Nasir
- * Author URI:        https://cyberwp.com
+ * Author URI:        https://cyberwp.cloud
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  */
