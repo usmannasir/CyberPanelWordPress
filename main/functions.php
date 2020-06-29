@@ -198,7 +198,7 @@ function ajax_fetchProviderPlans()
 
     check_ajax_referer('CPWP');
 
-    $cpjm = new CPJobManager('fetchProviderPlans', $_POST, sprintf('Fetching provider plans for %s.', sanitize_text_field($_POST['wpcp_provider'])));
+    $cpjm = new CPJobManager('fetchProviderPlans');
     $cpjm->RunJob();
 }
 
