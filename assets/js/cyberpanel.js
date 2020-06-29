@@ -78,6 +78,20 @@ jQuery(document).ready(function ($) {
         }
         GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });
+
+    /// Providers
+
+    $("#wpcp_provider").change(function () {
+        alert('hello world');
+        // dataContent = {
+        //     _ajax_nonce: CPWP.nonce,
+        //     action: 'connectServer',
+        //     hostname: $("#hostname").val(),
+        //     username: $("#username").val(),
+        //     password: $("#password").val()
+        // }
+        // GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
+    });
 });
 
 ///

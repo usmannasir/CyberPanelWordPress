@@ -144,7 +144,7 @@ function wpcp_custom_box_html($post)
 {
     ?>
     <label for="wporg_field">Description for this field</label>
-    <select name="wporg_field" id="wporg_field" class="postbox">
+    <select name="wporg_field" id="wpcp_provider" class="postbox">
         <option value="">Select something...</option>
         <option value="something">Something</option>
         <option value="else">Else</option>
