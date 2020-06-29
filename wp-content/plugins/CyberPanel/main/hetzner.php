@@ -35,11 +35,11 @@ add_action( 'wp_ajax_connectHetzner', 'ajax_connectHetzner' );
 function ajax_connectHetzner() {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('ajax_connectHetzner');
+    $cc = new CapabilityCheck('connectHetzner');
     if( ! $cc->checkCapability()){return;}
 
     check_ajax_referer( 'CPWP' );
 
-    $cpjm = new CPJobManager('connectHetzner', $_POST, 'Adding new Hetzner Token account: ' . $_POST['Name']);
+    $cpjm = new CPJobManager('connectHetzner', $_POST, sprintf('Configuring Hetzner account named: %s..', sanitize_text_field($_POST['name'])));
     $cpjm->RunJob();
 }

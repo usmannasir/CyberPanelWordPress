@@ -15,21 +15,21 @@ class CyberPanelHetzner extends WPCPHTTP
 
     function connectHetzner(){
 
-        $Name = sanitize_text_field($this->data['Name']);
-        $Token = sanitize_text_field($this->data['Token']);
+        $name = sanitize_text_field($this->data['name']);
+        $token = sanitize_text_field($this->data['token']);
 
-        $token = 'Bearer ' . $Token;
+        $token = 'Bearer ' . $token;
 
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_hetzner WHERE name = '$Name'" );
+        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_hetzner WHERE name = '$name'" );
 
         if ($result == null) {
             $wpdb->insert(
                 $wpdb->prefix . TN_CYBERPANEL_HTZ,
                 array(
-                    'name' => $Name,
+                    'name' => $name,
                     'token' => $token
                 ),
                 array(
@@ -38,7 +38,9 @@ class CyberPanelHetzner extends WPCPHTTP
                 )
             );
 
-            $this->job->setDescription('Hetzner server successfully added, name: ' . $Name);
+            sprintf('Successfully configured Hetzner account  named: %s', $name);
+
+            $this->job->setDescription(sprintf('Successfully configured Hetzner account named: %s', $name));
             $this->job->updateJobStatus(WPCP_JobSuccess, 100);
 
             $cu = new CommonUtils(1, '');
@@ -46,7 +48,7 @@ class CyberPanelHetzner extends WPCPHTTP
         }
         else{
 
-            $this->job->setDescription('Failed to add hetzner: ' . $Name . ' Error message: This API already exists.');
+            $this->job->setDescription(sprintf('Failed to configure Hetzner account named: %s. Error message: Account already exists.', $name));
             $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
             $cu = new CommonUtils(0, 'Already exists.');

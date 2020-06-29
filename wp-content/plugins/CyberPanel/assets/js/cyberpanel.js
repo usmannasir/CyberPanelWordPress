@@ -72,8 +72,8 @@ jQuery(document).ready(function ($) {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'connectHetzner',
-            Name: $("#Name").val(),
-            Token: $("#Token").val(),
+            name: $("#name").val(),
+            token: $("#token").val(),
         }
         GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });

@@ -5,9 +5,12 @@ class CapabilityCheck
 {
     protected $function;
 
-    function checkCapability(){
-        return 1;
+    function __construct($function)
+    {
+        $this->function = $function;
     }
+
+    function checkCapability(){return 1;}
 
     function jobOwnerShipCheck($jobid){return 1;}
 

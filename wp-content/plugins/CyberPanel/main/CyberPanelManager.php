@@ -6,39 +6,45 @@ require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 class CyberPanelManager extends WPCPHTTP
 {
 
-    function __construct($job, $serverHostname, $username, $userToken)
+    function __construct($job, $data)
     {
+        $hostname = sanitize_text_field($this->data['hostname']);
         $this->job = $job;
-        $this->serverHostname = $serverHostname;
-        $this->username = $username;
-        $this->userToken = $userToken;
+        $this->data = $data;
+        $this->url = 'https://' . $hostname . ':8090/cloudAPI/';
     }
 
 
     function VerifyConnection(){
 
+        $hostname = sanitize_text_field($this->data['hostname']);
+        $username = sanitize_text_field($this->data['username']);
+        $password = sanitize_text_field($this->data['password']);
+
+        $token = 'Basic ' . base64_encode($username . ':' . $password);
+
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_servers WHERE name = '$this->serverHostname'" );
+        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_servers WHERE name = '$hostname'" );
 
         if ($result == null) {
 
             $this->body = array(
                 'controller' => 'verifyLogin',
-                'serverUserName' => $this->username
+                'serverUserName' => $username
             );
 
-            $response = $this->HTTPPostCall();
+            $response = $this->HTTPPostCall($token);
             $data = json_decode(wp_remote_retrieve_body($response));
 
             if ($data->status == 1) {
                 $wpdb->insert(
                     $wpdb->prefix . TN_CYBERPANEL_SERVERS,
                     array(
-                        'name' => $this->serverHostname,
-                        'userName' => $this->username,
-                        'token' => $this->userToken,
+                        'name' => $hostname,
+                        'userName' => $username,
+                        'token' => $token,
                         'userid' => get_current_user_id()
                     ),
                     array(
@@ -49,14 +55,14 @@ class CyberPanelManager extends WPCPHTTP
                     )
                 );
 
-                $this->job->setDescription($this->serverHostname . ' successfully added.');
+                $this->job->setDescription(sprintf('%s successfully added.', $hostname));
                 $this->job->updateJobStatus(WPCP_JobSuccess, 100);
 
                 return $data;
             }
             else{
 
-                $this->job->setDescription('Failed to add: ' . $this->serverHostname . ' Error message: ' . $data->error_message);
+                $this->job->setDescription(sprintf('Failed to add %s. Error message: %s', $hostname, $data->error_message));
                 $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
                 $cu = new CommonUtils(0, $data->error_message);
@@ -65,7 +71,7 @@ class CyberPanelManager extends WPCPHTTP
         }
         else{
 
-            $this->job->setDescription('Failed to add: ' . $this->serverHostname . ' Error message: This server already exists.');
+            $this->job->setDescription(sprintf('Failed to add %s. Error message: This server already exists.', $hostname));
             $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
             $cu = new CommonUtils(0, 'Already exists.');

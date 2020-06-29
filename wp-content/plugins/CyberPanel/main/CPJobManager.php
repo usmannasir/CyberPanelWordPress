@@ -124,23 +124,16 @@ class CPJobManager
 
             if ($this->function == 'VerifyConnection') {
 
-                $hostname = sanitize_text_field($this->data['hostname']);
-                $username = sanitize_text_field($this->data['username']);
-                $password = sanitize_text_field($this->data['password']);
-
-                $token = 'Basic ' . base64_encode($username . ':' . $password);
-
-                $cpm = new CyberPanelManager($this, $hostname, $username, $token);
+                $cpm = new CyberPanelManager($this, $this->data);
                 wp_send_json($cpm->VerifyConnection());
 
             }
-            elseif ($this->function == 'jobStatus') {
-                $this->jobStatus();
-            }
             elseif ($this->function == 'connectHetzner') {
-
                 $cph = new CyberPanelHetzner($this, $this->data);
                 wp_send_json($cph->connectHetzner());
+            }
+            elseif ($this->function == 'jobStatus') {
+                $this->jobStatus();
             }
         } catch (Exception $e) {
             $cu = new CommonUtils(0, $e->getMessage());

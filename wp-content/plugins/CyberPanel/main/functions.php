@@ -61,7 +61,7 @@ add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
 function ajax_Connect_Server() {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('ajax_Connect_Server');
+    $cc = new CapabilityCheck('Connect_Server');
     if( ! $cc->checkCapability()){return;}
 
     check_ajax_referer( 'CPWP' );
@@ -74,7 +74,7 @@ add_action( 'wp_ajax_jobStatus', 'ajax_jobStatus' );
 function ajax_jobStatus() {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('ajax_jobStatus');
+    $cc = new CapabilityCheck('jobStatus');
     if( ! $cc->checkCapability()){return;}
 
     check_ajax_referer( 'CPWP' );
