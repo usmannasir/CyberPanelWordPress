@@ -33,7 +33,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $finalResult = '';
 
         foreach ($types as $type){
-            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '000'));
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
         }
 
         $data = array(
