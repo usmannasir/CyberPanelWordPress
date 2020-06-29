@@ -103,7 +103,7 @@ jQuery(document).ready(function ($) {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'fetchProviderPlans',
-            wpcp_provider: $("#wpcp_provider").val(),
+            wpcp_provider: $(this).children("option:selected").val(),
         }
         GlobalAjax(dataContent, fetchProviderPlansCallBack, fetchProviderPlansCallBack);
     });
