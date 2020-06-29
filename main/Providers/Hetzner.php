@@ -24,14 +24,16 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $response = $this->HTTPPostCall($token, 'GET');
 
-        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+        //error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
 
         $data = json_decode(wp_remote_retrieve_body($response));
 
+        $types = $data->pricing->server_types;
+
         $finalResult = '';
 
-        foreach ($data as $result){
-            $finalResult = $finalResult . sprintf('<option>%s</option>', $result->pricing->server_types[1]);
+        foreach ($types as $type){
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . $type->prices[0]->price_monthly->net);
         }
 
         $data = array(
