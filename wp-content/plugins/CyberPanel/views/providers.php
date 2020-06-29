@@ -7,7 +7,7 @@
         <div class="card-body">
             <form>
                 <div class="form-group">
-                    <label for="exampleFormControlSelect1">Select Cloud Company</label>
+                    <label for="provider" class="sr-only">Select Cloud Company</label>
                     <select class="form-control" id="provider">
                         <option>Hetzner</option>
                     </select>
