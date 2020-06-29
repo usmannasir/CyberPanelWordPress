@@ -18,6 +18,7 @@ function verifyConnectionCB(data) {
 }
 
 function fetchProviderPlansCallBack(data) {
+
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").hide();
         $("#WPCPSpinnerModal").hide();

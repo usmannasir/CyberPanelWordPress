@@ -15,6 +15,11 @@ class CyberPanelHetzner extends WPCPHTTP
 
     function fetchPlans(){
 
-        return '<option>abc</option><option>def</option>';
+        $data = array(
+            'status' => 1,
+            'result' => '<option>abc</option><option>def</option>'
+        );
+
+        return $data;
     }
 }
