@@ -1,6 +1,5 @@
 <?php
 
-
 class WPCPHTTP
 {
     protected $job;
@@ -9,6 +8,7 @@ class WPCPHTTP
     protected $body;
 
     function HTTPPostCall($token){
+
         $headers = array(
             'Authorization' => $token,
             'Content-type' => 'application/json'
@@ -22,6 +22,7 @@ class WPCPHTTP
             'blocking'    => true,
             'headers'     => $headers,
             'cookies'     => array(),
+            'sslverify'   => false
         );
         return wp_remote_post( $this->url, $args );
 

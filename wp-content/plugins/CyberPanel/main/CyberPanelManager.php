@@ -8,9 +8,9 @@ class CyberPanelManager extends WPCPHTTP
 
     function __construct($job, $data)
     {
-        $hostname = sanitize_text_field($this->data['hostname']);
         $this->job = $job;
         $this->data = $data;
+        $hostname = sanitize_text_field($this->data['hostname']);
         $this->url = 'https://' . $hostname . ':8090/cloudAPI/';
     }
 
@@ -62,7 +62,7 @@ class CyberPanelManager extends WPCPHTTP
             }
             else{
 
-                $this->job->setDescription(sprintf('Failed to add %s. Error message: %s', $hostname, wp_remote_retrieve_body($response)));
+                $this->job->setDescription(sprintf('Failed to add %s. Error message: %s', $hostname, $data->error_message));
                 $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
                 $cu = new CommonUtils(0, $data->error_message);

@@ -1,18 +1,14 @@
 <?php
 
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
-require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 
 class CyberPanelHetzner extends WPCPHTTP
 {
-
     function __construct($job, $data)
     {
         $this->job = $job;
         $this->data = $data;
     }
-
-
     function connectHetzner(){
 
         $name = sanitize_text_field($this->data['name']);
