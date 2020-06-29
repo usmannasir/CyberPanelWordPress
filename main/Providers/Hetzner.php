@@ -15,11 +15,10 @@ class CyberPanelHetzner extends WPCPHTTP
 
         global $wpdb;
 
-        //$result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
+        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = 'wpcp'" );
 
-        //$token = json_decode($result->apidetails)->token;
+        $token = json_decode($result->apidetails)->token;
 
-        $token = 'Bearer qQyRuvISbepOGjDmdyJBakqXSDAQIVTsK7nLhYpouxaE8rq19kqfZdphei9nfn87';
         $this->url = 'https://api.hetzner.cloud/v1/pricing';
 
         $response = $this->HTTPPostCall($token, 'GET');
