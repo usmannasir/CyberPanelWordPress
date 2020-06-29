@@ -33,7 +33,7 @@ function Main_CyberPanel()
     );
 }
 
-// This function will generate HTML
+// This function will generate HTML for Main Screen
 
 function cyberpanel_main_html() {
     // check user capabilities
@@ -54,7 +54,6 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 add_action( 'wp_ajax_connectServer', 'ajax_Connect_Server' );
 
-//// Ajax to fetch job status
 
 function ajax_Connect_Server() {
     // Handle the ajax request
@@ -66,6 +65,8 @@ function ajax_Connect_Server() {
     $cpjm = new CPJobManager('VerifyConnection', $_POST, 'Verifying connection to: ' . $_POST['hostname']);
     $cpjm->RunJob();
 }
+
+//// Ajax to fetch job status
 
 add_action( 'wp_ajax_jobStatus', 'ajax_jobStatus' );
 
@@ -81,7 +82,7 @@ function ajax_jobStatus() {
     $cpjm->RunJob();
 }
 
-// Configure providers page
+// Proviers page html
 
 function cyberpanel_provider_html() {
     // check user capabilities
@@ -104,6 +105,8 @@ function CyberPanel_Providers()
 }
 
 add_action('admin_menu', 'CyberPanel_Providers');
+
+// Ajax for providers
 
 add_action( 'wp_ajax_connectProvider', 'ajax_connectProvider' );
 
