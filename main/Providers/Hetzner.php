@@ -24,6 +24,11 @@ class CyberPanelHetzner extends WPCPHTTP
         $token = json_decode($result->apidetails)->token;
 
         $response = $this->HTTPPostCall($token);
+
+        $message = $token;
+        error_log($message, 3, CPWP_ERROR_LOGS);
+        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+
         $data = json_decode(wp_remote_retrieve_body($response));
 
         $finalResult = '';

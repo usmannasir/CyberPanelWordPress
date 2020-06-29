@@ -19,6 +19,7 @@ if (!defined('WPINC')) {
 
 define('CPWP_PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
 define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('CPWP_ERROR_LOGS', CPWP_PLUGIN_DIR . 'error_log');
 
 // Table names for CyberPanel
 
