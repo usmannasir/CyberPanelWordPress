@@ -82,15 +82,12 @@ jQuery(document).ready(function ($) {
     /// Providers
 
     $("#wpcp_provider").change(function () {
-        alert('hello world');
-        // dataContent = {
-        //     _ajax_nonce: CPWP.nonce,
-        //     action: 'connectServer',
-        //     hostname: $("#hostname").val(),
-        //     username: $("#username").val(),
-        //     password: $("#password").val()
-        // }
-        // GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'fetchProviderPlans',
+            wpcp_provider: $("#wpcp_provider").val(),
+        }
+        GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });
 });
 

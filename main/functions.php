@@ -162,17 +162,30 @@ function wpcp_custom_box_html($post)
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     ?>
-    <label for="wporg_field">Description for this field
+    <label for="wporg_field">Select Provider
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </label>
+    <select name="wpcp_field" id="wpcp_provider" class="postbox">
+        <?php
+        foreach ($results as $result){
+            echo sprintf('<option value="">%s</option>', $result->name);
+        }?>
+    </select>
+
     <select name="wporg_field" id="wpcp_provider" class="postbox">
         <?php
         foreach ($results as $result){
             echo sprintf('<option value="">%s</option>', $result->name);
         }?>
     </select>
+
+    <select name="wpcp_providerplans" id="wpcp_providerplans" class="postbox">
+    </select>
+
     <?php
+
+
 }
 
