@@ -23,7 +23,7 @@ class CyberPanelManager extends WPCPHTTP
 
         $token = 'Basic ' . base64_encode($username . ':' . $password);
 
-        /// Check if hostname alrady exists
+        /// Check if hostname already exists
         global $wpdb;
 
         $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_servers WHERE name = '$hostname'" );

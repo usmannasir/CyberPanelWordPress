@@ -22,7 +22,6 @@ class WPCPHTTP
             'blocking'    => true,
             'headers'     => $headers,
             'cookies'     => array(),
-            'sslverify'   => false
         );
         return wp_remote_post( $this->url, $args );
 
