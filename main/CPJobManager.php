@@ -4,6 +4,7 @@ require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelManager.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CyberPanelProvider.php');
+require_once(CPWP_PLUGIN_DIR . 'main/Providers/Hetzner.php');
 
 class CPJobManager
 {
@@ -131,6 +132,10 @@ class CPJobManager
             elseif ($this->function == 'connectProvider') {
                 $cpp = new CyberPanelProvider($this, $this->data);
                 wp_send_json($cpp->connectProvider());
+            }
+            elseif ($this->function == 'fetchProviderPlans') {
+                $cph = new CyberPanelHetzner($this, $this->data);
+                wp_send_json($cph->fetchPlans());
             }
             elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();

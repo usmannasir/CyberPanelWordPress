@@ -14,7 +14,6 @@ class CyberPanelManager extends WPCPHTTP
         $this->url = 'https://' . $hostname . ':8090/cloudAPI/';
     }
 
-
     function VerifyConnection(){
 
         $hostname = sanitize_text_field($this->data['hostname']);

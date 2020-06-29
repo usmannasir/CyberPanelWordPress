@@ -1,7 +1,20 @@
 <?php
 
+require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
+require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 
-class Hetzner
+class CyberPanelHetzner extends WPCPHTTP
 {
+    function __construct($job, $data)
+    {
+        $this->job = $job;
+        $this->data = $data;
+        $hostname = sanitize_text_field($this->data['hostname']);
+        $this->url = 'https://' . $hostname . ':8090/cloudAPI/';
+    }
 
+    function fetchPlans(){
+
+        return '<option>abc</option><option>def</option>';
+    }
 }

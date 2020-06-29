@@ -17,6 +17,19 @@ function verifyConnectionCB(data) {
     GlobalAjax(dataContent, jobStatus, jobStatus);
 }
 
+function fetchProviderPlansCallBack(data) {
+    jQuery(document).ready(function ($) {
+        $("#WPCPSpinner").hide();
+        $("#WPCPSpinnerModal").hide();
+        $("#wpcp_providerplans_label").show();
+        $("#wpcp_providerplans").show();
+
+        if (data.status === 1) {
+            $("#wpcp_providerplans").html(data.result);
+        }
+    });
+}
+
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").show();
@@ -32,7 +45,11 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 }
 
 jQuery(document).ready(function ($) {
+
     $("#WPCPSpinner").hide();
+    $("#wpcp_providerplans_label").hide();
+    $("#wpcp_providerplans").hide();
+
     var dataContent;
 
     $("#connectServer").click(function () {
@@ -87,7 +104,7 @@ jQuery(document).ready(function ($) {
             action: 'fetchProviderPlans',
             wpcp_provider: $("#wpcp_provider").val(),
         }
-        GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
+        GlobalAjax(dataContent, fetchProviderPlansCallBack, fetchProviderPlansCallBack);
     });
 });
 

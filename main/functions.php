@@ -174,12 +174,31 @@ function wpcp_custom_box_html($post)
         } ?>
     </select>
 
-    <label for="wporg_field">Select Provider Plan</label>
+    <label id="wpcp_providerplans_label" for="wpcp_providerplans">Select Provider Plan</label>
     <select name="wpcp_providerplans" id="wpcp_providerplans" class="postbox">
     </select>
 
     <?php
 
 
+}
+
+// Ajax for fetching provider plans
+
+add_action('wp_fetchProviderPlans', 'ajax_fetchProviderPlans');
+
+function ajax_fetchProviderPlans()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('fetchProviderPlans');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $cpjm = new CPJobManager('fetchProviderPlans', $_POST, sprintf('Fetching provider plans for %s.', sanitize_text_field($_POST['wpcp_provider'])));
+    $cpjm->RunJob();
 }
 
