@@ -41,7 +41,6 @@ require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 register_activation_hook(__FILE__, 'on_activation');
 function on_activation()
 {
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     global $wpdb;
 
     /// Tables that contain details of CyberPanel Server.
@@ -50,7 +49,7 @@ function on_activation()
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
-  userid mediumint(9) NOT NULL AUTO_INCREMENT,
+  userid mediumint(9) NOT NULL,
   name varchar(500) DEFAULT '' NOT NULL,
   userName varchar(500) DEFAULT '' NOT NULL,
   token varchar(500) DEFAULT '' NOT NULL,
@@ -65,7 +64,7 @@ function on_activation()
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
-  userid mediumint(9) NOT NULL AUTO_INCREMENT,
+  userid mediumint(9) NOT NULL,
   function varchar(50) DEFAULT '' NOT NULL,
   description varchar(500) DEFAULT '' NOT NULL,
   status mediumint(9) DEFAULT 0 NOT NULL,
