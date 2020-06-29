@@ -25,8 +25,8 @@ add_action('admin_enqueue_scripts', 'CPWP_load_static');
 function Main_CyberPanel()
 {
     add_menu_page(
-        'Cyberpanel', //Page Title
-        'Cyberpanel', //Menu Title
+        'CyberPanel', //Page Title
+        'CyberPanel', //Menu Title
         'manage_options', //Capability
         'cyberpanel', //Page slug
         'cyberpanel_main_html' //Callback to print html
@@ -121,3 +121,34 @@ function ajax_connectProvider() {
     $cpjm = new CPJobManager('connectProvider', $_POST, sprintf('Configuring %s account named: %s..',sanitize_text_field($_POST['provider']), sanitize_text_field($_POST['name'])));
     $cpjm->RunJob();
 }
+
+/// Create meta box to disable for woocommerce posts
+
+/* Fire our meta box setup function on the post editor screen. */
+
+function wpcp_add_custom_box()
+{
+    $screens = ['product'];
+    foreach ($screens as $screen) {
+        add_meta_box(
+            'wpcp_box_id',           // Unique ID
+            'Configure Backend Package for this product.',  // Box title
+            'wpcp_custom_box_html',  // Content callback, must be of type callable
+            $screen                   // Post type
+        );
+    }
+}
+add_action('add_meta_boxes', 'wpcp_add_custom_box');
+
+function wpcp_custom_box_html($post)
+{
+    ?>
+    <label for="wporg_field">Description for this field</label>
+    <select name="wporg_field" id="wporg_field" class="postbox">
+        <option value="">Select something...</option>
+        <option value="something">Something</option>
+        <option value="else">Else</option>
+    </select>
+    <?php
+}
+
