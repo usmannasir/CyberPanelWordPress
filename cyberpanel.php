@@ -48,7 +48,7 @@ function on_activation()
 
     $table_name = $wpdb->prefix . TN_CYBERPANEL_SERVERS;
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   userid mediumint(9) NOT NULL AUTO_INCREMENT,
   name varchar(500) DEFAULT '' NOT NULL,
@@ -63,7 +63,7 @@ function on_activation()
 
     $table_name = $wpdb->prefix . TN_CYBERPANEL_JOBS;
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   userid mediumint(9) NOT NULL AUTO_INCREMENT,
   function varchar(50) DEFAULT '' NOT NULL,
@@ -78,7 +78,7 @@ function on_activation()
 
     $table_name = $wpdb->prefix . TN_CYBERPANEL_PVD;
 
-    $sql = "CREATE TABLE $table_name (
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
   provider varchar(200) DEFAULT '' NOT NULL,
   name varchar(200) DEFAULT '' NOT NULL,
