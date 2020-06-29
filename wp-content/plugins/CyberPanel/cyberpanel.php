@@ -22,7 +22,7 @@ define('CPWP_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 define('TN_CYBERPANEL_SERVERS', 'cyberpanel_servers');
 define('TN_CYBERPANEL_JOBS', 'cyberpanel_jobs');
-define('TN_CYBERPANEL_HTZ', 'cyberpanel_hetzner');
+define('TN_CYBERPANEL_PVD', 'cyberpanel_providers');
 
 /// JOBS
 
@@ -75,12 +75,13 @@ function on_activation()
 )";
     dbDelta( $sql );
 
-    $table_name = $wpdb->prefix . TN_CYBERPANEL_HTZ;
+    $table_name = $wpdb->prefix . TN_CYBERPANEL_PVD;
 
     $sql = "CREATE TABLE IF NOT EXISTS $table_name (
   id mediumint(9) NOT NULL AUTO_INCREMENT,
+  provider varchar(200) DEFAULT '' NOT NULL,
   name varchar(200) DEFAULT '' NOT NULL,
-  token varchar(200) DEFAULT '' NOT NULL,
+  apidetails varchar(800) DEFAULT '' NOT NULL,
   PRIMARY KEY  (id),
   UNIQUE (name)
 )";

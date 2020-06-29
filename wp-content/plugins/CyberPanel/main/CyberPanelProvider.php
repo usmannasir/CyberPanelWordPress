@@ -2,41 +2,46 @@
 
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
-class CyberPanelHetzner extends WPCPHTTP
+class CyberPanelProvider extends WPCPHTTP
 {
     function __construct($job, $data)
     {
         $this->job = $job;
         $this->data = $data;
     }
-    function connectHetzner(){
+    function connectProvider(){
 
+
+        $provider = sanitize_text_field($this->data['provider']);
         $name = sanitize_text_field($this->data['name']);
         $token = sanitize_text_field($this->data['token']);
 
         $token = 'Bearer ' . $token;
 
+        $finalDetails = json_encode(array('token'=> $token));
+
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_hetzner WHERE name = '$name'" );
+        $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$name'" );
 
         if ($result == null) {
             $wpdb->insert(
-                $wpdb->prefix . TN_CYBERPANEL_HTZ,
+                $wpdb->prefix . TN_CYBERPANEL_PVD,
                 array(
+                    'provider' => $provider,
                     'name' => $name,
-                    'token' => $token
+                    'apidetails' => $finalDetails
                 ),
                 array(
+                    '%s',
                     '%s',
                     '%s'
                 )
             );
 
-            sprintf('Successfully configured Hetzner account  named: %s', $name);
 
-            $this->job->setDescription(sprintf('Successfully configured Hetzner account named: %s', $name));
+            $this->job->setDescription(sprintf('Successfully configured %s account named: %s', $provider, $name));
             $this->job->updateJobStatus(WPCP_JobSuccess, 100);
 
             $cu = new CommonUtils(1, '');
@@ -44,7 +49,7 @@ class CyberPanelHetzner extends WPCPHTTP
         }
         else{
 
-            $this->job->setDescription(sprintf('Failed to configure Hetzner account named: %s. Error message: Account already exists.', $name));
+            $this->job->setDescription(sprintf('Failed to configure %s account named: %s. Error message: Account already exists.', $provider, $name));
             $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
             $cu = new CommonUtils(0, 'Already exists.');

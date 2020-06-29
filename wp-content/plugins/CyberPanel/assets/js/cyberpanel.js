@@ -68,10 +68,11 @@ jQuery(document).ready(function ($) {
 
     /// Hetzner
 
-    $("#connectHetzner").click(function () {
+    $("#connectProvider").click(function () {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
-            action: 'connectHetzner',
+            action: 'connectProvider',
+            provider: $("#provider").val(),
             name: $("#name").val(),
             token: $("#token").val(),
         }

@@ -82,3 +82,41 @@ function ajax_jobStatus() {
     $cpjm = new CPJobManager('jobStatus', $_POST);
     $cpjm->RunJob();
 }
+
+// Configure providers page
+
+function cyberpanel_provider_html() {
+    // check user capabilities
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+
+    $cc = new CapabilityCheck('cyberpanel_hetzner_html');
+    if( ! $cc->checkCapability()){return;}
+
+    include( CPWP_PLUGIN_DIR . 'views/providers.php' );
+}
+
+function CyberPanel_Providers()
+{
+    add_submenu_page("cyberpanel","Configure Providers",
+        "Cloud Providers","manage_options","cyberpanel-providers"
+        ,"cyberpanel_provider_html"
+    );
+}
+
+add_action('admin_menu', 'CyberPanel_Providers');
+
+add_action( 'wp_ajax_connectProvider', 'ajax_connectProvider' );
+
+function ajax_connectProvider() {
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('connectProvider');
+    if( ! $cc->checkCapability()){return;}
+
+    check_ajax_referer( 'CPWP' );
+
+    $cpjm = new CPJobManager('connectProvider', $_POST, sprintf('Configuring %s account named: %s..',sanitize_text_field($_POST['provider']), sanitize_text_field($_POST['name'])));
+    $cpjm->RunJob();
+}
