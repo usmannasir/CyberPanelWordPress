@@ -62,7 +62,7 @@ class CyberPanelManager extends WPCPHTTP
             }
             else{
 
-                $this->job->setDescription(sprintf('[65] Failed to add %s. Error message: %s', $hostname, $data));
+                $this->job->setDescription(sprintf('Failed to add %s. Error message: %s', $hostname, $response));
                 $this->job->updateJobStatus(WPCP_JobFailed, 0);
 
                 $cu = new CommonUtils(0, $data->error_message);
