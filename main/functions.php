@@ -245,28 +245,17 @@ function so_payment_complete($order_id)
 add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
 function woocommerce_payment_complete_order_status($order_id)
 {
+
+    $message = sprintf('Processing order %s', $order_id);
+
+    $cpjm = new CPJobManager('createServer', $order_id, $message);
+    $cpjm->RunJob();
+
     //sleep for 3 seconds
     //sleep(20);
     if ( ! $order_id ) {
         return;
     }
     $order = wc_get_order( $order_id );
-
-    if ($order->data['status'] == 'wc-processing') {
-        $payment_method=$order->get_payment_method();
-        if ($payment_method != "cod")
-        {
-            $order->update_status( 'wc-completed' );
-        }
-    }
-
-    $items = $order->get_items();
-    foreach ( $items as $item ) {
-        $product_name = $item->get_name();
-        $product_id = $item->get_product_id();
-        $product_variation_id = $item->get_variation_id();
-        error_log($product_name . '\n', 3, CPWP_ERROR_LOGS);
-        error_log($product_id . '\n', 3, CPWP_ERROR_LOGS);
-    }
 }
 
