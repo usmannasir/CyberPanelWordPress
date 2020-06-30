@@ -65,20 +65,16 @@ class CyberPanelHetzner extends WPCPHTTP
 
             $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
-            $this->body = '{
-  "name": "my-server",
-  "server_type": "cx11",
-  "location": "nbg1",
-  "start_after_create": true,
-  "image": "ubuntu-20.04",
-  "volumes": [
-    1
-  ],
-  "networks": [
-    1
-  ],
-  "automount": false
-}';
+            $this->body = array(
+                'name' => 'wpcp',
+                'server_type' => 'cx11',
+                'location' => 'nbg1',
+                'start_after_create' => true,
+                'image' => 'ubuntu-20.04',
+                'volumes' => array(1),
+                'networks' => array(1),
+                'automount' => false,
+                );
 
             $token = 'Bearer qQyRuvISbepOGjDmdyJBakqXSDAQIVTsK7nLhYpouxaE8rq19kqfZdphei9nfn87';
             $this->url = 'https://api.hetzner.cloud/v1/servers';
