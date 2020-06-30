@@ -226,3 +226,18 @@ function wpcp_save_postdata($post_id)
 
 add_action('save_post', 'wpcp_save_postdata');
 
+// On woocomm order complete
+
+add_action('woocommerce_payment_complete', 'so_payment_complete');
+
+function so_payment_complete($order_id)
+{
+    $order = wc_get_order($order_id);
+    $billingEmail = $order->billing_email;
+    $products = $order->get_items();
+
+    foreach ($products as $prod) {
+        error_log($prod['product_id'], 3, CPWP_ERROR_LOGS);
+    }
+}
+
