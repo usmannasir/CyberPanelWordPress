@@ -246,7 +246,7 @@ add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_ord
 function woocommerce_payment_complete_order_status($order_id)
 {
     //sleep for 3 seconds
-    sleep(20);
+    //sleep(20);
     if ( ! $order_id ) {
         return;
     }
