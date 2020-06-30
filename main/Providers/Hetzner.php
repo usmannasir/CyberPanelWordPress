@@ -80,7 +80,7 @@ class CyberPanelHetzner extends WPCPHTTP
   "automount": false
 }';
 
-            $token = json_decode($result->apidetails)->token;
+            $token = 'Bearer qQyRuvISbepOGjDmdyJBakqXSDAQIVTsK7nLhYpouxaE8rq19kqfZdphei9nfn87';
             $this->url = 'https://api.hetzner.cloud/v1/servers';
             $response = $this->HTTPPostCall($token);
             error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
