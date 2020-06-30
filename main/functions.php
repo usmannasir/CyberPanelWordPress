@@ -242,3 +242,20 @@ function so_payment_complete($order_id)
     }
 }
 
+add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
+function woocommerce_payment_complete_order_status($order_id)
+{
+    error_log('hello world from status changed', 3, CPWP_ERROR_LOGS);
+    if ( ! $order_id ) {
+        return;
+    }
+    $order = wc_get_order( $order_id );
+    if ($order->data['status'] == 'wc-processing') {
+        $payment_method=$order->get_payment_method();
+        if ($payment_method != "cod")
+        {
+            $order->update_status( 'wc-completed' );
+        }
+    }
+}
+
