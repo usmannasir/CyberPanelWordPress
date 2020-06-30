@@ -250,6 +250,9 @@ function woocommerce_payment_complete_order_status($order_id)
         return;
     }
     $order = wc_get_order( $order_id );
+
+    error_log(var_dump($order), 3, CPWP_ERROR_LOGS);
+
     if ($order->data['status'] == 'wc-processing') {
         $payment_method=$order->get_payment_method();
         if ($payment_method != "cod")
