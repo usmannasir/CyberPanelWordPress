@@ -135,7 +135,7 @@ class CPJobManager
             }
             elseif ($this->function == 'createServer') {
                 $cph = new CyberPanelHetzner($this, $this->data);
-                wp_send_json($cph->createServer());
+                $cph->createServer();
             }
             elseif ($this->function == 'fetchProviderPlans') {
                 $cph = new CyberPanelHetzner($this, $this->data);

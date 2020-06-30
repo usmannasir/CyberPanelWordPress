@@ -250,12 +250,5 @@ function woocommerce_payment_complete_order_status($order_id)
 
     $cpjm = new CPJobManager('createServer', $order_id, $message);
     $cpjm->RunJob();
-
-    //sleep for 3 seconds
-    //sleep(20);
-    if ( ! $order_id ) {
-        return;
-    }
-    $order = wc_get_order( $order_id );
 }
 
