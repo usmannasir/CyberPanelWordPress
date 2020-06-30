@@ -232,7 +232,7 @@ add_action('woocommerce_payment_complete', 'so_payment_complete');
 
 function so_payment_complete($order_id)
 {
-    error_log('hello world', 3, CPWP_ERROR_LOGS);
+    error_log('woocommerce_payment_complete', 3, CPWP_ERROR_LOGS);
     $order = wc_get_order($order_id);
     $billingEmail = $order->billing_email;
     $products = $order->get_items();
@@ -245,13 +245,10 @@ function so_payment_complete($order_id)
 add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
 function woocommerce_payment_complete_order_status($order_id)
 {
-    error_log('hello world from status changed', 3, CPWP_ERROR_LOGS);
     if ( ! $order_id ) {
         return;
     }
     $order = wc_get_order( $order_id );
-
-    error_log(var_dump($order), 3, CPWP_ERROR_LOGS);
 
     if ($order->data['status'] == 'wc-processing') {
         $payment_method=$order->get_payment_method();
@@ -259,6 +256,16 @@ function woocommerce_payment_complete_order_status($order_id)
         {
             $order->update_status( 'wc-completed' );
         }
+    }
+
+    $items = $order->get_items();
+    foreach ( $items as $item ) {
+        $product_name = $item->get_name();
+        $product_id = $item->get_product_id();
+        $product_variation_id = $item->get_variation_id();
+        error_log($product_name, 3, CPWP_ERROR_LOGS);
+        error_log($product_id, 3, CPWP_ERROR_LOGS);
+        error_log($product_variation_id, 3, CPWP_ERROR_LOGS);
     }
 }
 
