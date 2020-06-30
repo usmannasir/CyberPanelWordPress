@@ -232,6 +232,7 @@ add_action('woocommerce_payment_complete', 'so_payment_complete');
 
 function so_payment_complete($order_id)
 {
+    error_log('hello world', 3, CPWP_ERROR_LOGS);
     $order = wc_get_order($order_id);
     $billingEmail = $order->billing_email;
     $products = $order->get_items();
