@@ -263,9 +263,8 @@ function woocommerce_payment_complete_order_status($order_id)
         $product_name = $item->get_name();
         $product_id = $item->get_product_id();
         $product_variation_id = $item->get_variation_id();
-        error_log($product_name, 3, CPWP_ERROR_LOGS);
-        error_log($product_id, 3, CPWP_ERROR_LOGS);
-        error_log($product_variation_id, 3, CPWP_ERROR_LOGS);
+        error_log($product_name . '\n', 3, CPWP_ERROR_LOGS);
+        error_log($product_id . '\n', 3, CPWP_ERROR_LOGS);
     }
 }
 
