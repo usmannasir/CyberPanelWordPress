@@ -19,28 +19,25 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $result = $wpdb->get_row( "SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'" );
 
-        $token = json_decode($result->apidetails)->token;
+        if($result->provider == 'Hetzner') {
 
-        $this->url = 'https://api.hetzner.cloud/v1/pricing';
+            $token = json_decode($result->apidetails)->token;
+            $this->url = 'https://api.hetzner.cloud/v1/pricing';
+            $response = $this->HTTPPostCall($token, 'GET');
+            $data = json_decode(wp_remote_retrieve_body($response));
+            $types = $data->pricing->server_types;
 
-        $response = $this->HTTPPostCall($token, 'GET');
+            $finalResult = '';
 
-        error_log($result->apidetails, 3, CPWP_ERROR_LOGS);
+            foreach ($types as $type) {
+                $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
+            }
 
-        $data = json_decode(wp_remote_retrieve_body($response));
-
-        $types = $data->pricing->server_types;
-
-        $finalResult = '';
-
-        foreach ($types as $type){
-            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
+            $data = array(
+                'status' => 1,
+                'result' => $finalResult
+            );
         }
-
-        $data = array(
-            'status' => 1,
-            'result' => $finalResult
-        );
 
         return $data;
     }
