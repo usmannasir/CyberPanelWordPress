@@ -202,3 +202,27 @@ function ajax_fetchProviderPlans()
     $cpjm->RunJob();
 }
 
+// Save data from product meta
+
+function wpcp_save_postdata($post_id)
+{
+    if (array_key_exists('wpcp_providerplans', $_POST)) {
+
+        $wpcp_provider = sanitize_text_field($_POST['wpcp_provider']);
+        $wpcp_providerplans = sanitize_text_field($_POST['wpcp_providerplans']);
+
+        update_post_meta(
+            $post_id,
+            'wpcp_provider',
+            $wpcp_provider
+        );
+        update_post_meta(
+            $post_id,
+            'wpcp_providerplans',
+            $wpcp_providerplans
+        );
+    }
+}
+
+add_action('save_post', 'wpcp_save_postdata');
+
