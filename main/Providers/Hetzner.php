@@ -71,8 +71,6 @@ class CyberPanelHetzner extends WPCPHTTP
                 'location' => 'nbg1',
                 'start_after_create' => true,
                 'image' => 'ubuntu-20.04',
-                'volumes' => array(1),
-                'networks' => array(1),
                 'automount' => false,
                 );
 
