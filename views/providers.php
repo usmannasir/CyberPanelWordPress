@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail" class="sr-only">Image ID</label>
-                    <input type="text" id="imageID" class="form-control" placeholder="Token" required>
+                    <input type="text" id="imageID" class="form-control" placeholder="Image ID" required>
                     <small class="form-text text-muted">Image ID that will be used to create the server.</small>
                 </div>
                 <button id="connectProvider" type="button" class="btn btn-primary">Save</button>
