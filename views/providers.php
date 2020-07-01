@@ -9,6 +9,7 @@
                 <div class="form-group">
                     <label for="provider" class="sr-only">Select Cloud Company</label>
                     <select style="max-width: 100%" class="form-control" id="provider">
+                        <option>Select</option>
                         <option>Hetzner</option>
                     </select>
                     <small id="Name" class="form-text text-muted">Select cloud provider from the list.</small>

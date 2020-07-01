@@ -108,6 +108,17 @@ jQuery(document).ready(function ($) {
         }
         GlobalAjax(dataContent, fetchProviderPlansCallBack, fetchProviderPlansCallBack);
     });
+
+    $("#provider").change(function () {
+        alert($(this).children("option:selected").val());
+        return 0;
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'fetchProviderAPIs',
+            wpcp_provider: $(this).children("option:selected").val(),
+        }
+        GlobalAjax(dataContent, fetchProviderPlansCallBack, fetchProviderPlansCallBack);
+    });
 });
 
 ///
