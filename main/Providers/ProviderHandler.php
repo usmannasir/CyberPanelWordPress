@@ -23,7 +23,7 @@ class ProviderHandler
         foreach ($items as $item) {
 
             $product_id = $item->get_product_id();
-            $wpcp_provider = get_post_meta($product_id, 'wpcp_provider');
+            $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
             $message = sprintf($wpcp_provider, $this->data);
 
             global $wpdb;
