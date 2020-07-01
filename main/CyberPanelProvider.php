@@ -66,7 +66,7 @@ class CyberPanelProvider extends WPCPHTTP
         /// Check if hostname alrady exists
         global $wpdb;
 
-        $results = $wpdb->get_results( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE provider = '$provider'" );
+        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE provider = '$provider'" );
 
         $finalResult = '';
 
