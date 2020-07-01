@@ -232,22 +232,20 @@ add_action('woocommerce_payment_complete', 'so_payment_complete');
 
 function so_payment_complete($order_id)
 {
-    error_log('woocommerce_payment_complete', 3, CPWP_ERROR_LOGS);
-    $order = wc_get_order($order_id);
-    $billingEmail = $order->billing_email;
-    $products = $order->get_items();
-
-    foreach ($products as $prod) {
-        error_log($prod['product_id'], 3, CPWP_ERROR_LOGS);
-    }
+//    error_log('woocommerce_payment_complete', 3, CPWP_ERROR_LOGS);
+//    $order = wc_get_order($order_id);
+//    $billingEmail = $order->billing_email;
+//    $products = $order->get_items();
+//
+//    foreach ($products as $prod) {
+//        error_log($prod['product_id'], 3, CPWP_ERROR_LOGS);
+//    }
 }
 
 add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
 function woocommerce_payment_complete_order_status($order_id)
 {
-
     $message = sprintf('Processing order %s', $order_id);
-
     $cpjm = new CPJobManager('createServer', $order_id, $message);
     $cpjm->RunJob();
 }

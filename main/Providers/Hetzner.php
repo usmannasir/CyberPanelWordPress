@@ -16,13 +16,9 @@ class CyberPanelHetzner extends WPCPHTTP
 
     function fetchPlans()
     {
-
         $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
-
         global $wpdb;
-
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
         if ($result->provider == 'Hetzner') {
 
             $token = json_decode($result->apidetails)->token;
@@ -53,6 +49,8 @@ class CyberPanelHetzner extends WPCPHTTP
         $product_id = $this->data->get_product_id();
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider');
         $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans');
+
+        error_log($wpcp_providerplans, 3, CPWP_ERROR_LOGS);
 
         $finalPlan = explode(',', $wpcp_providerplans)[0];
 

@@ -14,11 +14,7 @@ class ProviderHandler
 
     function createServer(){
 
-        $this->job->setDescription(sprintf('%s successfully added.', $hostname));
-        $this->job->updateJobStatus(WPCP_JobSuccess, 100);
-
         $message = sprintf('Creating servers for order id: %s', $this->data);
-
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $order = wc_get_order($this->data);
@@ -32,17 +28,16 @@ class ProviderHandler
             global $wpdb;
 
             $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-            $message = sprintf('Provider for product id is %s, order id: %s', $product_id, $this->data);
+            $message = sprintf('Provider for product id %s is %s, order id: %s', $product_id, $result->provider, $this->data);
             error_log($message, 3, CPWP_ERROR_LOGS);
 
             if($result->provider == 'Hetzner'){
-                $cpp = new CyberPanelHetzner($this, $item, $this->data);
-                $cpp->createServer();
+                $cph = new CyberPanelHetzner($this, $item, $this->data);
+                $cph->createServer();
             }
         }
 
-        $order->update_status('wc-completed');
+        //$order->update_status('wc-completed');
 
 //        if ($order->data['status'] == 'wc-completed') {
 //            $payment_method = $order->get_payment_method();
