@@ -5,10 +5,13 @@ require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 
 class CyberPanelHetzner extends WPCPHTTP
 {
-    function __construct($job, $data)
+    protected $orderid;
+
+    function __construct($job, $data, $order_id = null)
     {
         $this->job = $job;
         $this->data = $data;
+        $this->orderid = $order_id;
     }
 
     function fetchPlans()
@@ -46,48 +49,38 @@ class CyberPanelHetzner extends WPCPHTTP
     function createServer()
     {
 
-        if (!$this->data) {
-            return;
-        }
+        $product_name = $this->data->get_name();
+        $product_id = $this->data->get_product_id();
+        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider');
+        $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans');
 
-        $order = wc_get_order($this->data);
+        $finalPlan = explode(',', $wpcp_providerplans)[0];
 
-        $items = $order->get_items();
-        foreach ($items as $item) {
+        $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
+        error_log($message, 3, CPWP_ERROR_LOGS);
 
-            //$product_name = $item->get_name();
-            $product_id = $item->get_product_id();
+        global $wpdb;
 
-            $wpcp_provider = get_post_meta($product_id, 'wpcp_provider');
-            $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans');
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
-            global $wpdb;
+        $token = json_decode($result->apidetails)->token;
+        $message = sprintf('Token product id %s is %s', $product_id, $token);
+        error_log($message, 3, CPWP_ERROR_LOGS);
 
-            $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+        $this->body = array(
+            'name' => $product_name . '-' . $this->orderid,
+            'server_type' => $finalPlan,
+            'location' => 'nbg1',
+            'start_after_create' => true,
+            'image' => 'ubuntu-20.04',
+            'automount' => false,
+        );
 
-            $this->body = array(
-                'name' => 'wpcp',
-                'server_type' => 'cx11',
-                'location' => 'nbg1',
-                'start_after_create' => true,
-                'image' => 'ubuntu-20.04',
-                'automount' => false,
-                );
+        $this->url = 'https://api.hetzner.cloud/v1/servers';
+        $response = $this->HTTPPostCall($token);
+        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
 
-            $token = 'Bearer qQyRuvISbepOGjDmdyJBakqXSDAQIVTsK7nLhYpouxaE8rq19kqfZdphei9nfn87';
-            $this->url = 'https://api.hetzner.cloud/v1/servers';
-            $response = $this->HTTPPostCall($token);
-            error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
-
-        }
-
-        $order->update_status('wc-completed');
-
-//        if ($order->data['status'] == 'wc-completed') {
-//            $payment_method = $order->get_payment_method();
-//            if ($payment_method != "cod") {
-//                $order->update_status('wc-completed');
-//            }
-//        }
+        $this->job->setDescription(wp_remote_retrieve_body($response));
+        $this->job->updateJobStatus(WPCP_JobSuccess, 100);
     }
 }
