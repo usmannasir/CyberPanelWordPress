@@ -15,10 +15,12 @@ class CyberPanelProvider extends WPCPHTTP
         $provider = sanitize_text_field($this->data['provider']);
         $name = sanitize_text_field($this->data['name']);
         $token = sanitize_text_field($this->data['token']);
+        $imageID = sanitize_text_field($this->data['imageID']);
 
         $token = 'Bearer ' . $token;
 
-        $finalDetails = json_encode(array('token'=> $token));
+        $finalDetails = json_encode(array('token'=> $token,
+                                          'image'=> $imageID));
 
         /// Check if hostname alrady exists
         global $wpdb;

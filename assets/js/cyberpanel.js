@@ -93,6 +93,7 @@ jQuery(document).ready(function ($) {
             provider: $("#provider").val(),
             name: $("#name").val(),
             token: $("#token").val(),
+            imageID: $("#imageID").val(),
         }
         GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });

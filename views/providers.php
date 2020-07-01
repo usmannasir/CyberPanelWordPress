@@ -23,6 +23,11 @@
                     <input type="text" id="token" class="form-control" placeholder="Token" required>
                     <small class="form-text text-muted">Actual API Token From Hetzner</small>
                 </div>
+                <div class="form-group">
+                    <label for="inputEmail" class="sr-only">Image ID</label>
+                    <input type="text" id="imageID" class="form-control" placeholder="Token" required>
+                    <small class="form-text text-muted">Image ID that will be used to create the server.</small>
+                </div>
                 <button id="connectProvider" type="button" class="btn btn-primary">Save</button>
             </form>
         </div>

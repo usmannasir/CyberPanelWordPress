@@ -60,11 +60,12 @@ class CyberPanelHetzner extends WPCPHTTP
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
         $token = json_decode($result->apidetails)->token;
+        $image = json_decode($result->apidetails)->image;
         $message = sprintf('Token product id %s is %s', $product_id, $token);
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $this->body = array(
-            'name' => 'helloworld',
+            'name' => '$image',
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
@@ -74,7 +75,7 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $this->url = 'https://api.hetzner.cloud/v1/servers';
         $response = $this->HTTPPostCall($token);
-        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+        error_log(json_decode(wp_remote_retrieve_body($response))->server->id, 3, CPWP_ERROR_LOGS);
 
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
