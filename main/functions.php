@@ -265,3 +265,22 @@ function wpcp_custom_post_type() {
     );
 }
 add_action('init', 'wpcp_custom_post_type');
+
+//
+
+add_action('wp_ajax_fetchProviderAPIs', 'ajax_fetchProviderAPIs');
+
+function ajax_fetchProviderAPIs()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('fetchProviderPlans');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $cpjm = new CPJobManager('fetchProviderPlans', $_POST);
+    $cpjm->RunJob();
+}
