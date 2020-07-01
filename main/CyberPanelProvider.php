@@ -71,7 +71,7 @@ class CyberPanelProvider extends WPCPHTTP
         $finalResult = '';
 
         foreach ($results as $result){
-            $finalResult = $finalResult . sprintf('<tr><th scope="row">%s</th><td>%s</td><td>%s</td><td>%s</td><td><button onclick="deleteAPIDetails(\\%s)" type="button" class="btn btn-danger">Delete</button></td></tr>', $result->id, $result->name, $result->provider, $result->apidetails, $result->id);
+            $finalResult = $finalResult . sprintf('<tr><th scope="row">%s</th><td>%s</td><td>%s</td><td>%s</td><td><button onclick="deleteAPIDetails(%s)" type="button" class="btn btn-danger">Delete</button></td></tr>', $result->id, $result->name, $result->provider, $result->apidetails, $result->id);
         }
 
         $data = array(
