@@ -64,7 +64,7 @@ class CyberPanelHetzner extends WPCPHTTP
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $this->body = array(
-            'name' => $product_name,
+            'name' => 'helloworld',
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
