@@ -75,7 +75,7 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $this->url = 'https://api.hetzner.cloud/v1/servers';
         $response = $this->HTTPPostCall($token);
-        error_log(json_decode(wp_remote_retrieve_body($response))->server, 3, CPWP_ERROR_LOGS);
+        error_log(json_decode(wp_remote_retrieve_body($response)), 3, CPWP_ERROR_LOGS);
 
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
