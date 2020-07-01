@@ -58,7 +58,6 @@ class CyberPanelProvider extends WPCPHTTP
             $cu->fetchJson();
         }
     }
-
     function fetchProviderAPIs(){
 
         $provider = sanitize_text_field($this->data['provider']);
@@ -81,7 +80,6 @@ class CyberPanelProvider extends WPCPHTTP
         wp_send_json($data);
 
     }
-
     function deleteAPIDetails(){
 
         $id = sanitize_text_field($this->data['id']);

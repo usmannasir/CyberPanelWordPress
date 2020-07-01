@@ -2,6 +2,7 @@
 
 class WPCPHTTP
 {
+    static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     protected $job;
     protected $data;
     protected $url;

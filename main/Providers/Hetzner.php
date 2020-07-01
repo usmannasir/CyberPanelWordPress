@@ -45,7 +45,6 @@ class CyberPanelHetzner extends WPCPHTTP
     function createServer()
     {
 
-        $product_name = $this->data->get_name();
         $product_id = $this->data->get_product_id();
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
         $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans', true);
@@ -64,8 +63,10 @@ class CyberPanelHetzner extends WPCPHTTP
         $message = sprintf('Token product id %s is %s', $product_id, $token);
         error_log($message, 3, CPWP_ERROR_LOGS);
 
+        $serverName = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 10);
+
         $this->body = array(
-            'name' => 'hello',
+            'name' => $serverName,
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
@@ -75,7 +76,25 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $this->url = 'https://api.hetzner.cloud/v1/servers';
         $response = $this->HTTPPostCall($token);
-        error_log(sprintf('server id %s', json_decode(wp_remote_retrieve_body($response))->server->id), 3, CPWP_ERROR_LOGS);
+        $serverID = json_decode(wp_remote_retrieve_body($response))->server->id;
+        error_log(sprintf('server id %s', $serverID), 3, CPWP_ERROR_LOGS);
+
+        ## Store the order as server post type
+
+        $content = array(
+                        'productid' => $product_id,
+                        'orderid' => $this->orderid
+                        );
+
+        $my_post = array(
+            'post_title'    => $serverID,
+            'post_content'  => json_encode($content),
+            'post_status'   => 'publish',
+            'post_author'   => 1,
+            'post_type'     => 'wpcp_server',
+        );
+
+        wp_insert_post( $my_post );
 
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
