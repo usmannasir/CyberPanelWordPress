@@ -39,6 +39,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Provider</th>
                     <th scope="col">API Details</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody id="wpcp_providerapis">

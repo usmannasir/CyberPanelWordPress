@@ -32,7 +32,6 @@ function fetchProviderPlansCallBack(data) {
 }
 
 function fetchProviderAPIs(data) {
-
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").hide();
         $("#WPCPSpinnerModal").hide();
@@ -131,6 +130,10 @@ jQuery(document).ready(function ($) {
         }
         GlobalAjax(dataContent, fetchProviderAPIs, fetchProviderAPIs);
     });
+
+    function deleteAPIDetails(id) {
+        alert(id);
+    }
 });
 
 ///
