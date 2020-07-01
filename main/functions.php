@@ -247,11 +247,9 @@ function woocommerce_payment_complete_order_status($order_id)
 {
     $order = wc_get_order($order_id);
 
-    if($order->data['status'] == 'wc-completed') {
-        $message = sprintf('Processing order %s', $order_id);
-        $cpjm = new CPJobManager('createServer', $order_id, $message);
-        $cpjm->RunJob();
-    }
+    $message = sprintf('Processing order %s', $order_id);
+    $cpjm = new CPJobManager('createServer', $order_id, $message);
+    $cpjm->RunJob();
 }
 
 // Register CyberPanel Servers Post Type
