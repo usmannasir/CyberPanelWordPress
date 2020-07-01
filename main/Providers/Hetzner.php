@@ -65,11 +65,11 @@ class CyberPanelHetzner extends WPCPHTTP
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $this->body = array(
-            'name' => '$image',
+            'name' => 'hello',
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
-            'image' => 'ubuntu-20.04',
+            'image' => $image,
             'automount' => false,
         );
 
