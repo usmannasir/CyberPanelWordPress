@@ -50,8 +50,6 @@ class CyberPanelHetzner extends WPCPHTTP
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
         $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans', true);
 
-        error_log($wpcp_providerplans, 3, CPWP_ERROR_LOGS);
-
         $finalPlan = explode(',', $wpcp_providerplans)[0];
 
         $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
@@ -66,7 +64,7 @@ class CyberPanelHetzner extends WPCPHTTP
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $this->body = array(
-            'name' => $product_name . $this->orderid,
+            'name' => $product_name,
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
