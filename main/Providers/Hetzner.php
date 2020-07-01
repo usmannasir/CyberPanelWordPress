@@ -66,7 +66,7 @@ class CyberPanelHetzner extends WPCPHTTP
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $this->body = array(
-            'name' => $product_name . '-' . $this->orderid,
+            'name' => $product_name . $this->orderid,
             'server_type' => $finalPlan,
             'location' => 'nbg1',
             'start_after_create' => true,
