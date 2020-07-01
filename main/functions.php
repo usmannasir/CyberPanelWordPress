@@ -250,3 +250,18 @@ function woocommerce_payment_complete_order_status($order_id)
     $cpjm->RunJob();
 }
 
+// Register CyberPanel Servers Post Type
+
+function wpcp_custom_post_type() {
+    register_post_type('wpcp_server',
+        array(
+            'labels'      => array(
+                'name'          => __('Servers', 'textdomain'),
+                'singular_name' => __('Server', 'textdomain'),
+            ),
+            'public'      => true,
+            'has_archive' => true,
+        )
+    );
+}
+add_action('init', 'wpcp_custom_post_type');
