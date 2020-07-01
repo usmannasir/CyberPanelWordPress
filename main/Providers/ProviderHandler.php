@@ -24,6 +24,7 @@ class ProviderHandler
 
             $product_id = $item->get_product_id();
             $wpcp_provider = get_post_meta($product_id, 'wpcp_provider');
+            $message = sprintf($wpcp_provider, $this->data);
 
             global $wpdb;
 
