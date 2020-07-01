@@ -131,9 +131,13 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, fetchProviderAPIs, fetchProviderAPIs);
     });
 
-    function deleteAPIDetails(id) {
-        alert(id);
-    }
+
 });
+
+function deleteAPIDetails(id) {
+    jQuery(document).ready(function ($) {
+        alert(id);
+    });
+}
 
 ///
