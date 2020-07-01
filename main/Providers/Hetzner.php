@@ -76,7 +76,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $response = $this->HTTPPostCall($token);
         error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
 
-        $this->job->setDescription(wp_remote_retrieve_body($response));
-        $this->job->updateJobStatus(WPCP_JobSuccess, 100);
+        //$this->job->setDescription(wp_remote_retrieve_body($response));
+        //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
     }
 }
