@@ -281,6 +281,6 @@ function ajax_fetchProviderAPIs()
 
     check_ajax_referer('CPWP');
 
-    $cpjm = new CPJobManager('fetchProviderPlans', $_POST);
+    $cpjm = new CPJobManager('fetchProviderAPIs', $_POST);
     $cpjm->RunJob();
 }

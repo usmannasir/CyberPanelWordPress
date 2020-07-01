@@ -40,7 +40,7 @@ function fetchProviderAPIs(data) {
         $("#wpcp_providerplans").show();
 
         if (data.status === 1) {
-            $("#wpcp_providerplans").html(data.result);
+            $("#wpcp_providerapis").html(data.result);
         }
     });
 }
@@ -124,13 +124,12 @@ jQuery(document).ready(function ($) {
     });
 
     $("#provider").change(function () {
-        return 0;
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'fetchProviderAPIs',
             provider: $(this).children("option:selected").val(),
         }
-        GlobalAjax(dataContent, fetchProviderPlansCallBack, fetchProviderPlansCallBack);
+        GlobalAjax(dataContent, fetchProviderAPIs, fetchProviderAPIs);
     });
 });
 

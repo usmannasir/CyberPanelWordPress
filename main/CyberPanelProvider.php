@@ -58,4 +58,32 @@ class CyberPanelProvider extends WPCPHTTP
             $cu->fetchJson();
         }
     }
+
+    function fetchProviderAPIs(){
+
+        $provider = sanitize_text_field($this->data['provider']);
+
+        /// Check if hostname alrady exists
+        global $wpdb;
+
+        $results = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE provider = '$provider'" );
+
+        $finalResult = '';
+
+        foreach ($results as $result){
+            $finalResult = $finalResult . sprintf('<tr>
+                    <th scope="row">%s</th>
+                    <td>%s</td>
+                    <td>%s</td>
+                </tr>', $result->id, $result->provider, $result->apidetails);
+        }
+
+        $data = array(
+            'status' => 1,
+            'result' => $finalResult
+        );
+        wp_send_json($data);
+
+
+    }
 }
