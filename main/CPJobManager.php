@@ -137,6 +137,10 @@ class CPJobManager
                 $cpp = new CyberPanelProvider($this, $this->data);
                 $cpp->fetchProviderAPIs();
             }
+            elseif ($this->function == 'deleteAPIDetails') {
+                $cpp = new CyberPanelProvider($this, $this->data);
+                $cpp->deleteAPIDetails();
+            }
             elseif ($this->function == 'createServer') {
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->createServer();

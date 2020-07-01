@@ -284,3 +284,20 @@ function ajax_fetchProviderAPIs()
     $cpjm = new CPJobManager('fetchProviderAPIs', $_POST);
     $cpjm->RunJob();
 }
+
+add_action('wp_ajax_deleteAPIDetails', 'ajax_deleteAPIDetails');
+
+function ajax_deleteAPIDetails()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('fetchProviderPlans');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $cpjm = new CPJobManager('deleteAPIDetails', $_POST);
+    $cpjm->RunJob();
+}

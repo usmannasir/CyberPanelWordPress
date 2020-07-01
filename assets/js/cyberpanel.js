@@ -44,6 +44,10 @@ function fetchProviderAPIs(data) {
     });
 }
 
+function deleteAPIDetailsCB(data) {
+    window.location.reload();
+}
+
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").show();
@@ -135,9 +139,13 @@ jQuery(document).ready(function ($) {
 });
 
 function deleteAPIDetails(id) {
-    jQuery(document).ready(function ($) {
-        alert(id);
-    });
+
+    dataContent = {
+        _ajax_nonce: CPWP.nonce,
+        action: 'deleteAPIDetails',
+        id: id,
+    }
+    GlobalAjax(dataContent, deleteAPIDetailsCB, deleteAPIDetailsCB);
 }
 
 ///

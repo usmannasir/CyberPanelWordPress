@@ -81,4 +81,21 @@ class CyberPanelProvider extends WPCPHTTP
         wp_send_json($data);
 
     }
+
+    function deleteAPIDetails(){
+
+        $id = sanitize_text_field($this->data['id']);
+
+        /// Check if hostname alrady exists
+        global $wpdb;
+
+        $table = $wpdb->prefix . TN_CYBERPANEL_PVD;
+        $wpdb->delete( $table, array( 'id' => $id ) );
+
+        $data = array(
+            'status' => 1,
+        );
+        wp_send_json($data);
+
+    }
 }
