@@ -134,11 +134,11 @@ class CPJobManager
                 wp_send_json($cpp->connectProvider());
             }
             elseif ($this->function == 'createServer') {
-                $cpp = new CyberPanelProvider($this, $this->data);
+                $cpp = new ProviderHandler($this, $this->data);
                 $cpp->createServer();
             }
             elseif ($this->function == 'fetchProviderPlans') {
-                $cpp = new CyberPanelProvider($this, $this->data);
+                $cpp = new ProviderHandler($this, $this->data);
                 wp_send_json($cpp->fetchPlans());
             }
             elseif ($this->function == 'jobStatus') {

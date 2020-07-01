@@ -1,7 +1,8 @@
 <?php
 
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/Hetzner.php');
-class CyberPanelProvider
+
+class ProviderHandler
 {
     protected $job;
     protected $data;
