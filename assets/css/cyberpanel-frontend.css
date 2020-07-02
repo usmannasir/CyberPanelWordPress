@@ -1,5 +1,79 @@
-.mainMenuCP ul {
+ul.horizontal {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul.horizontal li {
+    float: left;
+}
+
+ul.horizontal li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.horizontal li a:hover:not(.active) {
+    background-color: #000;
+}
+
+ul.horizontal li a.active {
+    background-color:#4CAF50;
+}
+
+ul.horizontal2 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+ul.horizontal2 li {
+    float: left;
+}
+
+ul.horizontal2 li a {
+    display: inline-block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.horizontal2 li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+ul.horizontal2 a.active {
+    color: white;
+    background-color: #4CAF50;
+}
+
+ul.gray {
+    border: 1px solid #e7e7e7;
+    background-color: #f3f3f3;
+}
+
+ul.gray li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.gray li a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+ul.gray li a.active {
+    color: white;
+    background-color: #008CBA;
 }
