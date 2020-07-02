@@ -55,25 +55,3 @@ ul.horizontal2 a.active {
     color: white;
     background-color: #4CAF50;
 }
-
-ul.gray {
-    border: 1px solid #e7e7e7;
-    background-color: #f3f3f3;
-}
-
-ul.gray li a {
-    display: block;
-    color: #666;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-ul.gray li a:hover:not(.active) {
-    background-color: #ddd;
-}
-
-ul.gray li a.active {
-    color: white;
-    background-color: #008CBA;
-}
