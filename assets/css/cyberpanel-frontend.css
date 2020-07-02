@@ -1,3 +1,5 @@
-.cptHeader{
-    margin-bottom: 0px;
+.mainMenuCP ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
