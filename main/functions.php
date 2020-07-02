@@ -23,6 +23,28 @@ function CPWP_load_static()
 
 add_action('admin_enqueue_scripts', 'CPWP_load_static');
 
+// Load scripts js for user end
+
+function CPWP_load_static_frontend()
+{
+
+    //wp_enqueue_style('bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css');
+    //wp_enqueue_script('bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js', 'jQuery');
+    wp_enqueue_style('CPCSSFE', CPWP_PLUGIN_DIR_URL . 'assets/css/cyberpanel-frontend.css');
+    wp_enqueue_script('CPJSFE', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel-frontend.js', 'jQuery');
+
+    $title_nonce = wp_create_nonce('CPWP');
+
+    wp_localize_script('CPJSFE', 'CPWP', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'nonce' => $title_nonce,
+    ));
+}
+
+add_action('wp_enqueue_scripts', 'CPWP_load_static_frontend');
+
+///
+
 function Main_CyberPanel()
 {
     add_menu_page(
