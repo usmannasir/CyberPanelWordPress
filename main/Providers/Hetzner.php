@@ -46,6 +46,7 @@ class CyberPanelHetzner extends WPCPHTTP
     {
 
         $product_id = $this->data->get_product_id();
+        $productPrice = get_the_price($product_id);
         $order = wc_get_order($this->orderid);
         $orderDate = $order->order_date;
         $productName = wc_get_product( $product_id )->get_title();;
@@ -115,7 +116,7 @@ class CyberPanelHetzner extends WPCPHTTP
             <p>{orderDate}</p>
             <div style="float:left">
                 <h4>Recurring Charges</h4>
-                <p>$ 28.99</p>
+                <p>{price}</p>
             </div>
             <div style="float:left; margin-left: 5%">
                 <h4>State</h4>
@@ -161,6 +162,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $replacements = array(
             '{productLine}' => $productName . ' - ' . $serverID,
             '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
+            '{$productPrice}' => $productPrice
             );
 
         $content = str_replace(
