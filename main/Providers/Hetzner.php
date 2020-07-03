@@ -162,7 +162,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $replacements = array(
             '{productLine}' => $productName . ' - ' . $serverID,
             '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
-            '{$productPrice}' => $productPrice
+            '{price}' => $productPrice
             );
 
         $content = str_replace(
