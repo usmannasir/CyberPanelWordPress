@@ -82,7 +82,7 @@ class CyberPanelHetzner extends WPCPHTTP
 
         ## Store the order as server post type
 
-        $rawHTML = sprintf('<!-- wp:html -->
+        $rawHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
     <li><a href="javascript:void(0)">%s</a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
@@ -140,7 +140,7 @@ class CyberPanelHetzner extends WPCPHTTP
         <figure class="wp-block-table"><table class="has-subtle-pale-green-background-color has-background"><tbody><tr><td>create_server</td><td>success</td></tr><tr><td>start_server</td><td>success</td></tr><tr><td>create_server</td><td>success</td></tr></tbody></table></figure>
         <!-- /wp:table --></div>
     <!-- /wp:column --></div>
-<!-- /wp:columns -->', $productName . ' - ' . $serverID);
+<!-- /wp:columns -->';
 
         $content = $rawHTML;
 
