@@ -220,3 +220,7 @@ $data = '{
   ],
   "root_password": "wUnEbpsrdEw7XTRLUK7n"
 }';
+
+$json = json_decode($data);
+
+echo $json->server->public_net->ipv4->ip;
