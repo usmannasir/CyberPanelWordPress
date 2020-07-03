@@ -84,7 +84,7 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $rawHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
-    <li><a href="javascript:void(0)">%s</a></li>
+    <li><a href="javascript:void(0)">$productName - $serverID</a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
     <li style="float:right"><a href="javascript:void(0)">Access CyberPanel</a></li>
     <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
