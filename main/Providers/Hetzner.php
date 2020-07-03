@@ -163,7 +163,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $replacements = array(
             '{productLine}' => $productName . ' - ' . $serverID,
             '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
-            '{price}' => $productPrice
+            '{price}' => get_woocommerce_currency_symbol() . ' ' . $productPrice
             );
 
         $content = str_replace(
