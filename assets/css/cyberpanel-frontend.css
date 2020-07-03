@@ -84,5 +84,6 @@ ul.gray li a.active {
 
 .WPCPBoxed{
     border: 1px solid lightskyblue;
-    padding: 20px;
+    padding: 15px;
+    height: 100%;
 }

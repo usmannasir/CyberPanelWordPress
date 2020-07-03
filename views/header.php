@@ -38,3 +38,16 @@
         </div>
     </div>
 </div>
+
+<div class="WPCPBoxed">
+    <h3>Registration Date</h3>
+    <p>July 2, 2020, 12:01 p.m.</p>
+    <div style="float:left">
+        <h4>Recurring Charges</h4>
+        <p>$ 28.99</p>
+    </div>
+    <div style="float:left; margin-left: 5%">
+        <h4>State</h4>
+        <p>Active</p>
+    </div>
+</div>
