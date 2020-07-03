@@ -77,8 +77,17 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $this->url = 'https://api.hetzner.cloud/v1/servers';
         $response = $this->HTTPPostCall($token);
-        $serverID = json_decode(wp_remote_retrieve_body($response))->server->id;
-        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+        $respData = json_decode(wp_remote_retrieve_body($response));
+        
+        try{
+            $serverID = $respData->server->id;
+            error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+        }
+        catch (Exception $e) {
+            error_log(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $product_id, $this->orderid, $productName, $respData->error->code), 3, CPWP_ERROR_LOGS);
+            return 0;
+        }
+
 
         ## Store the order as server post type
 
@@ -148,8 +157,6 @@ class CyberPanelHetzner extends WPCPHTTP
             array_keys($replacements),
             array_values($replacements),
             $rawHTML);
-
-        error_log($content, 3, CPWP_ERROR_LOGS);
 
         $my_post = array(
             'post_title'    => $serverID,
