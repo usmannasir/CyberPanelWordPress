@@ -144,6 +144,8 @@ class CyberPanelHetzner extends WPCPHTTP
 
         $content = $rawHTML;
 
+        error_log($content, 3, CPWP_ERROR_LOGS);
+
         $my_post = array(
             'post_title'    => $serverID,
             'post_content'  => $content,
