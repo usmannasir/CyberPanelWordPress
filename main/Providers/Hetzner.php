@@ -78,7 +78,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $this->url = 'https://api.hetzner.cloud/v1/servers';
         $response = $this->HTTPPostCall($token);
         $serverID = json_decode(wp_remote_retrieve_body($response))->server->id;
-        error_log(sprintf('server id %s', $serverID), 3, CPWP_ERROR_LOGS);
+        error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
 
         ## Store the order as server post type
 
