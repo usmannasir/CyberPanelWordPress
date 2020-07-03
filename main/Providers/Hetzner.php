@@ -46,6 +46,8 @@ class CyberPanelHetzner extends WPCPHTTP
     {
 
         $product_id = $this->data->get_product_id();
+        $order = wc_get_order($this->orderid);
+        $orderDate = $order->order_date;
         $productName = wc_get_product( $product_id )->get_title();;
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
         $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans', true);
@@ -110,7 +112,7 @@ class CyberPanelHetzner extends WPCPHTTP
     <div class="wp-block-column"><!-- wp:html -->
         <div class="WPCPBoxed">
             <h3>Registration Date</h3>
-            <p>July 2, 2020, 12:01 p.m.</p>
+            <p>{orderDate}</p>
             <div style="float:left">
                 <h4>Recurring Charges</h4>
                 <p>$ 28.99</p>
@@ -156,7 +158,10 @@ class CyberPanelHetzner extends WPCPHTTP
     <!-- /wp:column --></div>
 <!-- /wp:columns -->';
 
-        $replacements = array('{productLine}' => $productName . ' - ' . $serverID);
+        $replacements = array(
+            '{productLine}' => $productName . ' - ' . $serverID,
+            '{orderDate}' => $orderDate,
+            );
 
         $content = str_replace(
             array_keys($replacements),
