@@ -46,10 +46,11 @@ class CyberPanelHetzner extends WPCPHTTP
     {
 
         $product_id = $this->data->get_product_id();
-        $productPrice = get_the_price($product_id);
         $order = wc_get_order($this->orderid);
         $orderDate = $order->order_date;
-        $productName = wc_get_product( $product_id )->get_title();;
+        $product = wc_get_product( $product_id );
+        $productName = $product->get_title();
+        $productPrice = $product->get_regular_price();
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
         $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans', true);
 
