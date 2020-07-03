@@ -81,3 +81,7 @@ ul.gray li a.active {
 .rightli {
     float:right;
 }
+
+.WPCPBoxed{
+    border: 15px solid lightskyblue;
+}
