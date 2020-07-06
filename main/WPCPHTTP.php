@@ -14,7 +14,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
-    <button onclick="cancelNow()">Cancel Now</button>
+    <button onclick="cancelNow()">Cancel Now <img src="CPWP_PLUGIN_DIR_URL . \'assets/images/loading.gif\'" </button>
   </div>
   </div>
 
