@@ -14,7 +14,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel?</p>
-    <button onclick="triggerModal()">Cancel Now</button>
+    <button onclick="cancelNow()">Cancel Now</button>
   </div>
   </div>
 
