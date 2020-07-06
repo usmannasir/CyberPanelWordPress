@@ -10,8 +10,12 @@ class WPCPHTTP
      Cancel
      <!-- The Modal -->
 <!-- Modal content -->
-<div class="modal-content">
-  <div class="modal-header">
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
     <span class="close">&times;</span>
     <h2>Modal Header</h2>
   </div>
@@ -22,6 +26,8 @@ class WPCPHTTP
   <div class="modal-footer">
     <h3>Modal Footer</h3>
   </div>
+  </div>
+
 </div>
      </a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
