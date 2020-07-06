@@ -8,23 +8,13 @@ class WPCPHTTP
     <li><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">{productLine}</a></li>
      <li id="myBtn" onclick="triggerModal()" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
-     <!-- The Modal -->
-<!-- Modal content -->
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
   <!-- Modal content -->
   <div class="modal-content">
-    <div class="modal-header">
-    <span class="close">&times;</span>
-    <h2>Modal Header</h2>
-  </div>
   <div class="modal-body">
-    <p>Some text in the Modal Body</p>
-    <p>Some other text...</p>
-  </div>
-  <div class="modal-footer">
-    <h3>Modal Footer</h3>
+    <p>Are you sure you want to cancel?</p>
+    <button onclick="triggerModal()">Cancel Now</button>
   </div>
   </div>
 
