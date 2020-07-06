@@ -13,8 +13,8 @@ class WPCPHTTP
   <!-- Modal content -->
   <div class="modal-content">
   <div class="modal-body">
-    <p>Are you sure you want to cancel?</p>
-    <button onclick="cancelNow(\'{serverID}\')">Cancel Now</button>
+    <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
+    <button onclick="cancelNow()">Cancel Now</button>
   </div>
   </div>
 
