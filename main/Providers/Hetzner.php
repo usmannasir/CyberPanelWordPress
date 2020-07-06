@@ -136,7 +136,7 @@ runcmd:
             '{serverIP}' =>  $ipv4,
             '{token}' =>  $token,
             '{productLine}' => $productName . ' - ' . $serverID,
-            '{$serverID}' => $serverID,
+            '{serverID}' => $serverID,
             '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
             '{price}' => get_woocommerce_currency_symbol() . ' ' . $productPrice,
             '{ipv4}' => $ipv4,
