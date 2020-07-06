@@ -69,6 +69,8 @@ class CyberPanelHetzner extends WPCPHTTP
         error_log($message, 3, CPWP_ERROR_LOGS);
 
         $serverName = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 10);
+        $CyberPanelPassword = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 15);
+        $rootPassword = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 15);
 
         $this->body = array(
             'name' => $serverName,
@@ -76,6 +78,26 @@ class CyberPanelHetzner extends WPCPHTTP
             'location' => 'nbg1',
             'start_after_create' => true,
             'image' => $image,
+            'user_data' =>  sprintf("#cloud-config
+# run commands
+# default: none
+# runcmd contains a list of either lists or a string
+# each item will be executed in order at rc.local like level with
+# output to the console
+# - runcmd only runs during the first boot
+# - if the item is a list, the items will be properly executed as if
+#   passed to execve(3) (with the first arg as the command).
+# - if the item is a string, it will be simply written to the file and
+#   will be interpreted by 'sh'
+#
+# Note, that the list has to be proper yaml, so you have to quote
+# any characters yaml would eat (':' can be problematic)
+# /var/lib/cloud/instance/scripts/runcmd
+runcmd:
+ - /usr/local/CyberCP/bin/python /usr/local/CyberCP/plogical/adminPass.py --password %s
+ - /usr/local/CyberCP/bin/python /usr/local/CyberCP/plogical/apiAccess.py
+ - echo \"root:%s\"|chpasswd
+", $CyberPanelPassword, $rootPassword),
             'automount' => false,
         );
 
@@ -108,7 +130,11 @@ class CyberPanelHetzner extends WPCPHTTP
 
         ## Store the order as server post type
 
+        $token = base64_encode('admin:' . $CyberPanelPassword);
+
         $replacements = array(
+            '{serverIP}' =>  $ipv4,
+            '{token}' =>  $token,
             '{productLine}' => $productName . ' - ' . $serverID,
             '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
             '{price}' => get_woocommerce_currency_symbol() . ' ' . $productPrice,
@@ -134,7 +160,13 @@ class CyberPanelHetzner extends WPCPHTTP
             'post_type'     => 'wpcp_server',
         );
 
-        wp_insert_post( $my_post );
+        $post_id = wp_insert_post( $my_post );
+
+        update_post_meta(
+            $post_id,
+            'wpcp_token',
+            $token
+        );
 
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);

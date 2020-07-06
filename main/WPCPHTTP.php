@@ -5,9 +5,9 @@ class WPCPHTTP
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
-    <li><a href="javascript:void(0)">{productLine}</a></li>
+    <li><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?={token}">{productLine}</a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
-    <li style="float:right"><a href="javascript:void(0)">Access CyberPanel</a></li>
+    <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?={token}">Access CyberPanel</a></li>
     <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
 </ul>
 <!-- /wp:html -->
