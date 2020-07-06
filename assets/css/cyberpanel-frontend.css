@@ -137,7 +137,11 @@ ul.gray li a.active {
 }
 
 /* Modal Body */
-.modal-body {padding: 2px 16px;}
+.modal-body {
+    padding: 2px 16px;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
 
 /* Modal Footer */
 .modal-footer {
