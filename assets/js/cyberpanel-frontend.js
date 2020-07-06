@@ -49,7 +49,8 @@ jQuery(document).ready(function ($) {
 
     var dataContent;
 
-    $("#cacnelNow").click(function () {
+    $("#cancelNow").click(function () {
+        alert('hello world');
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'cancelNow',
