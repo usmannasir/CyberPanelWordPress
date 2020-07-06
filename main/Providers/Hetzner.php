@@ -146,6 +146,7 @@ runcmd:
             '{disk}' => $disk,
             '{datacenter}' => $datacenter,
             '{city}' => $city,
+            '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
             );
 
         $content = str_replace(
