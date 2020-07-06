@@ -1,5 +1,4 @@
-jQuery(document).ready(function ($) {
-
+function triggerModal() {
     var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
@@ -24,4 +23,5 @@ jQuery(document).ready(function ($) {
             modal.style.display = "none";
         }
     }
-});
+}
+

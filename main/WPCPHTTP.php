@@ -6,11 +6,11 @@ class WPCPHTTP
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
     <li><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">{productLine}</a></li>
-     <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
+     <li id="myBtn" onclick="triggerModal" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
      <!-- The Modal -->
 <!-- Modal content -->
-<div style="display: none" class="modal-content">
+<div class="modal-content">
   <div class="modal-header">
     <span class="close">&times;</span>
     <h2>Modal Header</h2>
