@@ -183,7 +183,7 @@ runcmd:
     function cancelNow()
     {
 
-        $page = get_page_by_title($this->data); // enter your page title
+        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
         $postIDServer = $page->ID;
         $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
