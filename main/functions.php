@@ -265,8 +265,6 @@ function so_payment_complete($order_id)
 add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
 function woocommerce_payment_complete_order_status($order_id)
 {
-    $order = wc_get_order($order_id);
-
     $message = sprintf('Processing order %s', $order_id);
     $cpjm = new CPJobManager('createServer', $order_id, $message);
     $cpjm->RunJob();
@@ -323,4 +321,22 @@ function ajax_deleteAPIDetails()
 
     $cpjm = new CPJobManager('deleteAPIDetails', $_POST);
     $cpjm->RunJob();
+}
+
+add_action('wp_ajax_cancelNow', 'ajax_cancelNow');
+
+function ajax_cancelNow()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('cancelNow');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $cpjm = new CPJobManager('cancelNow', $_POST);
+    $cpjm->RunJob();
+
 }

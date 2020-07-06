@@ -179,4 +179,28 @@ runcmd:
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
     }
+
+    function cancelNow()
+    {
+
+        $page = get_page_by_title($this->data); // enter your page title
+        $postIDServer = $page->ID;
+        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
+        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+
+        global $wpdb;
+
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        $token = json_decode($result->apidetails)->token;
+
+        $this->url = 'https://api.hetzner.cloud/v1/servers/' . $this->data;
+        $response = $this->HTTPPostCall($token, 'DELETE');
+        $respData = wp_remote_retrieve_body($response);
+
+        error_log($respData, 3, CPWP_ERROR_LOGS);
+
+        //$this->job->setDescription(wp_remote_retrieve_body($response));
+        //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
+    }
 }
