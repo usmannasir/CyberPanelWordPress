@@ -53,7 +53,7 @@ class ProviderHandler
         $serverID = sanitize_text_field($this->data['serverID']);
         $message = sprintf('original: %s', $serverID);
         error_log($message, 3, CPWP_ERROR_LOGS);
-        $page = get_page_by_title($serverID); // enter your page title
+        $page = get_page_by_title($serverID, $post_type = 'wpcp_server'); // enter your page title
         $postIDServer = $page->ID;
         $message = sprintf('Server post id: %s', $postIDServer);
         error_log($message, 3, CPWP_ERROR_LOGS);
