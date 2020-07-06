@@ -187,6 +187,8 @@ runcmd:
         $postIDServer = $page->ID;
         $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+        error_log($product_id, 3, CPWP_ERROR_LOGS);
+        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
 
         global $wpdb;
 
