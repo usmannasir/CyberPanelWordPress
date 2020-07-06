@@ -115,6 +115,13 @@ class WPCPHTTP
         }else if ($method == 'DELETE') {
             $args     = array(
                 'method' => 'DELETE',
+                'timeout' => '5',
+                'redirection' => '5',
+                'httpversion' => '1.0',
+                'blocking' => true,
+                'headers' => $headers,
+                'cookies' => array(),
+                'sslverify' => false
             );
             return wp_remote_request( $this->url, $args );
         }
