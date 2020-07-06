@@ -49,12 +49,14 @@ jQuery(document).ready(function ($) {
 
     var dataContent;
 
-    dataContent = {
-        _ajax_nonce: CPWP.nonce,
-        action: 'cancelNow',
-        serverID: '6585654'
-    }
-    GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+    $("#cancelNow").click(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'cancelNow',
+            serverID: '6585654'
+        }
+        GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+    });
 
 
 
