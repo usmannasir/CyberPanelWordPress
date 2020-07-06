@@ -168,6 +168,12 @@ runcmd:
             $token
         );
 
+        update_post_meta(
+            $post_id,
+            'wpcp_productid',
+            $product_id
+        );
+
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
     }

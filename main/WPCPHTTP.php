@@ -6,9 +6,26 @@ class WPCPHTTP
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
     <li><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">{productLine}</a></li>
-     <li style="float:right; color:red"><a href="javascript:void(0)">Cancel</a></li>
+     <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
+     Cancel
+     <!-- The Modal -->
+<!-- Modal content -->
+<div class="modal-content">
+  <div class="modal-header">
+    <span class="close">&times;</span>
+    <h2>Modal Header</h2>
+  </div>
+  <div class="modal-body">
+    <p>Some text in the Modal Body</p>
+    <p>Some other text...</p>
+  </div>
+  <div class="modal-footer">
+    <h3>Modal Footer</h3>
+  </div>
+</div>
+     </a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
-    <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?={token}">Access CyberPanel</a></li>
+    <li style="float:right"><a target="_blank" href=href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
     <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
 </ul>
 <!-- /wp:html -->
@@ -68,7 +85,8 @@ class WPCPHTTP
     protected $url;
     protected $body;
 
-    function HTTPPostCall($token, $method = null){
+    function HTTPPostCall($token, $method = null)
+    {
 
         $headers = array(
             'Authorization' => $token,
@@ -86,8 +104,8 @@ class WPCPHTTP
                 'cookies' => array(),
                 'sslverify' => false
             );
-            return wp_remote_post( $this->url, $args );
-        }else{
+            return wp_remote_post($this->url, $args);
+        } else {
             $args = array(
                 'timeout' => '5',
                 'redirection' => '5',
@@ -97,7 +115,7 @@ class WPCPHTTP
                 'cookies' => array(),
                 'sslverify' => false
             );
-            return wp_remote_get( $this->url, $args );
+            return wp_remote_get($this->url, $args);
         }
 
 
