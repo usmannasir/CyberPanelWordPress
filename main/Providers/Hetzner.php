@@ -176,6 +176,8 @@ runcmd:
             $product_id
         );
 
+        $order->update_status('wc-completed');
+
         //$this->job->setDescription(wp_remote_retrieve_body($response));
         //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
     }

@@ -269,9 +269,11 @@ function woocommerce_payment_complete_order_status($order_id)
 
     error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
 
-    $message = sprintf('Processing order %s', $order_id);
-    $cpjm = new CPJobManager('createServer', $order_id, $message);
-    $cpjm->RunJob();
+    if($order->data['status'] == 'processing') {
+        $message = sprintf('Processing order %s', $order_id);
+        $cpjm = new CPJobManager('createServer', $order_id, $message);
+        $cpjm->RunJob();
+    }
 }
 
 // Register CyberPanel Servers Post Type
