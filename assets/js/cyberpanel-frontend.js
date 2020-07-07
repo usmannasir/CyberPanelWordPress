@@ -41,7 +41,7 @@ function serverActionsCB(data) {
         if (data.status === 1) {
             $("#serverActions").html(data.result);
         }
-        if(data.runngin){
+        if(data.running === 1){
             alert('running');
         }
     });
