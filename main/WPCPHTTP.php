@@ -5,7 +5,7 @@ class WPCPHTTP
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
-    <li><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">{productLine}</a></li>
+    <li>{productLine}</li>
      <li id="myBtn" onclick="triggerModal()" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
@@ -21,7 +21,7 @@ class WPCPHTTP
 </div>
      </a></li>
     <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
-    <li style="float:right"><a target="_blank" href=href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
+    <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
     <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
 </ul>
 <!-- /wp:html -->
