@@ -304,17 +304,33 @@ runcmd:
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
-            $status = $respData->action->status;
-            if( ! isset($status) ){
-                throw new Exception('Failed to rebuild server.');
+            $actions = $respData->actions;
+            if( ! isset($actions) ){
+                throw new Exception('Failed to retrieve server actions.');
             }
+
+            $finalData = '';
+            $running = 0;
+
+            foreach ($actions as $action){
+
+                $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
+
+                if($action->status == 'running'){
+                    $running = 1;
+                }
+
+            }
+
             $data = array(
                 'status' => 1,
+                'result' => $finalData,
+                'running' => $running
             );
             wp_send_json($data);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to rebuild server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            error_log(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );

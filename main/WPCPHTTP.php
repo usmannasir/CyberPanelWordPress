@@ -83,10 +83,7 @@ class WPCPHTTP
 
         <!-- wp:table {"backgroundColor":"subtle-pale-green"} -->
         <figure class="wp-block-table"><table class="has-subtle-pale-green-background-color has-background">
-        <tbody>
-        <tr><td>create_server</td><td>success</td></tr>
-        <tr><td>start_server</td><td>success</td></tr>
-        <tr><td>create_server</td><td>success</td></tr>
+        <tbody id="serverActions">
         </tbody>
         </table>
         </figure>

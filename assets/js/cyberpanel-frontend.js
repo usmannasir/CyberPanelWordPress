@@ -34,6 +34,20 @@ function cancelNOWCB(data) {
     //window.location.reload();
 }
 
+function serverActionsCB(data) {
+    jQuery(document).ready(function ($) {
+        $(".loader").hide();
+
+        if (data.status === 1) {
+            $("#serverActions").html(data.result);
+        }
+        if(data.runngin){
+            alert('running');
+        }
+    });
+    //window.location.reload();
+}
+
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
         $(".loader").show();
@@ -76,7 +90,7 @@ jQuery(document).ready(function ($) {
         action: 'serverActions',
         serverID: $("#serverID").text()
     }
-    GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+    GlobalAjax(dataContent, serverActionsCB, serverActionsCB);
 
 
 });
