@@ -173,4 +173,5 @@ ul.gray li a.active {
 
 .notClickAble{
     pointer-events: none;
+    opacity: 0.5;
 }

@@ -45,6 +45,12 @@ function serverActionsCB(data) {
             $("#menu").addClass("notClickAble");
             $("#col1").addClass("notClickAble");
             $("#col2").addClass("notClickAble");
+            $("#jobRunning").show();
+        }else{
+            $("#menu").removeClass("notClickAble");
+            $("#col1").removeClass("notClickAble");
+            $("#col2").removeClass("notClickAble");
+            $("#jobRunning").hide();
         }
     });
     //window.location.reload();
@@ -66,6 +72,7 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 jQuery(document).ready(function ($) {
 
     $(".loader").hide();
+    $("#jobRunning").hide();
 
     var dataContent;
 
@@ -87,13 +94,16 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
     });
 
-    dataContent = {
-        _ajax_nonce: CPWP.nonce,
-        action: 'serverActions',
-        serverID: $("#serverID").text()
+    function fetchStatus(){
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'serverActions',
+            serverID: $("#serverID").text()
+        }
+        GlobalAjax(dataContent, serverActionsCB, serverActionsCB);
     }
-    GlobalAjax(dataContent, serverActionsCB, serverActionsCB);
 
+    setInterval(fetchStatus, 3000);
 
 });
 
