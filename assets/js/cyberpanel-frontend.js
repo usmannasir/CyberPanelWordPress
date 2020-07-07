@@ -26,7 +26,7 @@ function triggerModal() {
 }
 
 function cancelNOWCB(data) {
-    window.location.reload();
+    //window.location.reload();
 }
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
