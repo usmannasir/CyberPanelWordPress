@@ -1,4 +1,4 @@
-function triggerModal() {
+jQuery(document).ready(function ($) {
     var modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
@@ -19,7 +19,7 @@ function triggerModal() {
             modal.style.display = "none";
         }
     }
-}
+});
 
 function cancelNOWCB(data) {
     jQuery(document).ready(function ($) {
@@ -30,7 +30,6 @@ function cancelNOWCB(data) {
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
-        alert('hello world');
         $("#loader").show();
         $.ajax({
             type: "POST",
