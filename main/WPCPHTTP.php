@@ -6,7 +6,7 @@ class WPCPHTTP
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine}</a></li>
-     <li id="myBtn" onclick="triggerModal()" style="float:right; color:red"><a href="javascript:void(0)">
+     <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -17,10 +17,20 @@ class WPCPHTTP
     <button type="button" id="cancelNow">Cancel Now <img id="loader" src="{loader}" </button>
   </div>
   </div>
-
 </div>
      </a></li>
-    <li style="float:right"><a href="javascript:void(0)">Rebuild</a></li>
+    <li id="rebuild" style="float:right"><a href="javascript:void(0)">Rebuild
+    <!-- The Modal -->
+<div id="rebuildModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  <div class="modal-body">
+    <p>Are you sure you want to rebuild <span id="serverID">{serverID}</span>? You will loose everything on this server.</p>
+    <button type="button" id="cancelNow">Rebuild Now <img id="loader" src="{loader}" </button>
+  </div>
+  </div>
+</div>
+    </a></li>
     <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
     <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
 </ul>
@@ -115,8 +125,8 @@ class WPCPHTTP
                 'sslverify' => false
             );
             return wp_remote_get($this->url, $args);
-        }else if ($method == 'DELETE') {
-            $args     = array(
+        } else if ($method == 'DELETE') {
+            $args = array(
                 'method' => 'DELETE',
                 'timeout' => '5',
                 'redirection' => '5',
@@ -126,7 +136,7 @@ class WPCPHTTP
                 'cookies' => array(),
                 'sslverify' => false
             );
-            return wp_remote_request( $this->url, $args );
+            return wp_remote_request($this->url, $args);
         }
 
 
