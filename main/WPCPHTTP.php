@@ -14,7 +14,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
-    <button id="cancelNow">Cancel Now <img id="loader" src="{loader}" </button>
+    <button type="button" id="cancelNow">Cancel Now <img id="loader" src="{loader}" </button>
   </div>
   </div>
 

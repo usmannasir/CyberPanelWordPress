@@ -22,6 +22,7 @@ function triggerModal() {
 }
 
 function cancelNOWCB(data) {
+    $("#loader").hide();
     //window.location.reload();
 }
 
@@ -46,6 +47,7 @@ jQuery(document).ready(function ($) {
     var dataContent;
 
     $("#cancelNow").click(function () {
+        $("#loader").show();
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'cancelNow',
