@@ -76,6 +76,9 @@ class WPCPHTTP
         <!-- /wp:table --></div>
     <!-- /wp:column --></div>
 <!-- /wp:columns -->';
+    static $cancelled = '<!-- wp:heading {"align":"center"} -->
+<h2 class="has-text-align-center"><span class="has-inline-color has-vivid-red-color"><strong>This service is cancelled.</strong></span></h2>
+<!-- /wp:heading -->';
     protected $job;
     protected $data;
     protected $url;

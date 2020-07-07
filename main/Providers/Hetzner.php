@@ -202,7 +202,35 @@ runcmd:
 
         error_log($respData, 3, CPWP_ERROR_LOGS);
 
-        //$this->job->setDescription(wp_remote_retrieve_body($response));
-        //$this->job->updateJobStatus(WPCP_JobSuccess, 100);
+        $respData = json_decode(wp_remote_retrieve_body($response));
+
+        try{
+            $status = $respData->action->status;
+
+            if( ! isset($status) ){
+                throw new Exception('Failed to cancel server.');
+            }
+
+            $post = array(
+                'ID' => $postIDServer,
+                'post_content' => WPCPHTTP::$cancelled,
+            );
+
+            wp_update_post($post, true);
+
+            $data = array(
+                'status' => 1,
+            );
+            wp_send_json($data);
+
+
+        }
+        catch (Exception $e) {
+            error_log(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            $data = array(
+                'status' => 0
+            );
+            wp_send_json($data);
+        }
     }
 }

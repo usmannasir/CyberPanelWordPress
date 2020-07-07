@@ -24,6 +24,11 @@ jQuery(document).ready(function ($) {
 function cancelNOWCB(data) {
     jQuery(document).ready(function ($) {
         $("#loader").hide();
+
+        if (data.status === 1) {
+            window.location.reload();
+        }
+
     });
     //window.location.reload();
 }
