@@ -312,7 +312,7 @@ runcmd:
             $finalData = '';
             $running = 0;
 
-            foreach ($actions as $action){
+            foreach (array_reverse($actions) as $action){
 
                 $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
 
