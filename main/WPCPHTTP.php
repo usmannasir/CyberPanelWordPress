@@ -5,7 +5,7 @@ class WPCPHTTP
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
-    <li>{productLine}</li>
+    <li><a href="javascript:void(0)">{productLine}</a></li>
      <li id="myBtn" onclick="triggerModal()" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
