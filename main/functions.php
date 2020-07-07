@@ -265,6 +265,10 @@ function so_payment_complete($order_id)
 add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
 function woocommerce_payment_complete_order_status($order_id)
 {
+    $order = wc_get_order($order_id);
+
+    error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
+
     $message = sprintf('Processing order %s', $order_id);
     $cpjm = new CPJobManager('createServer', $order_id, $message);
     $cpjm->RunJob();

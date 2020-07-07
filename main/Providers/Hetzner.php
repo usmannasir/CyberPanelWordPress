@@ -185,15 +185,16 @@ runcmd:
 
         $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
         $postIDServer = $page->ID;
+
+        ## Get product id of this server.
         $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
+
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
         error_log($product_id, 3, CPWP_ERROR_LOGS);
         error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
 
         global $wpdb;
-
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
         $token = json_decode($result->apidetails)->token;
 
         $this->url = 'https://api.hetzner.cloud/v1/servers/' . $this->data;
@@ -206,24 +207,18 @@ runcmd:
 
         try{
             $status = $respData->action->status;
-
             if( ! isset($status) ){
                 throw new Exception('Failed to cancel server.');
             }
-
             $post = array(
                 'ID' => $postIDServer,
                 'post_content' => WPCPHTTP::$cancelled,
             );
-
             wp_update_post($post, true);
-
             $data = array(
                 'status' => 1,
             );
             wp_send_json($data);
-
-
         }
         catch (Exception $e) {
             error_log(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
