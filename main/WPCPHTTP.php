@@ -4,7 +4,7 @@ class WPCPHTTP
 {
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:html -->
-<ul class="horizontal gray">
+<ul id="menu" class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine} <img class="loader" src="{loader}"></a></li>
      <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
@@ -37,7 +37,7 @@ class WPCPHTTP
 <!-- /wp:html -->
 
 <!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<div id="col1" class="wp-block-columns"><!-- wp:column -->
     <div class="wp-block-column"><!-- wp:html -->
         <div class="WPCPBoxed">
             <h3>Registration Date</h3>
@@ -62,7 +62,7 @@ class WPCPHTTP
 <!-- /wp:columns -->
 
 <!-- wp:columns -->
-<div class="wp-block-columns"><!-- wp:column -->
+<div id="col2" class="wp-block-columns"><!-- wp:column -->
     <div class="wp-block-column"><!-- wp:heading {"level":3} -->
         <h3>Server Specs</h3>
         <!-- /wp:heading -->
@@ -90,6 +90,7 @@ class WPCPHTTP
         <!-- /wp:table --></div>
     <!-- /wp:column --></div>
 <!-- /wp:columns -->';
+
     static $cancelled = '<!-- wp:heading {"align":"center"} -->
 <h2 class="has-text-align-center"><span class="has-inline-color has-vivid-red-color"><strong>This service is cancelled.</strong></span></h2>
 <!-- /wp:heading -->';

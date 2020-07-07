@@ -168,3 +168,9 @@ ul.gray li a.active {
     from {top: -300px; opacity: 0}
     to {top: 0; opacity: 1}
 }
+
+/* not clickable */
+
+.notClickAble{
+    pointer-events: none;
+}

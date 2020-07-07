@@ -42,7 +42,9 @@ function serverActionsCB(data) {
             $("#serverActions").html(data.result);
         }
         if(data.running === 1){
-            alert('running');
+            $("#menu").addClass("notClickAble");
+            $("#col1").addClass("notClickAble");
+            $("#col2").addClass("notClickAble");
         }
     });
     //window.location.reload();
