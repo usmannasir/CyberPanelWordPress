@@ -149,6 +149,10 @@ class CPJobManager
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->cancelNow();
             }
+            elseif ($this->function == 'rebuildNow') {
+                $cpp = new ProviderHandler($this, $this->data);
+                $cpp->rebuildNow();
+            }
             elseif ($this->function == 'fetchProviderPlans') {
                 $cpp = new ProviderHandler($this, $this->data);
                 wp_send_json($cpp->fetchPlans());

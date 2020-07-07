@@ -62,6 +62,15 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
     });
 
+    $("#rebuildNow").click(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'rebuildNow',
+            serverID: $("#serverID").text()
+        }
+        GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+    });
+
 
 });
 

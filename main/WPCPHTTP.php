@@ -26,7 +26,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to rebuild <span id="serverID">{serverID}</span>? You will loose everything on this server.</p>
-    <button type="button" id="cancelNow">Rebuild Now <img class="loader" src="{loader}" </button>
+    <button type="button" id="rebuildNow">Rebuild Now <img class="loader" src="{loader}" </button>
   </div>
   </div>
 </div>
