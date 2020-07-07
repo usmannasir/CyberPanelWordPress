@@ -29,7 +29,7 @@ function CPWP_load_static_frontend()
 {
 
     wp_enqueue_style('CPCSSFE', CPWP_PLUGIN_DIR_URL . 'assets/css/cyberpanel-frontend.css');
-    wp_enqueue_script('CPJSFE', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel-frontend.js', 'jQuery');
+    wp_enqueue_script('CPJSFE', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel-frontend.js', array( 'jquery' ));
 
     $title_nonce = wp_create_nonce('CPWP');
 
