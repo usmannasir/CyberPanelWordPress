@@ -22,14 +22,16 @@ function triggerModal() {
 }
 
 function cancelNOWCB(data) {
-    $("#loader").hide();
+    jQuery(document).ready(function ($) {
+        $("#loader").hide();
+    });
     //window.location.reload();
 }
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
-        $("#WPCPSpinner").show();
-        $("#WPCPSpinnerModal").show();
+        alert('hello world');
+        $("#loader").show();
         $.ajax({
             type: "POST",
             url: CPWP.ajax_url,
@@ -47,7 +49,6 @@ jQuery(document).ready(function ($) {
     var dataContent;
 
     $("#cancelNow").click(function () {
-        $("#loader").show();
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'cancelNow',
