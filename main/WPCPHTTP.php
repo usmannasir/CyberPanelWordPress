@@ -5,7 +5,7 @@ class WPCPHTTP
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:html -->
 <ul class="horizontal gray">
-    <li><a href="javascript:void(0)">{productLine}</a></li>
+    <li><a href="javascript:void(0)">{productLine} <img class="loader" src="{loader}"></a></li>
      <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
@@ -14,7 +14,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
-    <button type="button" id="cancelNow">Cancel Now <img class="loader" src="{loader}" </button>
+    <button type="button" id="cancelNow">Cancel Now <img class="loader" src="{loader}"> </button>
   </div>
   </div>
 </div>
@@ -26,7 +26,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to rebuild <span id="serverID">{serverID}</span>? You will loose everything on this server.</p>
-    <button type="button" id="rebuildNow">Rebuild Now <img class="loader" src="{loader}" </button>
+    <button type="button" id="rebuildNow">Rebuild Now <img class="loader" src="{loader}"> </button>
   </div>
   </div>
 </div>
@@ -82,7 +82,14 @@ class WPCPHTTP
         <!-- /wp:heading -->
 
         <!-- wp:table {"backgroundColor":"subtle-pale-green"} -->
-        <figure class="wp-block-table"><table class="has-subtle-pale-green-background-color has-background"><tbody><tr><td>create_server</td><td>success</td></tr><tr><td>start_server</td><td>success</td></tr><tr><td>create_server</td><td>success</td></tr></tbody></table></figure>
+        <figure class="wp-block-table"><table class="has-subtle-pale-green-background-color has-background">
+        <tbody>
+        <tr><td>create_server</td><td>success</td></tr>
+        <tr><td>start_server</td><td>success</td></tr>
+        <tr><td>create_server</td><td>success</td></tr>
+        </tbody>
+        </table>
+        </figure>
         <!-- /wp:table --></div>
     <!-- /wp:column --></div>
 <!-- /wp:columns -->';

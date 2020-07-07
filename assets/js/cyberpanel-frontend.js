@@ -71,6 +71,13 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
     });
 
+    dataContent = {
+        _ajax_nonce: CPWP.nonce,
+        action: 'serverActions',
+        serverID: $("#serverID").text()
+    }
+    GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+
 
 });
 
