@@ -45,8 +45,6 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 
 jQuery(document).ready(function ($) {
 
-    alert('hello world');
-
     $("#loader").hide();
 
     var dataContent;
