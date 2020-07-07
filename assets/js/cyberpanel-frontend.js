@@ -24,7 +24,7 @@ jQuery(document).ready(function ($) {
 
 function cancelNOWCB(data) {
     jQuery(document).ready(function ($) {
-        $("#loader").hide();
+        $(".loader").hide();
 
         if (data.status === 1) {
             window.location.reload();
@@ -36,7 +36,7 @@ function cancelNOWCB(data) {
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
-        $("#loader").show();
+        $(".loader").show();
         $.ajax({
             type: "POST",
             url: CPWP.ajax_url,
@@ -49,7 +49,7 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 
 jQuery(document).ready(function ($) {
 
-    $("#loader").hide();
+    $(".loader").hide();
 
     var dataContent;
 

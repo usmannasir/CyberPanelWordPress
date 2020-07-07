@@ -14,7 +14,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
-    <button type="button" id="cancelNow">Cancel Now <img id="loader" src="{loader}" </button>
+    <button type="button" id="cancelNow">Cancel Now <img class="loader" src="{loader}" </button>
   </div>
   </div>
 </div>
@@ -26,7 +26,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to rebuild <span id="serverID">{serverID}</span>? You will loose everything on this server.</p>
-    <button type="button" id="cancelNow">Rebuild Now <img id="loader" src="{loader}" </button>
+    <button type="button" id="cancelNow">Rebuild Now <img class="loader" src="{loader}" </button>
   </div>
   </div>
 </div>
