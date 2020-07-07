@@ -53,7 +53,7 @@ jQuery(document).ready(function ($) {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'cancelNow',
-            serverID: '6585654'
+            serverID: $("#serverID").val()
         }
         GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
     });
