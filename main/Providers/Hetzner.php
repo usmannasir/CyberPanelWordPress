@@ -6,12 +6,35 @@ require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 class CyberPanelHetzner extends WPCPHTTP
 {
     protected $orderid;
+    protected $postIDServer;
+    protected $token;
+    protected $image;
 
     function __construct($job, $data, $order_id = null)
     {
         $this->job = $job;
         $this->data = $data;
         $this->orderid = $order_id;
+    }
+
+    function setupTokenImagePostID(){
+
+        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
+        $this->postIDServer = $page->ID;
+
+        ## Get product id of this server.
+        $product_id = get_post_meta($this->postIDServer, 'wpcp_productid', true);
+
+        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+        error_log($product_id, 3, CPWP_ERROR_LOGS);
+        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
+
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        $this->token = json_decode($result->apidetails)->token;
+        $this->image = json_decode($result->apidetails)->image;
+
     }
 
     function fetchPlans()
@@ -185,22 +208,11 @@ runcmd:
     function cancelNow()
     {
 
-        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        error_log($product_id, 3, CPWP_ERROR_LOGS);
-        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-        $token = json_decode($result->apidetails)->token;
-
         $this->url = 'https://api.hetzner.cloud/v1/servers/' . $this->data;
-        $response = $this->HTTPPostCall($token, 'DELETE');
+
+        $this->setupTokenImagePostID();
+
+        $response = $this->HTTPPostCall($this->token, 'DELETE');
         $respData = wp_remote_retrieve_body($response);
 
         error_log($respData, 3, CPWP_ERROR_LOGS);
@@ -213,7 +225,7 @@ runcmd:
                 throw new Exception('Failed to cancel server.');
             }
             $post = array(
-                'ID' => $postIDServer,
+                'ID' => $this->postIDServer,
                 'post_content' => WPCPHTTP::$cancelled,
             );
             wp_update_post($post, true);
@@ -234,28 +246,14 @@ runcmd:
     function rebuildNow()
     {
 
-        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        error_log($product_id, 3, CPWP_ERROR_LOGS);
-        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        $token = json_decode($result->apidetails)->token;
-        $image = json_decode($result->apidetails)->image;
+        $this->setupTokenImagePostID();
 
         $this->body = array(
-            'image' => $image,
+            'image' => $this->image,
         );
 
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/rebuild', $this->data);
-        $response = $this->HTTPPostCall($token);
+        $response = $this->HTTPPostCall($this->token);
         $respData = wp_remote_retrieve_body($response);
         error_log($respData, 3, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
@@ -281,24 +279,10 @@ runcmd:
 
     function serverActions()
     {
-
-        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        error_log($product_id, 3, CPWP_ERROR_LOGS);
-        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        $token = json_decode($result->apidetails)->token;
+        $this->setupTokenImagePostID();
 
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $this->data);
-        $response = $this->HTTPPostCall($token, 'GET');
+        $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = wp_remote_retrieve_body($response);
         error_log($respData, 3, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
@@ -331,6 +315,34 @@ runcmd:
         }
         catch (Exception $e) {
             error_log(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            $data = array(
+                'status' => 0
+            );
+            wp_send_json($data);
+        }
+    }
+
+    function rebootNow()
+    {
+        $this->setupTokenImagePostID();
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
+        $response = $this->HTTPPostCall($this->token);
+        $respData = wp_remote_retrieve_body($response);
+        error_log($respData, 3, CPWP_ERROR_LOGS);
+        $respData = json_decode(wp_remote_retrieve_body($response));
+
+        try{
+            $status = $respData->action->status;
+            if( ! isset($status) ){
+                throw new Exception('Failed to reboot server.');
+            }
+            $data = array(
+                'status' => 1,
+            );
+            wp_send_json($data);
+        }
+        catch (Exception $e) {
+            error_log(sprintf('Failed to reboot server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );

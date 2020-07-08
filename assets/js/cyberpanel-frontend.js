@@ -10,13 +10,25 @@ jQuery(document).ready(function ($) {
             }
         }
     }
+
     var btnRebuild = document.getElementById("rebuild");
     btnRebuild.onclick = function () {
         var modalRebuild = document.getElementById("rebuildModal");
         modalRebuild.style.display = "block";
         window.onclick = function (event) {
-            if (event.target == modal) {
+            if (event.target == modalRebuild) {
                 modalRebuild.style.display = "none";
+            }
+        }
+    }
+
+    var btnReboot = document.getElementById("reboot");
+    btnReboot.onclick = function () {
+        var rebootModal = document.getElementById("rebootModal");
+        rebootModal.style.display = "block";
+        window.onclick = function (event) {
+            if (event.target == rebootModal) {
+                rebootModal.style.display = "none";
             }
         }
     }
@@ -89,6 +101,15 @@ jQuery(document).ready(function ($) {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'rebuildNow',
+            serverID: $("#serverID").text()
+        }
+        GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);
+    });
+
+    $("#rebootNow").click(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'rebootNow',
             serverID: $("#serverID").text()
         }
         GlobalAjax(dataContent, cancelNOWCB, cancelNOWCB);

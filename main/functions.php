@@ -382,3 +382,21 @@ function ajax_serverActions()
     $cpjm->RunJob();
 
 }
+
+add_action('wp_ajax_rebootNow', 'ajax_rebootNow');
+
+function ajax_rebootNow()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('rebootNow');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $cpjm = new CPJobManager('rebootNow', $_POST);
+    $cpjm->RunJob();
+
+}

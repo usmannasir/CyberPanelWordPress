@@ -12,6 +12,34 @@ class ProviderHandler
         $this->data = $data;
     }
 
+    function findProvider(){
+
+        $serverID = sanitize_text_field($this->data['serverID']);
+        $message = sprintf('Original post id for server: %s', $serverID);
+        error_log($message, 3, CPWP_ERROR_LOGS);
+
+        ## Get post ID for server.
+        $page = get_page_by_title($serverID, OBJECT, 'wpcp_server'); // enter your page title
+        $postIDServer = $page->ID;
+        $message = sprintf('Server post id: %s', $postIDServer);
+        error_log($message, 3, CPWP_ERROR_LOGS);
+
+        ## Get product id of this server.
+        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
+        $message = sprintf('Product post id: %s', $product_id);
+        error_log($message, 3, CPWP_ERROR_LOGS);
+
+        ## Get provider name to decide which class to call
+        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+        $message = sprintf('Provider %s', $wpcp_provider);
+        error_log($message, 3, CPWP_ERROR_LOGS);
+
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        return $result->provider;
+    }
+
     function createServer(){
 
         $message = sprintf('Creating servers for order id: %s', $this->data);
@@ -49,99 +77,31 @@ class ProviderHandler
     }
 
     function cancelNow(){
-
-        $serverID = sanitize_text_field($this->data['serverID']);
-        $message = sprintf('Original post id for server: %s', $serverID);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get post ID for server.
-        $page = get_page_by_title($serverID, OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-        $message = sprintf('Server post id: %s', $postIDServer);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-        $message = sprintf('Product post id: %s', $product_id);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get provider name to decide which class to call
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        $message = sprintf('Provider %s', $wpcp_provider);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        if($result->provider == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, $serverID);
+        if($this->findProvider() == 'Hetzner'){
+            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
             $cph->cancelNow();
         }
-
     }
 
     function rebuildNow(){
-
-        $serverID = sanitize_text_field($this->data['serverID']);
-        $message = sprintf('Original post id for server: %s', $serverID);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get post ID for server.
-        $page = get_page_by_title($serverID, OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-        $message = sprintf('Server post id: %s', $postIDServer);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-        $message = sprintf('Product post id: %s', $product_id);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get provider name to decide which class to call
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        $message = sprintf('Provider %s', $wpcp_provider);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        if($result->provider == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, $serverID);
+        if($this->findProvider() == 'Hetzner'){
+            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
             $cph->rebuildNow();
         }
-
     }
 
     function serverActions(){
-
-        $serverID = sanitize_text_field($this->data['serverID']);
-        $message = sprintf('Original post id for server: %s', $serverID);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get post ID for server.
-        $page = get_page_by_title($serverID, OBJECT, 'wpcp_server'); // enter your page title
-        $postIDServer = $page->ID;
-        $message = sprintf('Server post id: %s', $postIDServer);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($postIDServer, 'wpcp_productid', true);
-        $message = sprintf('Product post id: %s', $product_id);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        ## Get provider name to decide which class to call
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        $message = sprintf('Provider %s', $wpcp_provider);
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        if($result->provider == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, $serverID);
+        if($this->findProvider() == 'Hetzner'){
+            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
             $cph->serverActions();
         }
+    }
 
+    function rebootNow(){
+        if($this->findProvider() == 'Hetzner'){
+            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph->rebootNow();
+        }
     }
 
     function fetchPlans(){

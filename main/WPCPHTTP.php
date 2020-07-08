@@ -30,7 +30,19 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to rebuild <span id="serverID">{serverID}</span>? You will loose everything on this server.</p>
-    <button type="button" id="rebuildNow">Rebuild Now <img class="loader" src="{loader}"> </button>
+    <button type="button" id="rebuildNow">Rebuild Now <img style="display: inline" class="loader" src="{loader}"> </button>
+  </div>
+  </div>
+</div>
+    </a></li>
+    <li id="reboot" style="float:right"><a href="javascript:void(0)">Reboot
+    <!-- The Modal -->
+<div id="rebootModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  <div class="modal-body">
+    <p>Are you sure you want to reboot? <span id="serverID">{serverID}</span></p>
+    <button type="button" id="rebootNow">Reboot Now <img style="display: inline" class="loader" src="{loader}"> </button>
   </div>
   </div>
 </div>
