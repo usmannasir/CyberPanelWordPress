@@ -292,7 +292,7 @@ function wpcp_custom_post_type()
             'delete_with_user' => false,
             'capabilities' => array(
                 'edit_post' => 'manage_options',
-                'read_post' => 'read',
+                'read_post' => 'manage_options',
                 'delete_post' => 'manage_options',
                 'edit_posts' => 'manage_options',
                 'edit_others_posts' => 'manage_options',
