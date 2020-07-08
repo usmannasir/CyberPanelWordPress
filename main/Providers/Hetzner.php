@@ -189,6 +189,7 @@ runcmd:
 
         add_post_meta( $post_id, 'wpcp_lastpayment', $orderDate, true );
         add_post_meta( $post_id, 'wpcp_activeinvoice', 0, true );
+        add_post_meta( $post_id, 'wpcp_orderid', $order->id, true );
 
         update_post_meta(
             $post_id,

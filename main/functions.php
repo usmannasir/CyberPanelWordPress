@@ -437,8 +437,9 @@ function wpcp_cron_exec(){
         $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
         $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
         $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
+        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
 
-        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %d. wpcp_activeinvoice: %s', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice), 3, CPWP_ERROR_LOGS);
+        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %d. wpcp_activeinvoice: %s. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
     }
     wp_reset_query();
