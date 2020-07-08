@@ -453,8 +453,8 @@ function example_add_cron_interval( $schedules ) {
     return $schedules;
 }
 
-add_action( 'wpcp_cron_hook', 'wpcp_cron_exec' );
+add_action( 'wpcp_croncp_hook', 'wpcp_cron_exec' );
 
-if ( ! wp_next_scheduled( 'wpcp_cron_hook' ) ) {
-    wp_schedule_event( time(), 'five_seconds', 'wpcp_cron_hook' );
+if ( ! wp_next_scheduled( 'wpcp_croncp_hook' ) ) {
+    wp_schedule_event( time(), 'five_seconds', 'wpcp_croncp_hook' );
 }
