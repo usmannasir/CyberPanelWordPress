@@ -405,3 +405,49 @@ function ajax_rebootNow()
 
 }
 
+/*add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
+
+function filter_the_content_in_the_main_loop($content)
+{
+    $current_user = wp_get_current_user();
+    $post = get_post();
+
+    if (get_post_type($post->id) == 'wpcp_server') {
+        if($current_user->id == $post->post_author){
+            return $content;
+        }else{
+            return "You are not allowed to manage this server.";
+        }
+    }
+
+    return $content;
+}*/
+
+function wpcp_cron_exec(){
+    $query = new WP_Query(array(
+        'post_type' => 'wpcp_server',
+        'post_status' => 'publish',
+        'posts_per_page' => -1
+    ));
+
+    while ($query->have_posts()) {
+        $query->the_post();
+        $post_id = get_the_ID();
+
+        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
+        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
+        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
+
+        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %d. wpcp_activeinvoice: %s', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice), 3, CPWP_ERROR_LOGS);
+
+    }
+    wp_reset_query();
+}
+
+wpcp_cron_exec();
+
+add_action( 'wpcp_cron_hook', 'wpcp_cron_exec' );
+
+if ( ! wp_next_scheduled( 'wpcp_cron_hook' ) ) {
+    wp_schedule_event( time(), 'daily', 'wpcp_cron_hook' );
+}
