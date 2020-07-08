@@ -407,18 +407,3 @@ function ajax_rebootNow()
 
 add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
 
-function filter_the_content_in_the_main_loop($content)
-{
-    $current_user = wp_get_current_user();
-    $post = get_post();
-
-    if (get_post_type($post->id) == 'wpcp_server') {
-        if($current_user->id == $post->post_author){
-            return $content;
-        }else{
-            return "You are not allowed to manage this server.";
-        }
-    }
-
-    return $content;
-}
