@@ -416,7 +416,7 @@ function filter_the_content_in_the_main_loop($content)
         if($current_user->id == $post->post_author){
             return $content;
         }else{
-            return "Only logged in users can manage servers.";
+            return "You are not allowed to manage this server.";
         }
     }
 
