@@ -289,6 +289,7 @@ function wpcp_custom_post_type() {
             'exclude_from_search' => true,
             'publicly_queryable' => false,
             'public' => false,
+            'private' => true,
             'show_ui' => true,
             'show_in_admin_bar' => false,
             'menu_position' => 75,
