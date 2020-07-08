@@ -178,6 +178,7 @@ runcmd:
             WPCPHTTP::$productHTML);
 
         $my_post = array(
+            'post_author' => $order->user_id,
             'post_title'    => $serverID,
             'post_content'  => $content,
             'post_status'   => 'publish',
