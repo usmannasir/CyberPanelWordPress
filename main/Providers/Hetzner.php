@@ -324,6 +324,7 @@ runcmd:
 
     function rebootNow()
     {
+        $this->body = array();
         $this->setupTokenImagePostID();
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
         $response = $this->HTTPPostCall($this->token);
