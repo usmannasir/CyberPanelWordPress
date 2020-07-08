@@ -8,7 +8,8 @@ class WPCPHTTP
 <!-- /wp:heading -->
 <!-- wp:html -->
 <ul id="menu" class="horizontal gray">
-    <li><a href="javascript:void(0)">{productLine} <img style="display: inline" class="loader" src="{loader}"></a></li>
+    <li><a href="javascript:void(0)">{productLine}</a></li>
+    <li><a href="javascript:void(0)"><img style="display: inline"  src="{loader}"></a></li>
      <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
