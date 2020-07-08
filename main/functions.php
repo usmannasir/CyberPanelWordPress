@@ -285,9 +285,10 @@ function wpcp_custom_post_type() {
                 'name'          => __('Servers', 'textdomain'),
                 'singular_name' => __('Server', 'textdomain'),
             ),
-            'public'      => true,
-            'has_archive' => true,
-            "supports" => array( "title", "editor", "author" )
+            'public'      => false,
+            'has_archive' => false,
+            "supports" => array( "title", "editor", "author" ),
+            'capability_type' => 'product'
         )
     );
 }

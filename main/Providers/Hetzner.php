@@ -187,6 +187,9 @@ runcmd:
 
         $post_id = wp_insert_post( $my_post );
 
+        add_post_meta( $post_id, 'wpcp_lastpayment', $orderDate, true );
+        add_post_meta( $post_id, 'wpcp_activeinvoice', 0, true );
+
         update_post_meta(
             $post_id,
             'wpcp_token',
@@ -324,7 +327,7 @@ runcmd:
 
     function rebootNow()
     {
-        $this->body = array();
+        $this->body = null;
         $this->setupTokenImagePostID();
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
         $response = $this->HTTPPostCall($this->token);
