@@ -424,50 +424,50 @@ function filter_the_content_in_the_main_loop($content)
 }*/
 
 function wpcp_cron_exec(){
-    $query = new WP_Query(array(
-        'post_type' => 'wpcp_server',
-        'post_status' => 'publish',
-        'posts_per_page' => -1
-    ));
-
-    while ($query->have_posts()) {
-        $query->the_post();
-        $post_id = get_the_ID();
-
-        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
-        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
-        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
-        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
-
-        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
-
-        global $woocommerce;
-
-        $address = array(
-            'first_name' => '111Joe',
-            'last_name'  => 'Conlin',
-            'company'    => 'Speed Society',
-            'email'      => 'joe@testing.com',
-            'phone'      => '760-555-1212',
-            'address_1'  => '123 Main st.',
-            'address_2'  => '104',
-            'city'       => 'San Diego',
-            'state'      => 'Ca',
-            'postcode'   => '92121',
-            'country'    => 'US'
-        );
-
-        // Now we create the order
-        $order = wc_create_order();
-
-        // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
-        $order->add_product( get_product($wpcp_productid), 1); // This is an existing SIMPLE product
-        $order->set_address( $address, 'billing' );
-        //
-        $order->calculate_totals();
-
-    }
-    wp_reset_query();
+//    $query = new WP_Query(array(
+//        'post_type' => 'wpcp_server',
+//        'post_status' => 'publish',
+//        'posts_per_page' => -1
+//    ));
+//
+//    while ($query->have_posts()) {
+//        $query->the_post();
+//        $post_id = get_the_ID();
+//
+//        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
+//        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
+//        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
+//        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
+//
+//        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+//
+//        global $woocommerce;
+//
+//        $address = array(
+//            'first_name' => '111Joe',
+//            'last_name'  => 'Conlin',
+//            'company'    => 'Speed Society',
+//            'email'      => 'joe@testing.com',
+//            'phone'      => '760-555-1212',
+//            'address_1'  => '123 Main st.',
+//            'address_2'  => '104',
+//            'city'       => 'San Diego',
+//            'state'      => 'Ca',
+//            'postcode'   => '92121',
+//            'country'    => 'US'
+//        );
+//
+//        // Now we create the order
+//        $order = wc_create_order();
+//
+//        // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
+//        $order->add_product( get_product($wpcp_productid), 1); // This is an existing SIMPLE product
+//        $order->set_address( $address, 'billing' );
+//        //
+//        $order->calculate_totals();
+//
+//    }
+//    wp_reset_query();
 }
 
 add_filter( 'cron_schedules', 'example_add_cron_interval' );
