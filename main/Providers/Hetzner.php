@@ -284,7 +284,7 @@ runcmd:
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $this->data);
         $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = wp_remote_retrieve_body($response);
-        error_log($respData, 3, CPWP_ERROR_LOGS);
+        //error_log($respData, 3, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -314,7 +314,7 @@ runcmd:
             wp_send_json($data);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            //error_log(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
