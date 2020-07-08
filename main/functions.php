@@ -410,12 +410,10 @@ add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
 function filter_the_content_in_the_main_loop($content)
 {
     $current_user = wp_get_current_user();
+    $post = get_post();
 
-    error_log('hello ' . $current_user->first_name, 3, CPWP_ERROR_LOGS);
-
-    $postID = get_the_ID();
-    if (get_post_type($postID) == 'wpcp_server') {
-        if(current_user_can('administrator') || is_author(get_current_user_id())){
+    if (get_post_type($post->id) == 'wpcp_server') {
+        if($current_user->id == $post->post_author){
             return $content;
         }else{
             return "Only logged in users can manage servers.";
