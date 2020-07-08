@@ -411,7 +411,7 @@ function filter_the_content_in_the_main_loop($content)
 {
     $current_user = wp_get_current_user();
 
-    error_log('hello ' . $current_user, 3, CPWP_ERROR_LOGS);
+    error_log('hello ' . $current_user->first_name, 3, CPWP_ERROR_LOGS);
 
     $postID = get_the_ID();
     if (get_post_type($postID) == 'wpcp_server') {
