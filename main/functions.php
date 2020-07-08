@@ -285,7 +285,7 @@ function wpcp_custom_post_type() {
                 'name'          => __('Servers', 'textdomain'),
                 'singular_name' => __('Server', 'textdomain'),
             ),
-            "supports" => array( "title", "editor", "author" ),
+            "supports" => array( "title", "editor", "author", "customer" ),
             'exclude_from_search' => true,
             'publicly_queryable' => false,
             'public' => false,
