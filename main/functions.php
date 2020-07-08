@@ -405,5 +405,3 @@ function ajax_rebootNow()
 
 }
 
-add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
-
