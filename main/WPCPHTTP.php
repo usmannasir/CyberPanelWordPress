@@ -9,7 +9,7 @@ class WPCPHTTP
 <!-- wp:html -->
 <ul id="menu" class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine}</a></li>
-    <li><a href="javascript:void(0)"><img style="display: inline"  src="{loader}"></a></li>
+    <li class="loader"><a href="javascript:void(0)"><img style="display: inline"  src="{loader}"></a></li>
      <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
      Cancel
 <!-- The Modal -->
@@ -18,7 +18,7 @@ class WPCPHTTP
   <div class="modal-content">
   <div class="modal-body">
     <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
-    <button type="button" id="cancelNow">Cancel Now <img class="loader" src="{loader}"> </button>
+    <button type="button" id="cancelNow">Cancel Now <img style="display: inline" class="loader" src="{loader}"> </button>
   </div>
   </div>
 </div>
