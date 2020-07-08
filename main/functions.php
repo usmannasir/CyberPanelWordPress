@@ -409,18 +409,12 @@ add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
 
 function filter_the_content_in_the_main_loop($content)
 {
-
     $postID = get_the_ID();
     if (get_post_type($postID) == 'wpcp_server') {
-        if (is_user_logged_in()) {
-            if(current_user_can('administrator') || is_author(get_current_user_id())){
-                return $content;
-            }else{
-                return "Only logged in users can manage servers.";
-            }
-
-        } else {
-            return "Only logged in users can view manage servers.";
+        if(current_user_can('administrator') || is_author(get_current_user_id())){
+            return $content;
+        }else{
+            return "Only logged in users can manage servers.";
         }
     }
 
