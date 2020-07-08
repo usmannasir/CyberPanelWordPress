@@ -29,7 +29,7 @@ function CPWP_load_static_frontend()
 {
 
     wp_enqueue_style('CPCSSFE', CPWP_PLUGIN_DIR_URL . 'assets/css/cyberpanel-frontend.css');
-    wp_enqueue_script('CPJSFE', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel-frontend.js', array( 'jquery' ));
+    wp_enqueue_script('CPJSFE', CPWP_PLUGIN_DIR_URL . 'assets/js/cyberpanel-frontend.js', array('jquery'));
 
     $title_nonce = wp_create_nonce('CPWP');
 
@@ -262,14 +262,14 @@ function so_payment_complete($order_id)
 //    }
 }
 
-add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status',10,3);
+add_action('woocommerce_order_status_changed', 'woocommerce_payment_complete_order_status', 10, 3);
 function woocommerce_payment_complete_order_status($order_id)
 {
     $order = wc_get_order($order_id);
 
     error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
 
-    if($order->data['status'] == 'processing') {
+    if ($order->data['status'] == 'processing') {
         $message = sprintf('Processing order %s', $order_id);
         $cpjm = new CPJobManager('createServer', $order_id, $message);
         $cpjm->RunJob();
@@ -278,39 +278,33 @@ function woocommerce_payment_complete_order_status($order_id)
 
 // Register CyberPanel Servers Post Type
 
-function wpcp_custom_post_type() {
+function wpcp_custom_post_type()
+{
     register_post_type('wpcp_server',
         array(
-            'labels'      => array(
-                'name'          => __('Servers', 'textdomain'),
+            'labels' => array(
+                'name' => __('Servers', 'textdomain'),
                 'singular_name' => __('Server', 'textdomain'),
             ),
-            "supports" => array( "title", "editor", "author", "customer" ),
-            'exclude_from_search' => true,
-            'publicly_queryable' => false,
-            'public' => false,
-            'private' => true,
-            'show_ui' => true,
-            'show_in_admin_bar' => false,
-            'menu_position' => 75,
-            'hierarchical' => false,
+            'public' => true,
             'has_archive' => false,
-            'rewrite' => false,
-            'can_export' => false,
-            'capabilities' => array (
-                'create_posts' => false,
+            "supports" => array("title", "editor", "author", "customer"),
+            'delete_with_user' => false,
+            'capabilities' => array(
                 'edit_post' => 'manage_options',
-                'read_post' => 'manage_options',
+                'read_post' => 'read',
                 'delete_post' => 'manage_options',
                 'edit_posts' => 'manage_options',
                 'edit_others_posts' => 'manage_options',
                 'publish_posts' => 'manage_options',
                 'read_private_posts' => 'manage_options',
+                'create_posts' => 'manage_options',
             ),
             //'capability_type' => 'product'
         )
     );
 }
+
 add_action('init', 'wpcp_custom_post_type');
 
 //
