@@ -182,7 +182,6 @@ runcmd:
             'post_title'    => $serverID,
             'post_content'  => $content,
             'post_status'   => 'publish',
-            'post_author'   => 1,
             'post_type'     => 'wpcp_server',
         );
 
