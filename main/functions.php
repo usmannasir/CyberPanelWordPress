@@ -445,10 +445,16 @@ function wpcp_cron_exec(){
     wp_reset_query();
 }
 
-wpcp_cron_exec();
+add_filter( 'cron_schedules', 'example_add_cron_interval' );
+function example_add_cron_interval( $schedules ) {
+    $schedules['five_seconds'] = array(
+        'interval' => 5,
+        'display'  => esc_html__( 'Every Five Seconds' ), );
+    return $schedules;
+}
 
 add_action( 'wpcp_cron_hook', 'wpcp_cron_exec' );
 
 if ( ! wp_next_scheduled( 'wpcp_cron_hook' ) ) {
-    wp_schedule_event( time(), 'daily', 'wpcp_cron_hook' );
+    wp_schedule_event( time(), 'five_seconds', 'wpcp_cron_hook' );
 }
