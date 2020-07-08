@@ -285,7 +285,7 @@ function wpcp_custom_post_type() {
                 'name'          => __('Servers', 'textdomain'),
                 'singular_name' => __('Server', 'textdomain'),
             ),
-            "supports" => array( "title", "editor", "author", "customer" ),
+            "supports" => array( "customer" ),
             'exclude_from_search' => true,
             'publicly_queryable' => false,
             'public' => false,
@@ -296,17 +296,6 @@ function wpcp_custom_post_type() {
             'has_archive' => false,
             'rewrite' => false,
             'can_export' => false,
-            'capabilities' => array (
-                'create_posts' => false,
-                'edit_post' => 'manage_options',
-                'read_post' => 'manage_options',
-                'delete_post' => 'manage_options',
-                'edit_posts' => 'manage_options',
-                'edit_others_posts' => 'manage_options',
-                'publish_posts' => 'manage_options',
-                'read_private_posts' => 'manage_options',
-            ),
-            //'capability_type' => 'product'
         )
     );
 }
