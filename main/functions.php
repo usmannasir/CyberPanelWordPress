@@ -440,41 +440,40 @@ function wpcp_cron_exec(){
         $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
 
         $diff = current_time( 'timestamp', 1 ) - strtotime( $wpcp_lastpayment );
-
-        $wpcp_lastpayment = sprintf('Seconds: %s', $diff);
+        $diff = sprintf('Seconds: %s', $diff);
+        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
         if( ! $wpcp_activeinvoice) {
+            if($diff > 60){
+                ## Find user of this orde
+                $order = wc_get_order( $wpcp_orderid );
 
-            ## Find user of this order
+                $address = array(
+                    'first_name' => $order->get_billing_first_name(),
+                    'last_name' => $order->get_billing_last_name(),
+                    'company' => $order->get_billing_company(),
+                    'email' => $order->get_billing_email(),
+                    'phone' => $order->get_billing_phone(),
+                    'address_1' => $order->get_billing_address_1(),
+                    'address_2' => $order->get_billing_address_2(),
+                    'city' => $order->get_billing_city(),
+                    'state' => $order->get_billing_state(),
+                    'postcode' => $order->get_billing_postcode(),
+                    'country' => $order->get_billing_country(),
+                );
 
-            $order = wc_get_order( $wpcp_orderid );
+                // Now we create the order
+                $order = wc_create_order(array('customer_id' => $order->get_user_id()));
 
-            error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+                $order->add_product(get_product($wpcp_productid), 1);
+                $order->set_address($address, 'billing');
+                //
+                $order->calculate_totals();
+                $order->update_status('pending');
 
-            global $woocommerce;
-
-            $address = array(
-                'first_name' => $order->get_billing_first_name(),
-                'last_name' => $order->get_billing_last_name(),
-                'company' => $order->get_billing_company(),
-                'email' => $order->get_billing_email(),
-                'phone' => $order->get_billing_phone(),
-                'address_1' => $order->get_billing_address_1(),
-                'address_2' => $order->get_billing_address_2(),
-                'city' => $order->get_billing_city(),
-                'state' => $order->get_billing_state(),
-                'postcode' => $order->get_billing_postcode(),
-                'country' => $order->get_billing_country(),
-            );
-
-            // Now we create the order
-            $order = wc_create_order(array('customer_id' => $order->get_user_id()));
-
-            $order->add_product(get_product($wpcp_productid), 1);
-            $order->set_address($address, 'billing');
-            //
-            $order->calculate_totals();
-            $order->update_status('pending');
+                update_post_meta($post_id, 'wpcp_lastpayment', current_time( 'timestamp', 1 ));
+                update_post_meta($post_id, 'wpcp_activeinvoice', 1);
+            }
         }
 
     }
