@@ -444,6 +444,7 @@ function wpcp_cron_exec(){
         error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
         if( ! $wpcp_activeinvoice) {
+
             if($diff > 60){
                 ## Find user of this orde
                 $order = wc_get_order( $wpcp_orderid );
