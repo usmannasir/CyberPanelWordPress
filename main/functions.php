@@ -473,6 +473,16 @@ function wpcp_cron_exec(){
 
                 update_post_meta($post_id, 'wpcp_lastpayment', current_time( 'timestamp', 1 ));
                 update_post_meta($post_id, 'wpcp_activeinvoice', 1);
+                add_post_meta($post_id, 'wpcp_paymentid', $order->id, true );
+
+                $postTitle = get_the_title( $post_id );
+                $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
+
+                global $wpdb;
+                $table_name = $wpdb->prefix . 'woocommerce_order_items';
+                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $order->id";
+                $wpdb->query( $sql );
+
             }
         }
 
