@@ -439,6 +439,8 @@ function wpcp_cron_exec(){
         $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
         $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
 
+        $wpcp_lastpayment = human_time_diff( strtotime( $wpcp_lastpayment ), current_time( 'timestamp', 1 ) );
+
         if( ! $wpcp_activeinvoice) {
 
             ## Find user of this order
