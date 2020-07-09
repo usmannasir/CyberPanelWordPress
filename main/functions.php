@@ -267,11 +267,11 @@ function woocommerce_payment_complete_order_status($order_id)
 {
     $order = wc_get_order($order_id);
 
-    $wpcp_paymentid = get_post_meta($order->id, 'wpcp_paymentid', true);
+    $wpcp_invoice = get_post_meta($order->id, 'wpcp_invoice', true);
 
-    error_log(sprintf('Value of wpcp_paymentid: %s', $wpcp_paymentid), 3, CPWP_ERROR_LOGS);
+    error_log(sprintf('Value of wpcp_invoice: %s', $wpcp_invoice), 3, CPWP_ERROR_LOGS);
 
-    if( $wpcp_paymentid != 'Main' ) {
+    if( $wpcp_invoice != 'yes' ) {
         error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
 
         if ($order->data['status'] == 'processing') {
@@ -469,17 +469,18 @@ function wpcp_cron_exec(){
                 );
 
                 // Now we create the order
-                $order = wc_create_order(array('customer_id' => $order->get_user_id()));
+                $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
 
-                $order->add_product(get_product($wpcp_productid), 1);
-                $order->set_address($address, 'billing');
+                $nOrder->add_product(get_product($wpcp_productid), 1);
+                $nOrder->set_address($address, 'billing');
                 //
-                $order->calculate_totals();
-                $order->update_status('pending');
+                $nOrder->calculate_totals();
+                $nOrder->update_status('pending');
 
                 update_post_meta($post_id, 'wpcp_lastpayment', current_time( 'timestamp', 1 ));
                 update_post_meta($post_id, 'wpcp_activeinvoice', 1);
-                add_post_meta($post_id, 'wpcp_paymentid', $order->id, true );
+                add_post_meta($post_id, 'wpcp_paymentid', $nOrder->id, true );
+                add_post_meta($nOrder->id, 'wpcp_invoice', 'yes', true );
 
                 $postTitle = get_the_title( $post_id );
                 $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
