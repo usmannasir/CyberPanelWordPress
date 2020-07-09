@@ -487,7 +487,7 @@ function wpcp_cron_exec(){
 
                 global $wpdb;
                 $table_name = $wpdb->prefix . 'woocommerce_order_items';
-                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $order->id";
+                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
                 $wpdb->query( $sql );
 
             }
