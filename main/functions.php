@@ -269,6 +269,8 @@ function woocommerce_payment_complete_order_status($order_id)
 
     $wpcp_paymentid = get_post_meta($order->id, 'wpcp_paymentid', true);
 
+    error_log(sprintf('Value of wpcp_paymentid: %s', $wpcp_paymentid), 3, CPWP_ERROR_LOGS);
+
     if( ! $wpcp_paymentid ) {
 
         error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
