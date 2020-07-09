@@ -424,50 +424,57 @@ function filter_the_content_in_the_main_loop($content)
 }*/
 
 function wpcp_cron_exec(){
-//    $query = new WP_Query(array(
-//        'post_type' => 'wpcp_server',
-//        'post_status' => 'publish',
-//        'posts_per_page' => -1
-//    ));
-//
-//    while ($query->have_posts()) {
-//        $query->the_post();
-//        $post_id = get_the_ID();
-//
-//        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
-//        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
-//        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
-//        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
-//
-//        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
-//
-//        global $woocommerce;
-//
-//        $address = array(
-//            'first_name' => '111Joe',
-//            'last_name'  => 'Conlin',
-//            'company'    => 'Speed Society',
-//            'email'      => 'joe@testing.com',
-//            'phone'      => '760-555-1212',
-//            'address_1'  => '123 Main st.',
-//            'address_2'  => '104',
-//            'city'       => 'San Diego',
-//            'state'      => 'Ca',
-//            'postcode'   => '92121',
-//            'country'    => 'US'
-//        );
-//
-//        // Now we create the order
-//        $order = wc_create_order();
-//
-//        // The add_product() function below is located in /plugins/woocommerce/includes/abstracts/abstract_wc_order.php
-//        $order->add_product( get_product($wpcp_productid), 1); // This is an existing SIMPLE product
-//        $order->set_address( $address, 'billing' );
-//        //
-//        $order->calculate_totals();
-//
-//    }
-//    wp_reset_query();
+    $query = new WP_Query(array(
+        'post_type' => 'wpcp_server',
+        'post_status' => 'publish',
+        'posts_per_page' => -1
+    ));
+
+    while ($query->have_posts()) {
+        $query->the_post();
+        $post_id = get_the_ID();
+
+        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
+        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
+        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
+        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
+
+        if( ! $wpcp_activeinvoice) {
+
+            ## Find user of this order
+
+            $order = wc_get_order( $wpcp_orderid );
+
+            error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+
+            global $woocommerce;
+
+            $address = array(
+                'first_name' => $order->get_billing_first_name(),
+                'last_name' => $order->get_billing_last_name(),
+                'company' => $order->get_billing_company(),
+                'email' => $order->get_billing_email(),
+                'phone' => $order->get_billing_phone(),
+                'address_1' => $order->get_billing_address_1(),
+                'address_2' => $order->get_billing_address_2(),
+                'city' => $order->get_billing_city(),
+                'state' => $order->get_billing_state(),
+                'postcode' => $order->get_billing_postcode(),
+                'country' => $order->get_billing_country(),
+            );
+
+            // Now we create the order
+            $order = wc_create_order(array('customer_id' => $order->get_user_id()));
+
+            $order->add_product(get_product($wpcp_productid), 1);
+            $order->set_address($address, 'billing');
+            //
+            $order->calculate_totals();
+            $order->update_status('pending');
+        }
+
+    }
+    wp_reset_query();
 }
 
 add_filter( 'cron_schedules', 'example_add_cron_interval' );
