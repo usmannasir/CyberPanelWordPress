@@ -475,6 +475,19 @@ function wpcp_cron_exec(){
                 $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
 
                 $nOrder->add_product(get_product($wpcp_productid), 1);
+
+                ## Set custom description of order
+
+                $postTitle = get_the_title( $post_id );
+                $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
+
+                global $wpdb;
+                $table_name = $wpdb->prefix . 'woocommerce_order_items';
+                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
+                $wpdb->query( $sql );
+
+                ##
+
                 $nOrder->set_address($address, 'billing');
                 //
                 $nOrder->calculate_totals();
@@ -485,13 +498,6 @@ function wpcp_cron_exec(){
                 add_post_meta($post_id, 'wpcp_paymentid', $nOrder->id, true );
                 add_post_meta($nOrder->id, 'wpcp_invoice', 'yes', true );
 
-                $postTitle = get_the_title( $post_id );
-                $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
-
-                global $wpdb;
-                $table_name = $wpdb->prefix . 'woocommerce_order_items';
-                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
-                $wpdb->query( $sql );
 
             }
         }
