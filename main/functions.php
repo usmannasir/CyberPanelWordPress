@@ -429,7 +429,10 @@ function filter_the_content_in_the_main_loop($content)
     return $content;
 }*/
 
+remove_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
+
 function wpcp_cron_exec(){
+
     $query = new WP_Query(array(
         'post_type' => 'wpcp_server',
         'post_status' => 'publish',
@@ -451,7 +454,7 @@ function wpcp_cron_exec(){
         if( ! $wpcp_activeinvoice) {
 
             if($diff > 60){
-                ## Find user of this orde
+                ## Find user of this order
                 $order = wc_get_order( $wpcp_orderid );
 
                 $address = array(
