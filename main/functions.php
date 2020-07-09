@@ -267,12 +267,17 @@ function woocommerce_payment_complete_order_status($order_id)
 {
     $order = wc_get_order($order_id);
 
-    error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
+    $wpcp_paymentid = get_post_meta($order->id, 'wpcp_paymentid', true);
 
-    if ($order->data['status'] == 'processing') {
-        $message = sprintf('Processing order %s', $order_id);
-        $cpjm = new CPJobManager('createServer', $order_id, $message);
-        $cpjm->RunJob();
+    if( ! $wpcp_paymentid ) {
+
+        error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
+
+        if ($order->data['status'] == 'processing') {
+            $message = sprintf('Processing order %s', $order_id);
+            $cpjm = new CPJobManager('createServer', $order_id, $message);
+            $cpjm->RunJob();
+        }
     }
 }
 
