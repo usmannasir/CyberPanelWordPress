@@ -440,7 +440,6 @@ function wpcp_cron_exec(){
         $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
 
         $diff = current_time( 'timestamp', 1 ) - strtotime( $wpcp_lastpayment );
-        $diff = sprintf('Seconds: %s', $diff);
         error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
         if( ! $wpcp_activeinvoice) {
