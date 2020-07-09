@@ -439,7 +439,7 @@ function wpcp_cron_exec(){
         $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
         $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
 
-        $diff = strtotime( $wpcp_lastpayment ) - current_time( 'timestamp', 1 );
+        $diff = current_time( 'timestamp', 1 ) - strtotime( $wpcp_lastpayment );
 
         $wpcp_lastpayment = sprintf('Seconds: %s', $diff);
 
