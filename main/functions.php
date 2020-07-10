@@ -186,8 +186,6 @@ function wpcp_custom_box_html($post)
     ?>
 
     <div id="woocommerce-product-data" class="postbox ">
-        <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: Product data</span><span
-                    class="toggle-indicator" aria-hidden="true"></span></button>
         <h2 class="hndle ui-sortable-handle"><span>Product data<span class="type_box hidden"> —
 		<label for="product-type">
 			<select id="product-type" name="product-type">
