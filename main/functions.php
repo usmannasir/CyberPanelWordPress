@@ -183,10 +183,10 @@ function wpcp_custom_box_html($post)
 {
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
-    $wpcp_provider = get_post_meta($post->id, WPCP_PROVIDER, true);
-    $wpcp_providerplan = get_post_meta($post->id, WPCP_PROVIDERPLANS, true);
+    $wpcp_provider = get_post_meta($post->ID, WPCP_PROVIDER, true);
+    $wpcp_providerplan = get_post_meta($post->ID, WPCP_PROVIDERPLANS, true);
 
-    error_log(sprintf('WPCP_CUSTOM_BOX POSTID: %s', $post->id), 3, CPWP_ERROR_LOGS);
+    error_log(sprintf('WPCP_CUSTOM_BOX POSTID: %s', $post->ID), 3, CPWP_ERROR_LOGS);
     error_log(sprintf('WPCP_CUSTOM_BOX wpcp_provider: %s', $wpcp_provider), 3, CPWP_ERROR_LOGS);
     error_log(sprintf('WPCP_CUSTOM_BOX wpcp_providerplan: %s', $wpcp_providerplan), 3, CPWP_ERROR_LOGS);
 
