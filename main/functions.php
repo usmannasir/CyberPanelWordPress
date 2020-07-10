@@ -188,25 +188,20 @@ function wpcp_custom_box_html($post)
     <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
         <div class="options_group">
             <p class="form-field shipping_class_field">
-                <label for="product_shipping_class">Select Provider
-                    <div id="WPCPSpinner" class="spinner-border text-info" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </label>
+                <label for="product_shipping_class">Select Provider</label>
                 <select name="wpcp_provider" id="wpcp_provider" class="select short">
                     <?php
                     foreach ($results as $result) {
                         echo sprintf('<option>%s</option>', $result->name);
                     } ?>
                 </select>
-                <span class="woocommerce-help-tip"></span></p>
+                </p>
         </div>
         <div id="wpcp_providerplans_label" class="options_group">
             <p class="form-field shipping_class_field">
                 <label for="product_shipping_class">Select Provider</label>
                 <select name="wpcp_providerplans" id="wpcp_providerplans" class="select short">
-                </select>
-                <span class="woocommerce-help-tip"></span></p>
+                </select></p>
         </div>
     </div>
 
