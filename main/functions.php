@@ -185,28 +185,28 @@ function wpcp_custom_box_html($post)
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     ?>
 
-    <div class="options_group pricing show_if_simple show_if_external hidden" style="display: block;">
-        <p class="form-field _regular_price_field ">
-            <label for="_regular_price">Regular price (£)</label><input type="text" class="short wc_input_price"
-                                                                        style="" name="_regular_price"
-                                                                        id="_regular_price" value="18" placeholder="">
-        </p>
-        <p class="form-field _sale_price_field ">
-            <label for="_sale_price">Sale price (£)</label><input type="text" class="short wc_input_price" style=""
-                                                                  name="_sale_price" id="_sale_price" value=""
-                                                                  placeholder=""> <span class="description"><a href="#"
-                                                                                                               class="sale_schedule">Schedule</a></span>
-        </p>
-        <p class="form-field sale_price_dates_fields" style="display: none;">
-            <label for="_sale_price_dates_from">Sale price dates</label>
-            <input type="text" class="short hasDatepicker" name="_sale_price_dates_from" id="_sale_price_dates_from"
-                   value="" placeholder="From… YYYY-MM-DD" maxlength="10"
-                   pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])">
-            <input type="text" class="short hasDatepicker" name="_sale_price_dates_to" id="_sale_price_dates_to"
-                   value="" placeholder="To…  YYYY-MM-DD" maxlength="10"
-                   pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])">
-            <a href="#" class="description cancel_sale_schedule">Cancel</a><span class="woocommerce-help-tip"></span>
-        </p></div>
+    <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
+        <div class="options_group">
+            <p class="form-field _weight_field ">
+                <label for="_weight">Weight (kg)</label><span class="woocommerce-help-tip"></span><input type="text" class="short wc_input_decimal" style="" name="_weight" id="_weight" value="" placeholder="0"> </p>			<p class="form-field dimensions_field">
+                <label for="product_length">Dimensions (cm)</label>
+                <span class="wrap">
+					<input id="product_length" placeholder="Length" class="input-text wc_input_decimal" size="6" type="text" name="_length" value="">
+					<input id="product_width" placeholder="Width" class="input-text wc_input_decimal" size="6" type="text" name="_width" value="">
+					<input id="product_height" placeholder="Height" class="input-text wc_input_decimal last" size="6" type="text" name="_height" value="">
+				</span>
+                <span class="woocommerce-help-tip"></span>			</p>
+        </div>
+
+        <div class="options_group">
+            <p class="form-field shipping_class_field">
+                <label for="product_shipping_class">Shipping class</label>
+                <select name="product_shipping_class" id="product_shipping_class" class="select short">
+                    <option value="-1" selected="selected">No shipping class</option>
+                </select>
+                <span class="woocommerce-help-tip"></span>		</p>
+        </div>
+    </div>
 
 
     <label for="wpcp_provider">Select Provider
