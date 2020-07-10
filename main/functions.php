@@ -187,43 +187,28 @@ function wpcp_custom_box_html($post)
 
     <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
         <div class="options_group">
-            <p class="form-field _weight_field ">
-                <label for="_weight">Weight (kg)</label><span class="woocommerce-help-tip"></span><input type="text" class="short wc_input_decimal" style="" name="_weight" id="_weight" value="" placeholder="0"> </p>			<p class="form-field dimensions_field">
-                <label for="product_length">Dimensions (cm)</label>
-                <span class="wrap">
-					<input id="product_length" placeholder="Length" class="input-text wc_input_decimal" size="6" type="text" name="_length" value="">
-					<input id="product_width" placeholder="Width" class="input-text wc_input_decimal" size="6" type="text" name="_width" value="">
-					<input id="product_height" placeholder="Height" class="input-text wc_input_decimal last" size="6" type="text" name="_height" value="">
-				</span>
-                <span class="woocommerce-help-tip"></span>			</p>
-        </div>
-
-        <div class="options_group">
             <p class="form-field shipping_class_field">
-                <label for="product_shipping_class">Shipping class</label>
-                <select name="product_shipping_class" id="product_shipping_class" class="select short">
-                    <option value="-1" selected="selected">No shipping class</option>
+                <label for="product_shipping_class">Select Provider
+                    <div id="WPCPSpinner" class="spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </label>
+                <select name="wpcp_provider" id="wpcp_provider" class="select short">
+                    <?php
+                    foreach ($results as $result) {
+                        echo sprintf('<option>%s</option>', $result->name);
+                    } ?>
                 </select>
-                <span class="woocommerce-help-tip"></span>		</p>
+                <span class="woocommerce-help-tip"></span></p>
+        </div>
+        <div id="wpcp_providerplans_label" class="options_group">
+            <p class="form-field shipping_class_field">
+                <label for="product_shipping_class">Select Provider</label>
+                <select name="wpcp_providerplans" id="wpcp_providerplans" class="select short">
+                </select>
+                <span class="woocommerce-help-tip"></span></p>
         </div>
     </div>
-
-
-    <label for="wpcp_provider">Select Provider
-        <div id="WPCPSpinner" class="spinner-border text-info" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </label>
-    <select name="wpcp_provider" id="wpcp_provider" class="postbox">
-        <?php
-        foreach ($results as $result) {
-            echo sprintf('<option>%s</option>', $result->name);
-        } ?>
-    </select>
-
-    <label id="wpcp_providerplans_label" for="wpcp_providerplans">Select Provider Plan</label>
-    <select name="wpcp_providerplans" id="wpcp_providerplans" class="postbox">
-    </select>
 
     <?php
 
