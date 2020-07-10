@@ -185,33 +185,29 @@ function wpcp_custom_box_html($post)
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     ?>
 
-    <form class="form-style-7">
-        <ul>
-            <li>
-                <label for="name">Name</label>
-                <input type="text" name="name" maxlength="100">
-                <span>Enter your full name here</span>
-            </li>
-            <li>
-                <label for="email">Email</label>
-                <input type="email" name="email" maxlength="100">
-                <span>Enter a valid email address</span>
-            </li>
-            <li>
-                <label for="url">Website</label>
-                <input type="url" name="url" maxlength="100">
-                <span>Your website address (eg: http://www.google.com)</span>
-            </li>
-            <li>
-                <label for="bio">About You</label>
-                <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
-                <span>Say something about yourself</span>
-            </li>
-            <li>
-                <input type="submit" value="Send This" >
-            </li>
-        </ul>
-    </form>
+    <div class="options_group pricing show_if_simple show_if_external hidden" style="display: block;">
+        <p class="form-field _regular_price_field ">
+            <label for="_regular_price">Regular price (£)</label><input type="text" class="short wc_input_price"
+                                                                        style="" name="_regular_price"
+                                                                        id="_regular_price" value="18" placeholder="">
+        </p>
+        <p class="form-field _sale_price_field ">
+            <label for="_sale_price">Sale price (£)</label><input type="text" class="short wc_input_price" style=""
+                                                                  name="_sale_price" id="_sale_price" value=""
+                                                                  placeholder=""> <span class="description"><a href="#"
+                                                                                                               class="sale_schedule">Schedule</a></span>
+        </p>
+        <p class="form-field sale_price_dates_fields" style="display: none;">
+            <label for="_sale_price_dates_from">Sale price dates</label>
+            <input type="text" class="short hasDatepicker" name="_sale_price_dates_from" id="_sale_price_dates_from"
+                   value="" placeholder="From… YYYY-MM-DD" maxlength="10"
+                   pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])">
+            <input type="text" class="short hasDatepicker" name="_sale_price_dates_to" id="_sale_price_dates_to"
+                   value="" placeholder="To…  YYYY-MM-DD" maxlength="10"
+                   pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])">
+            <a href="#" class="description cancel_sale_schedule">Cancel</a><span class="woocommerce-help-tip"></span>
+        </p></div>
+
 
     <label for="wpcp_provider">Select Provider
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
