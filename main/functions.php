@@ -185,32 +185,33 @@ function wpcp_custom_box_html($post)
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     ?>
 
-    <div id="woocommerce-product-data" class="postbox ">
-        <h2 class="hndle ui-sortable-handle"><span>Product data<span class="type_box hidden"> —
-		<label for="product-type">
-			<select id="product-type" name="product-type">
-				<optgroup label="Product Type">
-									<option value="simple" selected="selected">Simple product</option>
-									<option value="grouped">Grouped product</option>
-									<option value="external">External/Affiliate product</option>
-									<option value="variable">Variable product</option>
-								</optgroup>
-			</select>
-		</label>
-        <label for="_virtual" class="show_if_simple tips" style="display: inline-block;">
-				Virtual:
-				<input type="checkbox" name="_virtual" id="_virtual">
-			</label>
-		<label for="_downloadable" class="show_if_simple tips" style="display: inline-block;">
-				Downloadable:
-				<input type="checkbox" name="_downloadable" id="_downloadable">
-			</label>
-		<label for="_ywsbs_subscription" class="show_if_simple tips" style="display: inline-block;">
-				Subscription:
-				<input type="checkbox" name="_ywsbs_subscription" id="_ywsbs_subscription">
-			</label>
-			</span></span></h2>
-    </div>
+    <form class="form-style-7">
+        <ul>
+            <li>
+                <label for="name">Name</label>
+                <input type="text" name="name" maxlength="100">
+                <span>Enter your full name here</span>
+            </li>
+            <li>
+                <label for="email">Email</label>
+                <input type="email" name="email" maxlength="100">
+                <span>Enter a valid email address</span>
+            </li>
+            <li>
+                <label for="url">Website</label>
+                <input type="url" name="url" maxlength="100">
+                <span>Your website address (eg: http://www.google.com)</span>
+            </li>
+            <li>
+                <label for="bio">About You</label>
+                <textarea name="bio" onkeyup="adjust_textarea(this)"></textarea>
+                <span>Say something about yourself</span>
+            </li>
+            <li>
+                <input type="submit" value="Send This" >
+            </li>
+        </ul>
+    </form>
 
     <label for="wpcp_provider">Select Provider
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
