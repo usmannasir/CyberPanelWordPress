@@ -445,18 +445,22 @@ function wpcp_cron_exec(){
         $query->the_post();
         $post_id = get_the_ID();
 
-        $wpcp_productid = get_post_meta($post_id, 'wpcp_productid', true);
-        $wpcp_lastpayment = get_post_meta($post_id, 'wpcp_lastpayment', true);
-        $wpcp_activeinvoice = get_post_meta($post_id, 'wpcp_activeinvoice', true);
-        $wpcp_orderid = get_post_meta($post_id, 'wpcp_orderid', true);
+        $wpcp_productid = get_post_meta($post_id, WPCP_PRODUCTID, true);
+        $wpcp_duedate = (int) get_post_meta($post_id, WPCP_DUEDATE, true);
+        $wpcp_activeinvoice = get_post_meta($post_id, WPCP_ACTIVEINVOICE, true);
+        $wpcp_orderid = get_post_meta($post_id, WPCP_ORDERID, true);
 
-        $diff = current_time( 'timestamp', 1 ) - strtotime( $wpcp_lastpayment );
-        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_lastpayment: %s. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_lastpayment, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+        $now = new DateTime();
+        $diff = $wpcp_duedate - $now->getTimestamp();
+        $autoInvoice = (int) get_option( 'wpcp_invoice', '14' ) * 86400;
+
+        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
         if( ! $wpcp_activeinvoice) {
 
-            if($diff > 60){
-                ## Find user of this order
+            if($diff <= $autoInvoice){
+
+                update_post_meta($post_id, WPCP_DUEDATE, (string) $now->getTimestamp());
                 $order = wc_get_order( $wpcp_orderid );
 
                 $address = array(
@@ -475,9 +479,7 @@ function wpcp_cron_exec(){
 
                 // Now we create the order
                 $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
-
                 $nOrder->add_product(get_product($wpcp_productid), 1);
-
                 ## Set custom description of order
 
                 $postTitle = get_the_title( $post_id );
@@ -497,8 +499,7 @@ function wpcp_cron_exec(){
                 $nOrder->calculate_totals();
                 $nOrder->update_status('pending');
 
-                update_post_meta($post_id, 'wpcp_lastpayment', current_time( 'timestamp', 1 ));
-                update_post_meta($post_id, 'wpcp_activeinvoice', 1);
+                update_post_meta($post_id, WPCP_ACTIVEINVOICE, 1);
                 add_post_meta($post_id, 'wpcp_paymentid', $nOrder->id, true );
                 add_post_meta($nOrder->id, 'wpcp_invoice', 'yes', true );
 

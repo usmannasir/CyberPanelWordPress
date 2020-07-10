@@ -74,8 +74,8 @@ class CyberPanelHetzner extends WPCPHTTP
         $product = wc_get_product( $product_id );
         $productName = $product->get_title();
         $productPrice = $product->get_regular_price();
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        $wpcp_providerplans = get_post_meta($product_id, 'wpcp_providerplans', true);
+        $wpcp_provider = get_post_meta($product_id, WPCP_PROVIDER, true);
+        $wpcp_providerplans = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
 
         $finalPlan = explode(',', $wpcp_providerplans)[0];
 
@@ -138,7 +138,6 @@ runcmd:
             $datacenter = $respData->server->datacenter->name;
             $city = $respData->server->datacenter->location->city;
 
-
             if( ! isset($serverID) ){
                 throw new Exception('Server failed to create.');
             }
@@ -187,9 +186,13 @@ runcmd:
 
         $post_id = wp_insert_post( $my_post );
 
-        add_post_meta( $post_id, 'wpcp_lastpayment', $orderDate, true );
-        add_post_meta( $post_id, 'wpcp_activeinvoice', 0, true );
-        add_post_meta( $post_id, 'wpcp_orderid', $order->id, true );
+        $dueDate = new DateTime();
+        $interval = new DateInterval(WPCP_INTERVAL);
+        $dueDate->add($interval);
+
+        add_post_meta( $post_id, WPCP_DUEDATE, (string) $dueDate->getTimestamp(), true );
+        add_post_meta( $post_id, WPCP_ACTIVEINVOICE, 0, true );
+        add_post_meta( $post_id, WPCP_ORDERID, $order->id, true );
 
         update_post_meta(
             $post_id,
@@ -199,7 +202,7 @@ runcmd:
 
         update_post_meta(
             $post_id,
-            'wpcp_productid',
+            WPCP_PRODUCTID,
             $product_id
         );
 

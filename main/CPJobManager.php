@@ -125,9 +125,9 @@ class CPJobManager
 
             if ($this->function == 'saveSettings') {
 
-                $invoice = sanitize_text_field($this->data['invoice']);
-                $autoSuspend = sanitize_text_field($this->data['autoSuspend']);
-                $autoTerminate = sanitize_text_field($this->data['autoTerminate']);
+                $invoice = (string) sanitize_text_field($this->data['invoice']);
+                $autoSuspend = (string) sanitize_text_field($this->data['autoSuspend']);
+                $autoTerminate = (string) sanitize_text_field($this->data['autoTerminate']);
 
                 add_option('wpcp_invoice', $invoice, '', 'no');
                 add_option('wpcp_auto_suspend', $autoSuspend, '', 'no');

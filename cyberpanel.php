@@ -34,6 +34,16 @@ define('WPCP_JobFailed', 1);
 define('WPCP_JobSuccess', 2);
 define('WPCP_JobRunning', 3);
 
+## META VALUES
+
+define('WPCP_PROVIDER', 'wpcp_provider');
+define('WPCP_PROVIDERPLANS', 'wpcp_providerplans');
+define('WPCP_DUEDATE', 'wpcp_duedate');
+define('WPCP_ACTIVEINVOICE', 'wpcp_activeinvoice');
+define('WPCP_ORDERID', 'wpcp_orderid');
+define('WPCP_INTERVAL', 'P60S');
+define('WPCP_PRODUCTID', 'wpcp_productid');
+
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 
