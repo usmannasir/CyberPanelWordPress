@@ -183,6 +183,8 @@ function wpcp_custom_box_html($post)
 {
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
+    $wpcp_provider = get_post_meta($product_id, WPCP_PROVIDER, true);
+    $wpcp_providerplan = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
     ?>
 
     <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
@@ -195,7 +197,7 @@ function wpcp_custom_box_html($post)
                     foreach ($results as $result) {
                         echo sprintf('<option>%s</option>', $result->name);
                     } ?>
-                </select><span class="description"><a href="#" class="sale_schedule">Current Provider</a></span>
+                </select><span class="description">Current Provider <?php echo $wpcp_provider ?></span>
             </p>
             <div id="WPCPSpinner" class="spinner-border text-info" role="status">
                 <span class="sr-only">Loading...</span>
@@ -203,9 +205,9 @@ function wpcp_custom_box_html($post)
         </div>
         <div id="wpcp_providerplans_label" class="options_group">
             <p class="form-field shipping_class_field">
-                <label for="product_shipping_class">Select Provider</label>
+                <label for="product_shipping_class">Select Plan</label>
                 <select name="wpcp_providerplans" id="wpcp_providerplans" class="select short">
-                </select><span class="description"><a href="#" class="sale_schedule">Current package</a></span>
+                </select><span class="description">Current package:  <?php echo $wpcp_providerplan ?></span>
             </p>
         </div>
     </div>
