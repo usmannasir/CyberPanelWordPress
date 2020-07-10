@@ -88,8 +88,10 @@ function ajax_saveSettings()
         return;
     }
 
+    $message = 'Saving sitewide CyberPanel settings.';
+
     check_ajax_referer('CPWP');
-    $cpjm = new CPJobManager('saveSettings', $_POST);
+    $cpjm = new CPJobManager('saveSettings', $_POST, $message);
     $cpjm->RunJob();
 }
 

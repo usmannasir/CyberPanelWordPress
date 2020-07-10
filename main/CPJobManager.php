@@ -133,6 +133,9 @@ class CPJobManager
                 add_option('wpcp_auto_suspend', $autoSuspend, '', 'no');
                 add_option('wpcp_terminate', $autoTerminate, '', 'no');
 
+                $this->setDescription('Site wide settings configured.');
+                $this->updateJobStatus(WPCP_JobSuccess, 100);
+
                 wp_send_json(json_encode(array('status' => 1)));
 
             }
