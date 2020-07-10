@@ -129,9 +129,9 @@ class CPJobManager
                 $autoSuspend = (string) sanitize_text_field($this->data['autoSuspend']);
                 $autoTerminate = (string) sanitize_text_field($this->data['autoTerminate']);
 
-                add_option('wpcp_invoice', $invoice, '', 'no');
-                add_option('wpcp_auto_suspend', $autoSuspend, '', 'no');
-                add_option('wpcp_terminate', $autoTerminate, '', 'no');
+                update_option('wpcp_invoice', $invoice, 'no');
+                update_option('wpcp_auto_suspend', $autoSuspend, 'no');
+                update_option('wpcp_terminate', $autoTerminate, 'no');
 
                 $this->setDescription('Site wide settings configured.');
                 $this->updateJobStatus(WPCP_JobSuccess, 100);
