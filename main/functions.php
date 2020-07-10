@@ -560,8 +560,8 @@ function wpcp_display_custom_field_locations()
 
     printf('
 <div>
-<label style="margin-bottom: 1%" for="wpcp-title-field-locations">Select Location</label>
-<select style="margin-bottom: 1%" id="wpcp_locations">
+<label for="wpcp-title-field-locations">Select Location</label>
+<select id="wpcp_locations">
     %s
 </select>
 </div>
