@@ -552,6 +552,8 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  */
 function wpcp_create_custom_field() {
     $options[''] = __( 'Select a value', 'woocommerce'); // default value
+    $options['test'] = 'test';
+    $options['hey'] = 'hey';
     echo '<div class="options_group">';
 
     woocommerce_wp_select( array(
