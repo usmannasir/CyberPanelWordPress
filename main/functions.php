@@ -545,6 +545,22 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
 }
 
+/**
+ * Display the custom text field
+ * @since 1.0.0
+ */
+function cfwc_create_custom_field() {
+    $args = array(
+        'id' => 'custom_text_field_title',
+        'label' => __( 'Custom Text Field Title', 'cfwc' ),
+        'class' => 'cfwc-custom-field',
+        'desc_tip' => true,
+        'description' => __( 'Enter the title of your custom text field.', 'ctwc' ),
+    );
+    woocommerce_wp_text_input( $args );
+}
+add_action( 'woocommerce_product_options_general_product_data', 'cfwc_create_custom_field' );
+
 ///
 
 /**
@@ -552,16 +568,20 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  * @since 1.0.0
  */
 function cfwc_display_custom_field() {
-    global $post;
-    // Check for the custom field value
-    $product = wc_get_product( $post->ID );
-    $title = $product->get_meta( 'custom_text_field_title' );
-    if( $title ) {
-        // Only display our field if we've got a value for the field title
-        printf(
-            '<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">%s</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div>',
-            esc_html( $title )
-        );
-    }
+//    global $post;
+//    // Check for the custom field value
+//    $product = wc_get_product( $post->ID );
+//    $title = $product->get_meta( 'custom_text_field_title' );
+//    if( $title ) {
+//        // Only display our field if we've got a value for the field title
+//        printf(
+//            '<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">%s</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div>',
+//            esc_html( $title )
+//        );
+//    }
+    printf(
+        '<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">%s</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div>',
+        esc_html( 'hello world' )
+    );
 }
 add_action( 'woocommerce_before_add_to_cart_button', 'cfwc_display_custom_field' );
