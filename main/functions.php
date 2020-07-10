@@ -546,28 +546,21 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
 }
 
 
-
-///
-
 /**
- * Display custom field on the front end
+ * Display the custom text field
  * @since 1.0.0
  */
-function cfwc_display_custom_field() {
-//    global $post;
-//    // Check for the custom field value
-//    $product = wc_get_product( $post->ID );
-//    $title = $product->get_meta( 'custom_text_field_title' );
-//    if( $title ) {
-//        // Only display our field if we've got a value for the field title
-//        printf(
-//            '<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">%s</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div>',
-//            esc_html( $title )
-//        );
-//    }
-    printf(
-        '<div class="cfwc-custom-field-wrapper"><label for="cfwc-title-field">%s</label><input type="text" id="cfwc-title-field" name="cfwc-title-field" value=""></div>',
-        esc_html( 'hello world' )
-    );
+function wpcp_create_custom_field() {
+    $options[''] = __( 'Select a value', 'woocommerce'); // default value
+    echo '<div class="options_group">';
+
+    woocommerce_wp_select( array(
+        'id'      => '_select',
+        'label'   => __( 'My Select Field', 'woocommerce' ),
+        'options' =>  $options, //this is where I am having trouble
+        'value'   => 'hey',
+    ) );
+
+    echo '</div>';
 }
-add_action( 'woocommerce_before_add_to_cart_button', 'cfwc_display_custom_field' );
+add_action( 'woocommerce_product_options_general_product_data', 'wpcp_create_custom_field' );
