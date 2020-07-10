@@ -489,7 +489,9 @@ function wpcp_cron_exec(){
                 ##
 
                 $nOrder->set_address($address, 'billing');
+
                 //
+
                 $nOrder->calculate_totals();
                 $nOrder->update_status('pending');
 
