@@ -197,7 +197,7 @@ function wpcp_custom_box_html($post)
                     foreach ($results as $result) {
                         echo sprintf('<option>%s</option>', $result->name);
                     } ?>
-                </select><span class="description">Current Provider <?php echo $wpcp_provider ?></span>
+                </select><span class="description">Current Provider: <?php echo $wpcp_provider ?></span>
             </p>
             <div id="WPCPSpinner" class="spinner-border text-info" role="status">
                 <span class="sr-only">Loading...</span>
