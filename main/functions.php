@@ -183,8 +183,8 @@ function wpcp_custom_box_html($post)
 {
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
-    $wpcp_provider = get_post_meta($product_id, WPCP_PROVIDER, true);
-    $wpcp_providerplan = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
+    $wpcp_provider = get_post_meta($post, WPCP_PROVIDER, true);
+    $wpcp_providerplan = get_post_meta($post, WPCP_PROVIDERPLANS, true);
     ?>
 
     <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
