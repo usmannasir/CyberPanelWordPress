@@ -554,7 +554,7 @@ function wpcp_create_custom_field() {
     $options[''] = __( 'Select a value', 'woocommerce'); // default value
     echo '<div class="options_group">';
 
-    woocommerce_wp_hidden_input( array(
+    woocommerce_wp_select( array(
         'id'      => '_select',
         'label'   => __( 'My Select Field', 'woocommerce' ),
         'options' =>  $options, //this is where I am having trouble
