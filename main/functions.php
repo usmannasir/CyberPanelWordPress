@@ -195,13 +195,17 @@ function wpcp_custom_box_html($post)
                         echo sprintf('<option>%s</option>', $result->name);
                     } ?>
                 </select>
-                </p>
+            </p>
+            <div id="WPCPSpinner" class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
         <div id="wpcp_providerplans_label" class="options_group">
             <p class="form-field shipping_class_field">
                 <label for="product_shipping_class">Select Provider</label>
                 <select name="wpcp_providerplans" id="wpcp_providerplans" class="select short">
-                </select></p>
+                </select>
+            </p>
         </div>
     </div>
 
