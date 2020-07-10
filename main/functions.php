@@ -185,6 +185,11 @@ function wpcp_custom_box_html($post)
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     $wpcp_provider = get_post_meta($post, WPCP_PROVIDER, true);
     $wpcp_providerplan = get_post_meta($post, WPCP_PROVIDERPLANS, true);
+
+    error_log(sprintf('WPCP_CUSTOM_BOX POSTID: %s', $post), 3, CPWP_ERROR_LOGS);
+    error_log(sprintf('WPCP_CUSTOM_BOX wpcp_provider: %s', $wpcp_provider), 3, CPWP_ERROR_LOGS);
+    error_log(sprintf('WPCP_CUSTOM_BOX wpcp_providerplan: %s', $wpcp_providerplan), 3, CPWP_ERROR_LOGS);
+
     ?>
 
     <div id="shipping_product_data" class="panel woocommerce_options_panel hidden" style="display: block;">
