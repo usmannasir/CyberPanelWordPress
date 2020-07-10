@@ -545,21 +545,7 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
 }
 
-/**
- * Display the custom text field
- * @since 1.0.0
- */
-function cfwc_create_custom_field() {
-    $args = array(
-        'id' => 'custom_text_field_title',
-        'label' => __( 'Custom Text Field Title', 'cfwc' ),
-        'class' => 'cfwc-custom-field',
-        'desc_tip' => true,
-        'description' => __( 'Enter the title of your custom text field.', 'ctwc' ),
-    );
-    woocommerce_wp_text_input( $args );
-}
-add_action( 'woocommerce_product_options_general_product_data', 'cfwc_create_custom_field' );
+
 
 ///
 
