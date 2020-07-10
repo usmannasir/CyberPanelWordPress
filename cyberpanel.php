@@ -41,8 +41,10 @@ define('WPCP_PROVIDERPLANS', 'wpcp_providerplans');
 define('WPCP_DUEDATE', 'wpcp_duedate');
 define('WPCP_ACTIVEINVOICE', 'wpcp_activeinvoice');
 define('WPCP_ORDERID', 'wpcp_orderid');
-define('WPCP_INTERVAL', 'P13D');
+define('WPCP_INTERVAL', 'P29D');
 define('WPCP_PRODUCTID', 'wpcp_productid');
+define('WPCP_INVOICE', 'wpcp_invoice');
+define('WPCP_PAYMENTID', 'wpcp_paymentid');
 
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');

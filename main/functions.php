@@ -184,6 +184,36 @@ function wpcp_custom_box_html($post)
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
     ?>
+
+    <div id="woocommerce-product-data" class="postbox ">
+        <button type="button" class="handlediv" aria-expanded="true"><span class="screen-reader-text">Toggle panel: Product data</span><span
+                    class="toggle-indicator" aria-hidden="true"></span></button>
+        <h2 class="hndle ui-sortable-handle"><span>Product data<span class="type_box hidden"> —
+		<label for="product-type">
+			<select id="product-type" name="product-type">
+				<optgroup label="Product Type">
+									<option value="simple" selected="selected">Simple product</option>
+									<option value="grouped">Grouped product</option>
+									<option value="external">External/Affiliate product</option>
+									<option value="variable">Variable product</option>
+								</optgroup>
+			</select>
+		</label>
+        <label for="_virtual" class="show_if_simple tips" style="display: inline-block;">
+				Virtual:
+				<input type="checkbox" name="_virtual" id="_virtual">
+			</label>
+		<label for="_downloadable" class="show_if_simple tips" style="display: inline-block;">
+				Downloadable:
+				<input type="checkbox" name="_downloadable" id="_downloadable">
+			</label>
+		<label for="_ywsbs_subscription" class="show_if_simple tips" style="display: inline-block;">
+				Subscription:
+				<input type="checkbox" name="_ywsbs_subscription" id="_ywsbs_subscription">
+			</label>
+			</span></span></h2>
+    </div>
+
     <label for="wpcp_provider">Select Provider
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
             <span class="sr-only">Loading...</span>
@@ -273,7 +303,7 @@ function woocommerce_payment_complete_order_status($order_id)
 
     error_log(sprintf('Value of wpcp_invoice: %s', $wpcp_invoice), 3, CPWP_ERROR_LOGS);
 
-    if( $wpcp_invoice != 'yes' ) {
+    if ($wpcp_invoice != 'yes') {
         error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
 
         if ($order->data['status'] == 'processing') {
@@ -431,9 +461,10 @@ function filter_the_content_in_the_main_loop($content)
     return $content;
 }*/
 
-remove_filter( 'the_content', 'filter_the_content_in_the_main_loop' );
+remove_filter('the_content', 'filter_the_content_in_the_main_loop');
 
-function wpcp_cron_exec(){
+function wpcp_cron_exec()
+{
 
     $query = new WP_Query(array(
         'post_type' => 'wpcp_server',
@@ -447,22 +478,22 @@ function wpcp_cron_exec(){
         $post_id = get_the_ID();
 
         $wpcp_productid = get_post_meta($post_id, WPCP_PRODUCTID, true);
-        $wpcp_duedate = (int) get_post_meta($post_id, WPCP_DUEDATE, true);
+        $wpcp_duedate = (int)get_post_meta($post_id, WPCP_DUEDATE, true);
         $wpcp_activeinvoice = get_post_meta($post_id, WPCP_ACTIVEINVOICE, true);
         $wpcp_orderid = get_post_meta($post_id, WPCP_ORDERID, true);
 
         $now = new DateTime();
         $diff = $wpcp_duedate - $now->getTimestamp();
-        $autoInvoice = (int) get_option( 'wpcp_invoice', '14' ) * 86400;
+        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
 
         error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
 
-        if( ! $wpcp_activeinvoice) {
+        if (!$wpcp_activeinvoice) {
 
-            if($diff <= $autoInvoice){
+            if ($diff <= $autoInvoice) {
 
-                update_post_meta($post_id, WPCP_DUEDATE, (string) $now->getTimestamp());
-                $order = wc_get_order( $wpcp_orderid );
+                update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
+                $order = wc_get_order($wpcp_orderid);
 
                 $address = array(
                     'first_name' => $order->get_billing_first_name(),
@@ -483,13 +514,13 @@ function wpcp_cron_exec(){
                 $nOrder->add_product(get_product($wpcp_productid), 1);
                 ## Set custom description of order
 
-                $postTitle = get_the_title( $post_id );
+                $postTitle = get_the_title($post_id);
                 $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
 
                 global $wpdb;
                 $table_name = $wpdb->prefix . 'woocommerce_order_items';
                 $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
-                $wpdb->query( $sql );
+                $wpdb->query($sql);
 
                 ##
 
@@ -501,8 +532,8 @@ function wpcp_cron_exec(){
                 $nOrder->update_status('pending');
 
                 update_post_meta($post_id, WPCP_ACTIVEINVOICE, 1);
-                add_post_meta($post_id, 'wpcp_paymentid', $nOrder->id, true );
-                add_post_meta($nOrder->id, 'wpcp_invoice', 'yes', true );
+                add_post_meta($post_id, WPCP_PAYMENTID, $nOrder->id, true);
+                add_post_meta($nOrder->id, WPCP_INVOICE, 'yes', true);
 
 
             }
@@ -512,16 +543,17 @@ function wpcp_cron_exec(){
     wp_reset_query();
 }
 
-add_filter( 'cron_schedules', 'example_add_cron_interval' );
-function example_add_cron_interval( $schedules ) {
+add_filter('cron_schedules', 'example_add_cron_interval');
+function example_add_cron_interval($schedules)
+{
     $schedules['five_seconds'] = array(
         'interval' => 5,
-        'display'  => esc_html__( 'Every Five Seconds' ), );
+        'display' => esc_html__('Every Five Seconds'),);
     return $schedules;
 }
 
-add_action( 'wpcp_croncp_hook', 'wpcp_cron_exec' );
+add_action('wpcp_croncp_hook', 'wpcp_cron_exec');
 
-if ( ! wp_next_scheduled( 'wpcp_croncp_hook' ) ) {
-    wp_schedule_event( time(), 'five_seconds', 'wpcp_croncp_hook' );
+if (!wp_next_scheduled('wpcp_croncp_hook')) {
+    wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
 }
