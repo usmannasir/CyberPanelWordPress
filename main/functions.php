@@ -442,6 +442,7 @@ function wpcp_cron_exec(){
     ));
 
     while ($query->have_posts()) {
+
         $query->the_post();
         $post_id = get_the_ID();
 
