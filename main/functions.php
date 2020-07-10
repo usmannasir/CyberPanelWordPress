@@ -195,7 +195,7 @@ function wpcp_custom_box_html($post)
                     foreach ($results as $result) {
                         echo sprintf('<option>%s</option>', $result->name);
                     } ?>
-                </select>
+                </select><span class="description"><a href="#" class="sale_schedule">Current Provider</a></span>
             </p>
             <div id="WPCPSpinner" class="spinner-border text-info" role="status">
                 <span class="sr-only">Loading...</span>
@@ -205,7 +205,7 @@ function wpcp_custom_box_html($post)
             <p class="form-field shipping_class_field">
                 <label for="product_shipping_class">Select Provider</label>
                 <select name="wpcp_providerplans" id="wpcp_providerplans" class="select short">
-                </select>
+                </select><span class="description"><a href="#" class="sale_schedule">Current package</a></span>
             </p>
         </div>
     </div>
