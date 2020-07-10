@@ -545,48 +545,24 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
 }
 
-
-/**
- * Display the custom text field
- * @since 1.0.0
- */
-function wpcp_create_custom_field()
-{
-    $options[''] = __('Select a value', 'woocommerce'); // default value
-    $options['test'] = 'test';
-    $options['hey'] = 'hey';
-    echo '<div class="options_group">';
-
-    woocommerce_wp_select(array(
-        'id' => '_select',
-        'label' => __('My Select Field', 'wpcp'),
-        'options' => $options, //this is where I am having trouble
-        // Default value 'value'   => 'hey',
-    ));
-
-    echo '</div>';
-}
-
-add_action('woocommerce_product_options_general_product_data', 'wpcp_create_custom_field');
-
 /**
  * Display custom field on the front end
  * @since 1.0.0
  */
-function wpcp_display_custom_field()
+function wpcp_display_custom_field_locations()
 {
     global $post;
     printf('
-<div class="wpcp-custom-field-wrapper">
-<label for="wpcp-title-field">%s</label>
-<select id="">
-    <option>hey</option>
-    <option>heyy</option>
+<div class="wpcp-custom-field-locations">
+<label for="wpcp-title-field-locations">%s</label>
+<select id="wpcp_locations">
+    <option>why</option>
+    <option>whyy</option>
 </select>
 </div>
 ',
-        esc_html('hello world')
+        esc_html('Select Location')
     );
 }
 
-add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field');
+add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
