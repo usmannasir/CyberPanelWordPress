@@ -123,10 +123,17 @@ class CPJobManager
     {
         try {
 
-            if ($this->function == 'VerifyConnection') {
+            if ($this->function == 'saveSettings') {
 
-                $cpm = new CyberPanelManager($this, $this->data);
-                wp_send_json($cpm->VerifyConnection());
+                $invoice = sanitize_text_field($this->data['invoice']);
+                $autoSuspend = sanitize_text_field($this->data['autoSuspend']);
+                $autoTerminate = sanitize_text_field($this->data['autoTerminate']);
+
+                add_option('wpcp_invoice', $invoice, '', 'no');
+                add_option('wpcp_auto_suspend', $autoSuspend, '', 'no');
+                add_option('wpcp_terminate', $autoTerminate, '', 'no');
+
+                wp_send_json(json_encode(array('status' => 1)));
 
             }
             elseif ($this->function == 'connectProvider') {

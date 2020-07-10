@@ -76,20 +76,20 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 //// Ajax handler
 
-add_action('wp_ajax_connectServer', 'ajax_Connect_Server');
+add_action('wp_ajax_saveSettings', 'ajax_saveSettings');
 
 
-function ajax_Connect_Server()
+function ajax_saveSettings()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('Connect_Server');
+    $cc = new CapabilityCheck('saveSettings');
     if (!$cc->checkCapability()) {
         return;
     }
 
     check_ajax_referer('CPWP');
-    $cpjm = new CPJobManager('VerifyConnection', $_POST, 'Verifying connection to: ' . $_POST['hostname']);
+    $cpjm = new CPJobManager('saveSettings', $_POST);
     $cpjm->RunJob();
 }
 

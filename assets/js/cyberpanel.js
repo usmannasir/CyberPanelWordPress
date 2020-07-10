@@ -70,13 +70,13 @@ jQuery(document).ready(function ($) {
 
     var dataContent;
 
-    $("#connectServer").click(function () {
+    $("#saveSettings").click(function () {
         dataContent = {
             _ajax_nonce: CPWP.nonce,
-            action: 'connectServer',
-            hostname: $("#hostname").val(),
-            username: $("#username").val(),
-            password: $("#password").val()
+            action: 'saveSettings',
+            invoice: $("#invoice").val(),
+            autoSuspend: $("#autoSuspend").val(),
+            autoTerminate: $("#autoTerminate").val()
         }
         GlobalAjax(dataContent, verifyConnectionCB, verifyConnectionCB);
     });
