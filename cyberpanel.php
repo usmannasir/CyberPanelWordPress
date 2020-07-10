@@ -41,7 +41,7 @@ define('WPCP_PROVIDERPLANS', 'wpcp_providerplans');
 define('WPCP_DUEDATE', 'wpcp_duedate');
 define('WPCP_ACTIVEINVOICE', 'wpcp_activeinvoice');
 define('WPCP_ORDERID', 'wpcp_orderid');
-define('WPCP_INTERVAL', 'P60S');
+define('WPCP_INTERVAL', 'PT60S');
 define('WPCP_PRODUCTID', 'wpcp_productid');
 
 
