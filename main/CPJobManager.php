@@ -175,6 +175,10 @@ class CPJobManager
                 $cpp = new ProviderHandler($this, $this->data);
                 wp_send_json($cpp->fetchPlans());
             }
+            elseif ($this->function == 'fetchLocations') {
+                $cpp = new ProviderHandler($this, $this->data);
+                return $cpp->fetchLocations();
+            }
             elseif ($this->function == 'jobStatus') {
                 $this->jobStatus();
             }

@@ -105,6 +105,7 @@ class ProviderHandler
     }
 
     function fetchPlans(){
+
         $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
@@ -112,6 +113,18 @@ class ProviderHandler
         if ($result->provider == 'Hetzner') {
             $cph = new CyberPanelHetzner($this, $this->data);
             return $cph->fetchPlans();
+        }
+    }
+
+    function fetchLocations(){
+
+        $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        if ($result->provider == 'Hetzner') {
+            $cph = new CyberPanelHetzner($this, $this->data);
+            return $cph->fetchLocations();
         }
     }
 

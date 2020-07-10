@@ -552,17 +552,20 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
 function wpcp_display_custom_field_locations()
 {
     global $post;
+
+    $data = array('wpcp_provider' => get_post_meta($post->ID, WPCP_PROVIDER, true));
+
+    $cpjm = new CPJobManager('fetchLocations', $data);
+    $locations = $cpjm->RunJob();
+
     printf('
-<div class="wpcp-custom-field-locations">
-<label for="wpcp-title-field-locations">%s</label>
+<div>
+<label for="wpcp-title-field-locations">Select Location</label>
 <select id="wpcp_locations">
-    <option>why</option>
-    <option>whyy</option>
+    %s
 </select>
 </div>
-',
-        esc_html('Select Location')
-    );
+', $locations);
 }
 
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');

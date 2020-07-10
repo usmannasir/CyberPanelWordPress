@@ -40,29 +40,49 @@ class CyberPanelHetzner extends WPCPHTTP
     function fetchPlans()
     {
         $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
+
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-        if ($result->provider == 'Hetzner') {
 
-            $token = json_decode($result->apidetails)->token;
-            $this->url = 'https://api.hetzner.cloud/v1/pricing';
-            $response = $this->HTTPPostCall($token, 'GET');
-            $data = json_decode(wp_remote_retrieve_body($response));
-            $types = $data->pricing->server_types;
+        $token = json_decode($result->apidetails)->token;
+        $this->url = 'https://api.hetzner.cloud/v1/pricing';
+        $response = $this->HTTPPostCall($token, 'GET');
+        $data = json_decode(wp_remote_retrieve_body($response));
+        $types = $data->pricing->server_types;
 
-            $finalResult = '';
+        $finalResult = '';
 
-            foreach ($types as $type) {
-                $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
-            }
-
-            $data = array(
-                'status' => 1,
-                'result' => $finalResult
-            );
+        foreach ($types as $type) {
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
         }
 
+        $data = array(
+            'status' => 1,
+            'result' => $finalResult
+        );
+
         return $data;
+    }
+
+    function fetchLocations()
+    {
+        $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
+
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        $token = json_decode($result->apidetails)->token;
+        $this->url = 'https://api.hetzner.cloud/v1/datacenters';
+        $response = $this->HTTPPostCall($token, 'GET');
+        $data = json_decode(wp_remote_retrieve_body($response));
+
+        $finalResult = '';
+
+        foreach ($data->datacenters as $datacenter){
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $datacenter->location->city . ',' . $datacenter->location->name);
+        }
+
+        return $finalResult;
     }
 
     function createServer()
