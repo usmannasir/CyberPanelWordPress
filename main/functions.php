@@ -550,7 +550,7 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  * Display the custom text field
  * @since 1.0.0
  */
-function cwpcp_create_custom_field() {
+function wpcp_create_custom_field() {
     $args = array(
         'id' => 'wpcp_location',
         'label' => __( 'Custom Text Field Title', 'wpcp' ),
