@@ -552,7 +552,7 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  */
 function wpcp_create_custom_field() {
     $args = array(
-        'id' => 'wpcp_locations',
+        'id' => 'wpcp_location',
         'label' => __( 'Locations', 'wpcp' ),
         'desc_tip' => true,
         'description' => __( 'Enter the title of your custom text field.', 'wpcp' ),
