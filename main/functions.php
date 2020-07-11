@@ -556,6 +556,8 @@ function wpcp_add_custom_field_item_data( $cart_item_data, $product_id, $variati
     if( ! empty( $_POST['wpcp_location'] ) ) {
         // Add the item data
         $cart_item_data['wpcp_location'] = $_POST['wpcp_location'];
+        $message = sprintf('Final location for cart items : %s.', $_POST['wpcp_location']);
+        error_log($message, 3, CPWP_ERROR_LOGS);
     }
     return $cart_item_data;
 }
@@ -569,6 +571,8 @@ function wpcp_add_custom_data_to_order( $item, $cart_item_key, $values, $order )
     foreach( $item as $cart_item_key=>$values ) {
         if( isset( $values['wpcp_location'] ) ) {
             add_post_meta($order->id, WPCP_LOCATION, $values['wpcp_location'], true);
+            $message = sprintf('Final location for order id %s is %s.', $order->id, $values['wpcp_location']);
+            error_log($message, 3, CPWP_ERROR_LOGS);
         }
     }
 }
