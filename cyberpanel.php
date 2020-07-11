@@ -45,6 +45,7 @@ define('WPCP_INTERVAL', 'P29D');
 define('WPCP_PRODUCTID', 'wpcp_productid');
 define('WPCP_INVOICE', 'wpcp_invoice');
 define('WPCP_PAYMENTID', 'wpcp_paymentid');
+define('WPCP_LOCATION', 'wpcp_location');
 
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
