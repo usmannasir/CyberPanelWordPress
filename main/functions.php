@@ -561,7 +561,7 @@ function wpcp_display_custom_field_locations()
     printf('
 <div>
 <label for="wpcp-title-field-locations">Select Location</label>
-<select id="wpcp_locations">
+<select id="wpcp_location">
     %s
 </select>
 </div>
@@ -569,4 +569,14 @@ function wpcp_display_custom_field_locations()
 }
 
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
-add_action('woocommerce_loop_add_to_cart_link', 'wpcp_display_custom_field_locations');
+//add_action('woocommerce_loop_add_to_cart_link', 'wpcp_display_custom_field_locations');
+
+function wpcp_validate_custom_field( $passed, $product_id, $quantity ) {
+    if( empty( $_POST['wpcp_location'] ) ) {
+        // Fails validation
+        $passed = false;
+        wc_add_notice( __( 'Please select location from product page before ordering.', 'wpcp' ), 'error' );
+    }
+    return $passed;
+}
+add_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3 );
