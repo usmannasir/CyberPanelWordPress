@@ -286,9 +286,9 @@ function woocommerce_payment_complete_order_status($order_id)
 {
     $order = wc_get_order($order_id);
 
-    $wpcp_invoice = get_post_meta($order->id, 'wpcp_invoice', true);
+    $wpcp_invoice = get_post_meta($order->id, WPCP_INVOICE, true);
 
-    error_log(sprintf('Value of wpcp_invoice: %s', $wpcp_invoice), 3, CPWP_ERROR_LOGS);
+    error_log(sprintf(var_dump($order)), 3, CPWP_ERROR_LOGS);
 
     if ($wpcp_invoice != 'yes') {
 
