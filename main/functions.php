@@ -571,7 +571,7 @@ function wpcp_add_custom_data_to_order( $item, $cart_item_key, $values, $order )
     foreach( $item as $cart_item_key=>$values ) {
         if( isset( $values['wpcp_location'] ) ) {
             add_post_meta($order->id, WPCP_LOCATION, $values['wpcp_location'], true);
-            $message = sprintf('Final location for order id %s is %s.', $order->id, $values['wpcp_location']);
+            $message = sprintf('Final location for order id %s is %s.', $order, $values['wpcp_location']);
             error_log($message, 3, CPWP_ERROR_LOGS);
         }
     }
