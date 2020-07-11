@@ -98,12 +98,11 @@ class CyberPanelHetzner extends WPCPHTTP
         $wpcp_providerplans = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
 
         $finalPlan = explode(',', $wpcp_providerplans)[0];
-        $finalLocation = explode(',', $this->data['wpcp_location'])[1];
+        $finalLocation = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
 
         $message = sprintf('Final location for product id %s is %s.', $product_id, var_dump($this->data));
         error_log($message, 3, CPWP_ERROR_LOGS);
 
-        return 0;
 
         $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
         error_log($message, 3, CPWP_ERROR_LOGS);
@@ -148,6 +147,7 @@ runcmd:
  - echo \"root:%s\"|chpasswd
 ", $CyberPanelPassword, $rootPassword),
             'automount' => false,
+            'location' => $finalLocation
         );
 
         $this->url = 'https://api.hetzner.cloud/v1/servers';
