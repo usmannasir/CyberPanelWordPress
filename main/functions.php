@@ -580,8 +580,6 @@ function wpcp_validate_custom_field( $passed, $product_id, $quantity ) {
 
     global $woocommerce;
 
-    $woocommerce->
-
     add_post_meta($product_id, WPCP_LOCATION, $_POST['wpcp_location']);
     return $passed;
 }
