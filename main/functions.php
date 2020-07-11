@@ -288,8 +288,6 @@ function woocommerce_payment_complete_order_status($order_id)
 
     $wpcp_invoice = get_post_meta($order->id, WPCP_INVOICE, true);
 
-    error_log(sprintf(var_dump($order)), 3, CPWP_ERROR_LOGS);
-
     if ($wpcp_invoice != 'yes') {
 
         error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
@@ -551,13 +549,14 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  * @since 1.0.0
  */
 function wpcp_create_custom_field() {
-    $args = array(
-        'id' => 'wpcp_location',
-        'label' => __( 'Locations', 'wpcp' ),
-        'desc_tip' => true,
-        'description' => __( 'Enter the title of your custom text field.', 'wpcp' ),
-    );
-    woocommerce_wp_text_input( $args );
+    $options[''] = __( 'Select a value', 'woocommerce'); // default value
+    $option['hey'] = 'hey';
+    woocommerce_wp_select( array(
+        'id'      => 'wpcp_location',
+        'label'   => __( 'My Select Field', 'woocommerce' ),
+        'options' =>  $options, //this is where I am having trouble
+        'value'   => 'Hey',
+    ) );
 }
 add_action( 'woocommerce_product_options_general_product_data', 'wpcp_create_custom_field' );
 
