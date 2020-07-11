@@ -57,21 +57,6 @@ function on_activation()
 {
     global $wpdb;
 
-    /// Tables that contain details of CyberPanel Server.
-
-    $table_name = $wpdb->prefix . TN_CYBERPANEL_SERVERS;
-
-    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
-  id mediumint(9) NOT NULL AUTO_INCREMENT,
-  userid mediumint(9) NOT NULL,
-  name varchar(500) DEFAULT '' NOT NULL,
-  userName varchar(500) DEFAULT '' NOT NULL,
-  token varchar(500) DEFAULT '' NOT NULL,
-  PRIMARY KEY  (id),
-  UNIQUE (name)
-)";
-    $wpdb->query( $sql );
-
     /// Table that will contain details of currently queued jobs.
 
     $table_name = $wpdb->prefix . TN_CYBERPANEL_JOBS;

@@ -100,10 +100,6 @@ class CyberPanelHetzner extends WPCPHTTP
         $finalPlan = explode(',', $wpcp_providerplans)[0];
         $finalLocation = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
 
-        $message = sprintf('Final location for product id %s is %s.', $product_id, var_dump($this->data));
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
-
         $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
         error_log($message, 3, CPWP_ERROR_LOGS);
 
