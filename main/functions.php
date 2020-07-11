@@ -545,20 +545,34 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
 }
 
 /**
- * Display the custom text field
+ * Add the text field as item data to the cart object
  * @since 1.0.0
+ * @param Array $cart_item_data Cart item meta data.
+ * @param Integer $product_id Product ID.
+ * @param Integer $variation_id Variation ID.
+ * @param Boolean $quantity Quantity
  */
-function wpcp_create_custom_field() {
-    $options[''] = __( 'Select a value', 'woocommerce'); // default value
-    $options['hey'] = 'hey';
-    woocommerce_wp_select( array(
-        'id'      => 'wpcp_location',
-        'label'   => __( 'My Select Field', 'woocommerce' ),
-        'options' =>  $options, //this is where I am having trouble
-        'value'   => 'Hey',
-    ) );
+function wpcp_add_custom_field_item_data( $cart_item_data, $product_id, $variation_id, $quantity ) {
+    if( ! empty( $_POST['wpcp_location'] ) ) {
+        // Add the item data
+        $cart_item_data['wpcp_location'] = $_POST['wpcp_location'];
+    }
+    return $cart_item_data;
 }
-add_action( 'woocommerce_product_options_general_product_data', 'wpcp_create_custom_field' );
+
+add_filter( 'woocommerce_add_cart_item_data', 'wpcp_add_custom_field_item_data', 10, 4 );
+
+/**
+ * Add custom field to order object
+ */
+function wpcp_add_custom_data_to_order( $item, $cart_item_key, $values, $order ) {
+    foreach( $item as $cart_item_key=>$values ) {
+        if( isset( $values['wpcp_location'] ) ) {
+            add_post_meta($order->id, WPCP_LOCATION, $values['wpcp_location'], true);
+        }
+    }
+}
+add_action( 'woocommerce_checkout_create_order_line_item', 'wpcp_add_custom_data_to_order', 10, 4 );
 
 /**
  * Display custom field on the front end
