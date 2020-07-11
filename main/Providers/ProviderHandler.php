@@ -50,6 +50,10 @@ class ProviderHandler
 
         foreach ($items as $item) {
 
+            $result = wc_get_order_item_meta($item->id, WPCP_LOCATION, true);
+            $message = sprintf('Final location for cart items internal : %s.', $result);
+            error_log($message, 3, CPWP_ERROR_LOGS);
+
             $product_id = $item->get_product_id();
             $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
 
