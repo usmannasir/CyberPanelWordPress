@@ -98,7 +98,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $wpcp_providerplans = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
 
         $finalPlan = explode(',', $wpcp_providerplans)[0];
-        $finalLocation = explode(',', get_post_meta($order->id, WPCP_LOCATION, true))[1];
+        $finalLocation = explode(',', $this->data['wpcp_location'])[1];
 
         return 0;
 
