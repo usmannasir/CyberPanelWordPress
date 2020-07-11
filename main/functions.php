@@ -569,3 +569,4 @@ function wpcp_display_custom_field_locations()
 }
 
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
+add_action('woocommerce_loop_add_to_cart_link', 'wpcp_display_custom_field_locations');

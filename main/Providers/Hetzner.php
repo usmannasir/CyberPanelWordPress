@@ -97,9 +97,6 @@ class CyberPanelHetzner extends WPCPHTTP
         $wpcp_provider = get_post_meta($product_id, WPCP_PROVIDER, true);
         $wpcp_providerplans = get_post_meta($product_id, WPCP_PROVIDERPLANS, true);
 
-        $message = sprintf(var_dump($order)) . var_dump($this->data . var_dump($product));
-        error_log($message, 3, CPWP_ERROR_LOGS);
-
         $finalPlan = explode(',', $wpcp_providerplans)[0];
 
         $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
