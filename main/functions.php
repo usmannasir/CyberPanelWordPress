@@ -291,6 +291,7 @@ function woocommerce_payment_complete_order_status($order_id)
     error_log(sprintf('Value of wpcp_invoice: %s', $wpcp_invoice), 3, CPWP_ERROR_LOGS);
 
     if ($wpcp_invoice != 'yes') {
+
         error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
 
         if ($order->data['status'] == 'processing') {
@@ -453,81 +454,81 @@ remove_filter('the_content', 'filter_the_content_in_the_main_loop');
 function wpcp_cron_exec()
 {
 
-    $query = new WP_Query(array(
-        'post_type' => 'wpcp_server',
-        'post_status' => 'publish',
-        'posts_per_page' => -1
-    ));
-
-    while ($query->have_posts()) {
-
-        $query->the_post();
-        $post_id = get_the_ID();
-
-        $wpcp_productid = get_post_meta($post_id, WPCP_PRODUCTID, true);
-        $wpcp_duedate = (int)get_post_meta($post_id, WPCP_DUEDATE, true);
-        $wpcp_activeinvoice = get_post_meta($post_id, WPCP_ACTIVEINVOICE, true);
-        $wpcp_orderid = get_post_meta($post_id, WPCP_ORDERID, true);
-
-        $now = new DateTime();
-        $diff = $wpcp_duedate - $now->getTimestamp();
-        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
-
-        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
-
-        if (!$wpcp_activeinvoice) {
-
-            if ($diff <= $autoInvoice) {
-
-                update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
-                $order = wc_get_order($wpcp_orderid);
-
-                $address = array(
-                    'first_name' => $order->get_billing_first_name(),
-                    'last_name' => $order->get_billing_last_name(),
-                    'company' => $order->get_billing_company(),
-                    'email' => $order->get_billing_email(),
-                    'phone' => $order->get_billing_phone(),
-                    'address_1' => $order->get_billing_address_1(),
-                    'address_2' => $order->get_billing_address_2(),
-                    'city' => $order->get_billing_city(),
-                    'state' => $order->get_billing_state(),
-                    'postcode' => $order->get_billing_postcode(),
-                    'country' => $order->get_billing_country(),
-                );
-
-                // Now we create the order
-                $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
-                $nOrder->add_product(get_product($wpcp_productid), 1);
-                ## Set custom description of order
-
-                $postTitle = get_the_title($post_id);
-                $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
-
-                global $wpdb;
-                $table_name = $wpdb->prefix . 'woocommerce_order_items';
-                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
-                $wpdb->query($sql);
-
-                ##
-
-                $nOrder->set_address($address, 'billing');
-
-                //
-
-                $nOrder->calculate_totals();
-                $nOrder->update_status('pending');
-
-                update_post_meta($post_id, WPCP_ACTIVEINVOICE, 1);
-                add_post_meta($post_id, WPCP_PAYMENTID, $nOrder->id, true);
-                add_post_meta($nOrder->id, WPCP_INVOICE, 'yes', true);
-
-
-            }
-        }
-
-    }
-    wp_reset_query();
+//    $query = new WP_Query(array(
+//        'post_type' => 'wpcp_server',
+//        'post_status' => 'publish',
+//        'posts_per_page' => -1
+//    ));
+//
+//    while ($query->have_posts()) {
+//
+//        $query->the_post();
+//        $post_id = get_the_ID();
+//
+//        $wpcp_productid = get_post_meta($post_id, WPCP_PRODUCTID, true);
+//        $wpcp_duedate = (int)get_post_meta($post_id, WPCP_DUEDATE, true);
+//        $wpcp_activeinvoice = get_post_meta($post_id, WPCP_ACTIVEINVOICE, true);
+//        $wpcp_orderid = get_post_meta($post_id, WPCP_ORDERID, true);
+//
+//        $now = new DateTime();
+//        $diff = $wpcp_duedate - $now->getTimestamp();
+//        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
+//
+//        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+//
+//        if (!$wpcp_activeinvoice) {
+//
+//            if ($diff <= $autoInvoice) {
+//
+//                update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
+//                $order = wc_get_order($wpcp_orderid);
+//
+//                $address = array(
+//                    'first_name' => $order->get_billing_first_name(),
+//                    'last_name' => $order->get_billing_last_name(),
+//                    'company' => $order->get_billing_company(),
+//                    'email' => $order->get_billing_email(),
+//                    'phone' => $order->get_billing_phone(),
+//                    'address_1' => $order->get_billing_address_1(),
+//                    'address_2' => $order->get_billing_address_2(),
+//                    'city' => $order->get_billing_city(),
+//                    'state' => $order->get_billing_state(),
+//                    'postcode' => $order->get_billing_postcode(),
+//                    'country' => $order->get_billing_country(),
+//                );
+//
+//                // Now we create the order
+//                $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
+//                $nOrder->add_product(get_product($wpcp_productid), 1);
+//                ## Set custom description of order
+//
+//                $postTitle = get_the_title($post_id);
+//                $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
+//
+//                global $wpdb;
+//                $table_name = $wpdb->prefix . 'woocommerce_order_items';
+//                $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
+//                $wpdb->query($sql);
+//
+//                ##
+//
+//                $nOrder->set_address($address, 'billing');
+//
+//                //
+//
+//                $nOrder->calculate_totals();
+//                $nOrder->update_status('pending');
+//
+//                update_post_meta($post_id, WPCP_ACTIVEINVOICE, 1);
+//                add_post_meta($post_id, WPCP_PAYMENTID, $nOrder->id, true);
+//                add_post_meta($nOrder->id, WPCP_INVOICE, 'yes', true);
+//
+//
+//            }
+//        }
+//
+//    }
+//    wp_reset_query();
 }
 
 add_filter('cron_schedules', 'example_add_cron_interval');
@@ -544,6 +545,21 @@ add_action('wpcp_croncp_hook', 'wpcp_cron_exec');
 if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
 }
+
+/**
+ * Display the custom text field
+ * @since 1.0.0
+ */
+function cwpcp_create_custom_field() {
+    $args = array(
+        'id' => 'wpcp_location',
+        'label' => __( 'Custom Text Field Title', 'wpcp' ),
+        'desc_tip' => true,
+        'description' => __( 'Enter the title of your custom text field.', 'wpcp' ),
+    );
+    woocommerce_wp_text_input( $args );
+}
+add_action( 'woocommerce_product_options_general_product_data', 'wpcp_create_custom_field' );
 
 /**
  * Display custom field on the front end
@@ -577,10 +593,6 @@ function wpcp_validate_custom_field( $passed, $product_id, $quantity ) {
         $passed = false;
         wc_add_notice( __( 'Please select location from product page before ordering.', 'wpcp' ), 'error' );
     }
-
-    global $woocommerce;
-
-    add_post_meta($product_id, WPCP_LOCATION, $_POST['wpcp_location']);
     return $passed;
 }
 add_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3 );

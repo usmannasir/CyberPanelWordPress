@@ -122,7 +122,6 @@ class CPJobManager
     function RunJob()
     {
         try {
-
             if ($this->function == 'saveSettings') {
 
                 $invoice = (string) sanitize_text_field($this->data['invoice']);
