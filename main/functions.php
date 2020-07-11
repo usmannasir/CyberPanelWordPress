@@ -550,7 +550,7 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  */
 function wpcp_create_custom_field() {
     $options[''] = __( 'Select a value', 'woocommerce'); // default value
-    $option['hey'] = __( 'hey', 'woocommerce');;
+    $options['hey'] = 'hey';
     woocommerce_wp_select( array(
         'id'      => 'wpcp_location',
         'label'   => __( 'My Select Field', 'woocommerce' ),
