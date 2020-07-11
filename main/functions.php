@@ -573,6 +573,7 @@ function wpcp_add_custom_data_to_order( $item, $cart_item_key, $values, $order )
             add_post_meta($order->id, WPCP_LOCATION, $values['wpcp_location'], true);
             $message = sprintf('Final location for order id %s is %s.', $order, $values['wpcp_location']);
             error_log($message, 3, CPWP_ERROR_LOGS);
+            $item->add_meta_data( __( 'Location', 'wpcp' ), $values['wpcp_location'], true );
         }
     }
 }
