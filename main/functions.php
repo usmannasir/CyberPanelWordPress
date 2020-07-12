@@ -648,8 +648,9 @@ function wpcp_servers_fetch($atts = [], $content = null)
 
             $query->the_post();
             $postTitle = get_the_title();
+            $date = date("F j, Y, g:i a",strtotime(get_the_date()));
 
-            $finalData = $finalData . sprintf('<tr><td>%s</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="/wpcp_server/%s/">View</a></td></tr>', $postTitle, $postTitle);
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td><td>Completed</td><td>CyberPanel</td><td><a href="/wpcp_server/%s/">View</a></td></tr>', $postTitle, $date, $postTitle);
 
         }
 
