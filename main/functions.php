@@ -651,12 +651,13 @@ function wpcp_servers_fetch($atts = [], $content = null)
             $date = get_the_date("F j, Y, g:i a", get_the_id());
             $link = get_the_permalink();
 
-            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td><td>Completed</td><td>CyberPanel</td><td><a href="%s">View</a></td></tr>', $postTitle, $date, $link);
+            $productName = get_post_meta(get_the_id(), WPCP_PRODUCTNAME, true);
+
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td><td>Completed</td><td>%s</td><td><a href="%s">View</a></td></tr>', $postTitle, $date, $productName, $link);
 
         }
 
         wp_reset_query();
-
         $content = sprintf('<!-- wp:table -->
 <figure class="wp-block-table">
 <table>
@@ -669,7 +670,6 @@ function wpcp_servers_fetch($atts = [], $content = null)
 </table>
 </figure>
 <!-- /wp:table -->', $finalData);
-
         return $content;
     }
 
