@@ -547,33 +547,36 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
 
 /**
  * Add the text field as item data to the cart object
- * @since 1.0.0
  * @param Array $cart_item_data Cart item meta data.
  * @param Integer $product_id Product ID.
  * @param Integer $variation_id Variation ID.
  * @param Boolean $quantity Quantity
+ * @since 1.0.0
  */
-function wpcp_add_custom_field_item_data( $cart_item_data, $product_id, $variation_id, $quantity ) {
-    if( ! empty( $_POST['wpcp_location'] ) ) {
+function wpcp_add_custom_field_item_data($cart_item_data, $product_id, $variation_id, $quantity)
+{
+    if (!empty($_POST['wpcp_location'])) {
         // Add the item data
         $cart_item_data['wpcp_location'] = $_POST['wpcp_location'];
     }
     return $cart_item_data;
 }
 
-add_filter( 'woocommerce_add_cart_item_data', 'wpcp_add_custom_field_item_data', 10, 4 );
+add_filter('woocommerce_add_cart_item_data', 'wpcp_add_custom_field_item_data', 10, 4);
 
 /**
  * Add custom field to order object
  */
-function wpcp_add_custom_data_to_order( $item, $cart_item_key, $values, $order ) {
-    foreach( $item as $cart_item_key=>$values ) {
-        if( isset( $values['wpcp_location'] ) ) {
-            $item->add_meta_data( __( 'wpcp_location', 'wpcp' ), $values['wpcp_location'], true );
+function wpcp_add_custom_data_to_order($item, $cart_item_key, $values, $order)
+{
+    foreach ($item as $cart_item_key => $values) {
+        if (isset($values['wpcp_location'])) {
+            $item->add_meta_data(__('wpcp_location', 'wpcp'), $values['wpcp_location'], true);
         }
     }
 }
-add_action( 'woocommerce_checkout_create_order_line_item', 'wpcp_add_custom_data_to_order', 10, 4 );
+
+add_action('woocommerce_checkout_create_order_line_item', 'wpcp_add_custom_data_to_order', 10, 4);
 
 /**
  * Display custom field on the front end
@@ -601,22 +604,42 @@ function wpcp_display_custom_field_locations()
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
 //add_action('woocommerce_loop_add_to_cart_link', 'wpcp_display_custom_field_locations');
 
-function wpcp_validate_custom_field( $passed, $product_id, $quantity ) {
-    if( empty( $_POST['wpcp_location'] ) ) {
+function wpcp_validate_custom_field($passed, $product_id, $quantity)
+{
+    if (empty($_POST['wpcp_location'])) {
         // Fails validation
         $passed = false;
-        wc_add_notice( __( 'Please select location from product page before ordering.', 'wpcp' ), 'error' );
+        wc_add_notice(__('Please select location from product page before ordering.', 'wpcp'), 'error');
     }
     return $passed;
 }
-add_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3 );
+
+add_filter('woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3);
 
 /* */
 
 add_shortcode('wpcpservers', 'wpcp_servers_fetch');
-function wpcp_servers_fetch( $atts = [], $content = null) {
+function wpcp_servers_fetch($atts = [], $content = null)
+{
     // do something to $content
     // always return
+
+    $contentPre = '<!-- wp:table -->
+<figure class="wp-block-table">
+<table>
+<thead>
+<tr><th>ID</th><th>Date</th><th>Status</th><th>Product</th><th>Manage</th></tr>
+</thead>
+<tbody>
+<tr><td>6656604</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="https://cyberwp.cloud/my-account/view-order/136/">View</a></td></tr>
+</tbody>
+</table>
+</figure>
+<!-- /wp:table -->';
+
+    if(is_user_logged_in()){
+        return $contentPre;
+    }
 
     $content = 'hello world';
 
