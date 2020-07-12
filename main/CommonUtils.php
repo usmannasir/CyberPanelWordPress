@@ -19,7 +19,7 @@ class CommonUtils
     static function writeLogs($message, $filePath){
         if(CommonUtils::$CurrentLog == CommonUtils::$DEBUG) {
             $writeToFile = fopen($filePath, "a");
-            fwrite($writeToFile, $message . '\n');
+            fwrite($writeToFile, $message . PHP_EOL);
             fclose($writeToFile);
         }
     }

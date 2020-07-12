@@ -24,6 +24,7 @@ class CapabilityCheck
                 return 1;
             else{
                 $post = get_page_by_title(sanitize_text_field($this->data['serverID']),OBJECT, 'wpcp_server');
+                CommonUtils::writeLogs(sprintf('Server whose access is being checked: %s', $this->data['serverID']), CPWP_ERROR_LOGS);
                 if($post->post_author == get_current_user_id()){
                     return 1;
                 }
