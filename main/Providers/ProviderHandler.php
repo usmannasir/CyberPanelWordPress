@@ -85,6 +85,14 @@ class ProviderHandler
         }
     }
 
+    function shutDown(){
+
+        if($this->findProvider() == 'Hetzner'){
+            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph->shutDown();
+        }
+    }
+
     function rebuildNow(){
         if($this->findProvider() == 'Hetzner'){
             $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));

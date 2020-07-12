@@ -47,6 +47,8 @@ define('WPCP_INVOICE', 'wpcp_invoice');
 define('WPCP_PAYMENTID', 'wpcp_paymentid');
 define('WPCP_LOCATION', 'wpcp_location');
 define('WPCP_PRODUCTNAME', 'wpcp_productname');
+define('WPCP_AUTOSUSPEND', 'wpcp_auto_suspend');
+define('WPCP_TERMINATE', 'wpcp_terminate');
 
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');

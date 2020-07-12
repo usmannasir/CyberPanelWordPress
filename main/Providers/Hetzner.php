@@ -272,6 +272,45 @@ runcmd:
         }
     }
 
+    function shutDown()
+    {
+
+
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/poweroff', $this->data);
+
+        $this->setupTokenImagePostID();
+
+        $response = $this->HTTPPostCall($this->token);
+        $respData = wp_remote_retrieve_body($response);
+
+        CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
+
+        $respData = json_decode(wp_remote_retrieve_body($response));
+
+        try{
+            $status = $respData->action->status;
+            if( ! isset($status) ){
+                throw new Exception('Failed to shutdown server.');
+            }
+            $post = array(
+                'ID' => $this->postIDServer,
+                'post_content' => WPCPHTTP::$cancelled,
+            );
+            wp_update_post($post, true);
+            $data = array(
+                'status' => 1,
+            );
+            wp_send_json($data);
+        }
+        catch (Exception $e) {
+            CommonUtils::writeLogs(sprintf('Failed to shutdown server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
+            $data = array(
+                'status' => 0
+            );
+            wp_send_json($data);
+        }
+    }
+
     function rebuildNow()
     {
 

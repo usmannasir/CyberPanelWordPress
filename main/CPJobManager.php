@@ -158,6 +158,10 @@ class CPJobManager
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->cancelNow();
             }
+            elseif ($this->function == 'shutDown') {
+                $cpp = new ProviderHandler($this, $this->data);
+                $cpp->shutDown();
+            }
             elseif ($this->function == 'rebuildNow') {
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->rebuildNow();
