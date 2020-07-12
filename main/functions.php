@@ -357,9 +357,6 @@ add_action('wp_ajax_cancelNow', 'ajax_cancelNow');
 function ajax_cancelNow()
 {
     // Handle the ajax request
-
-
-
     $cc = new CapabilityCheck('cancelNow', $_POST);
     if (!$cc->checkCapability()) {
         return;
@@ -469,7 +466,7 @@ function wpcp_cron_exec()
 //        $diff = $wpcp_duedate - $now->getTimestamp();
 //        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
 //
-//        error_log(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), 3, CPWP_ERROR_LOGS);
+//        CommonUtils::writeLogs(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
 //
 //        if (!$wpcp_activeinvoice) {
 //

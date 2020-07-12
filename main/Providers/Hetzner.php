@@ -26,8 +26,8 @@ class CyberPanelHetzner extends WPCPHTTP
         $product_id = get_post_meta($this->postIDServer, 'wpcp_productid', true);
 
         $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-        error_log($product_id, 3, CPWP_ERROR_LOGS);
-        error_log($wpcp_provider, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($product_id, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($wpcp_provider, CPWP_ERROR_LOGS);
 
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
@@ -100,7 +100,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $finalLocation = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
 
         $message = sprintf('Final plan for product id %s is %s', $product_id, $finalPlan);
-        error_log($message, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($message,CPWP_ERROR_LOGS);
 
         global $wpdb;
 
@@ -109,7 +109,7 @@ class CyberPanelHetzner extends WPCPHTTP
         $token = json_decode($result->apidetails)->token;
         $image = json_decode($result->apidetails)->image;
         $message = sprintf('Token product id %s is %s', $product_id, $token);
-        error_log($message, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
 
         $serverName = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 10);
         $CyberPanelPassword = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 15);
@@ -163,10 +163,10 @@ runcmd:
                 throw new Exception('Server failed to create.');
             }
 
-            error_log(wp_remote_retrieve_body($response), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $product_id, $this->orderid, $productName, $respData->error->message), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $product_id, $this->orderid, $productName, $respData->error->message), CPWP_ERROR_LOGS);
             return 0;
         }
 
@@ -264,7 +264,7 @@ runcmd:
             wp_send_json($data);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
@@ -284,7 +284,7 @@ runcmd:
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/rebuild', $this->data);
         $response = $this->HTTPPostCall($this->token);
         $respData = wp_remote_retrieve_body($response);
-        error_log($respData, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -298,7 +298,7 @@ runcmd:
             wp_send_json($data);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to rebuild server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to rebuild server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
@@ -313,7 +313,7 @@ runcmd:
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $this->data);
         $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = wp_remote_retrieve_body($response);
-        //error_log($respData, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -343,7 +343,7 @@ runcmd:
             wp_send_json($data);
         }
         catch (Exception $e) {
-            //error_log(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()),CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
@@ -358,7 +358,7 @@ runcmd:
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
         $response = $this->HTTPPostCall($this->token);
         $respData = wp_remote_retrieve_body($response);
-        error_log($respData, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -372,7 +372,7 @@ runcmd:
             wp_send_json($data);
         }
         catch (Exception $e) {
-            error_log(sprintf('Failed to reboot server. Error message: %s', $e->getMessage()), 3, CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to reboot server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
