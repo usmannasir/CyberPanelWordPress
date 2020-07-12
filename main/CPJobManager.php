@@ -155,19 +155,19 @@ class CPJobManager
                 $cpp->createServer();
             }
             elseif ($this->function == 'cancelNow') {
-                $cpp = new ProviderHandler($this, sanitize_text_field($this->data));
+                $cpp = new ProviderHandler($this, $this->data);
                 $cpp->cancelNow();
             }
             elseif ($this->function == 'rebuildNow') {
-                $cpp = new ProviderHandler($this, sanitize_text_field($this->data));
+                $cpp = new ProviderHandler($this, $this->data);
                 $cpp->rebuildNow();
             }
             elseif ($this->function == 'serverActions') {
-                $cpp = new ProviderHandler($this, sanitize_text_field($this->data));
+                $cpp = new ProviderHandler($this, $this->data);
                 $cpp->serverActions();
             }
             elseif ($this->function == 'rebootNow') {
-                $cpp = new ProviderHandler($this, sanitize_text_field($this->data));
+                $cpp = new ProviderHandler($this, $this->data);
                 $cpp->rebootNow();
             }
             elseif ($this->function == 'fetchProviderPlans') {
