@@ -429,7 +429,7 @@ function ajax_rebootNow()
 
 }
 
-/*add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
+add_filter('the_content', 'filter_the_content_in_the_main_loop', 1);
 
 function filter_the_content_in_the_main_loop($content)
 {
@@ -445,7 +445,7 @@ function filter_the_content_in_the_main_loop($content)
     }
 
     return $content;
-}*/
+}
 
 remove_filter('the_content', 'filter_the_content_in_the_main_loop');
 
@@ -621,9 +621,6 @@ add_filter('woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 1
 add_shortcode('wpcpservers', 'wpcp_servers_fetch');
 function wpcp_servers_fetch($atts = [], $content = null)
 {
-    // do something to $content
-    // always return
-
     if (is_user_logged_in()) {
         $userID = get_current_user_id();
 
