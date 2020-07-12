@@ -10,7 +10,7 @@ class WPCPHTTP
 <ul id="menu" class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine}</a></li>
     <li class="loader"><a href="javascript:void(0)"><img style="display: inline"  src="{loader}"></a></li>
-     <li id="myBtn" style="float:right; color:red"><a href="javascript:void(0)">
+     <li id="myBtn" style="float:right; color:red"><a href="#">
      Cancel
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -23,7 +23,7 @@ class WPCPHTTP
   </div>
 </div>
      </a></li>
-    <li id="rebuild" style="float:right"><a href="javascript:void(0)">Rebuild
+    <li id="rebuild" style="float:right"><a href="#">Rebuild
     <!-- The Modal -->
 <div id="rebuildModal" class="modal">
   <!-- Modal content -->
@@ -35,7 +35,7 @@ class WPCPHTTP
   </div>
 </div>
     </a></li>
-    <li id="reboot" style="float:right"><a href="javascript:void(0)">Reboot
+    <li id="reboot" style="float:right"><a href="#">Reboot
     <!-- The Modal -->
 <div id="rebootModal" class="modal">
   <!-- Modal content -->
@@ -48,7 +48,7 @@ class WPCPHTTP
 </div>
     </a></li>
     <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
-    <li class="rightli" style="float:right"><a href="javascript:void(0)">Manage</a></li>
+    <li class="rightli" style="float:right"><a href="#">Manage</a></li>
 </ul>
 <!-- /wp:html -->
 
