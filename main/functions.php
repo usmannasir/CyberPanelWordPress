@@ -57,10 +57,6 @@ function Main_CyberPanel()
 
 function cyberpanel_main_html()
 {
-    // check user capabilities
-    if (!current_user_can('manage_options')) {
-        return;
-    }
 
     $cc = new CapabilityCheck('cyberpanel_main_html');
     if (!$cc->checkCapability()) {
@@ -76,7 +72,6 @@ add_action('admin_menu', 'Main_CyberPanel');
 //// Ajax handler
 
 add_action('wp_ajax_saveSettings', 'ajax_saveSettings');
-
 
 function ajax_saveSettings()
 {
