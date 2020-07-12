@@ -437,7 +437,7 @@ function filter_the_content_in_the_main_loop($content)
     $post = get_post();
 
     if (get_post_type($post->id) == 'wpcp_server') {
-        if($current_user->id == $post->post_author){
+        if($current_user->id == $post->post_author || current_user_can('manage_options')){
             return $content;
         }else{
             return "You are not allowed to manage this server.";
