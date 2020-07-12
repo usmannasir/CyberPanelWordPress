@@ -55,6 +55,16 @@ require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 register_activation_hook(__FILE__, 'wpcp_on_activation');
 function wpcp_on_activation()
 {
+
+    /**
+     * Check if WooCommerce is active
+     **/
+    if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+        // Put your plugin code here
+        add_action( 'admin_notices', 'CyberPanel Plugin requires WooCommerce plugin.' );
+        die('CyberPanel Plugin requires WooCommerce plugin.');
+    }
+
     global $wpdb;
 
     /// Table that will contain details of currently queued jobs.
