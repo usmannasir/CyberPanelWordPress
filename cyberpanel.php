@@ -113,8 +113,8 @@ register_deactivation_hook( __FILE__, 'wpcp_on_deactivation' );
 
 function wpcp_on_deactivation()
 {
-    unregister_post_type( 'wpcp_server' );
-    flush_rewrite_rules();
+    //unregister_post_type( 'wpcp_server' );
+    //flush_rewrite_rules();
     remove_filter( 'woocommerce_add_cart_item_data', 'wpcp_add_custom_field_item_data' );
     remove_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field' );
     remove_shortcode('wpcp_servers');
