@@ -41,7 +41,7 @@ define('WPCP_PROVIDERPLANS', 'wpcp_providerplans');
 define('WPCP_DUEDATE', 'wpcp_duedate');
 define('WPCP_ACTIVEINVOICE', 'wpcp_activeinvoice');
 define('WPCP_ORDERID', 'wpcp_orderid');
-define('WPCP_INTERVAL', 'P29D');
+define('WPCP_INTERVAL', 'P30D');
 define('WPCP_PRODUCTID', 'wpcp_productid');
 define('WPCP_INVOICE', 'wpcp_invoice');
 define('WPCP_PAYMENTID', 'wpcp_paymentid');
@@ -52,8 +52,8 @@ require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 
 // Create Table where Connected servers will be stored
 
-register_activation_hook(__FILE__, 'on_activation');
-function on_activation()
+register_activation_hook(__FILE__, 'wpcp_on_activation');
+function wpcp_on_activation()
 {
     global $wpdb;
 
@@ -86,4 +86,15 @@ function on_activation()
 )";
 
     $wpdb->query( $sql );
+}
+
+register_deactivation_hook( __FILE__, 'wpcp_on_deactivation' );
+
+function wpcp_on_deactivation()
+{
+    unregister_post_type( 'wpcp_server' );
+    flush_rewrite_rules();
+    remove_filter( 'woocommerce_add_cart_item_data', 'wpcp_add_custom_field_item_data' );
+    remove_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field' );
+    remove_shortcode('wpcp_servers');
 }

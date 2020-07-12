@@ -529,8 +529,9 @@ function wpcp_cron_exec()
 //    wp_reset_query();
 }
 
-add_filter('cron_schedules', 'example_add_cron_interval');
-function example_add_cron_interval($schedules)
+add_filter('cron_schedules', 'wpcp_add_cron_interval');
+
+function wpcp_add_cron_interval($schedules)
 {
     $schedules['five_seconds'] = array(
         'interval' => 5,
@@ -609,3 +610,15 @@ function wpcp_validate_custom_field( $passed, $product_id, $quantity ) {
     return $passed;
 }
 add_filter( 'woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3 );
+
+/* */
+
+add_shortcode('wpcpservers', 'wpcp_servers_fetch');
+function wpcp_servers_fetch( $atts = [], $content = null) {
+    // do something to $content
+    // always return
+
+    $content = 'hello world';
+
+    return $content;
+}
