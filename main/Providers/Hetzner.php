@@ -181,7 +181,7 @@ runcmd:
             '{token}' =>  $token,
             '{productLine}' => $productName . ' - ' . $serverID,
             '{serverID}' => $serverID,
-            '{orderDate}' => date("F j, Y, g:i a",strtotime($orderDate)),
+            '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
             '{price}' => get_woocommerce_currency_symbol() . ' ' . $productPrice,
             '{ipv4}' => $ipv4,
             '{ipv6}' => $ipv6,
