@@ -86,6 +86,17 @@ function wpcp_on_activation()
 )";
 
     $wpdb->query( $sql );
+
+    ## Create Servers Page
+
+    $post_details = array(
+        'post_title'    => 'Servers',
+        'post_content'  => '<!-- wp:shortcode -->[wpcpservers]<!-- /wp:shortcode -->',
+        'post_status'   => 'publish',
+        'post_author'   => 1,
+        'post_type' => 'page'
+    );
+    wp_insert_post( $post_details );
 }
 
 register_deactivation_hook( __FILE__, 'wpcp_on_deactivation' );
