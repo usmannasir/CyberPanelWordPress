@@ -649,7 +649,7 @@ function wpcp_servers_fetch($atts = [], $content = null)
             $query->the_post();
             $postTitle = get_the_title();
 
-            $finalData = $finalData . sprintf('<tr><td>%s</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="https://cyberwp.cloud/my-account/view-order/136/">View</a></td></tr>', $postTitle);
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="/wpcp_server/%s/">View</a></td></tr>', $postTitle, $postTitle);
 
         }
 
