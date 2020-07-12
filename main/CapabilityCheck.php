@@ -19,7 +19,7 @@ class CapabilityCheck
         || $this->function == 'deleteAPIDetails'){
             if(current_user_can('manage_options'))
                 return 1;
-        }else if ($this->function == 'cancelNow'){
+        }else if ($this->function == 'cancelNow' || $this->function == 'rebuildNow' || $this->function == 'serverActions' || $this->function == 'rebootNow'){
             if(current_user_can('manage_options'))
                 return 1;
             else{

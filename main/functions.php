@@ -375,7 +375,7 @@ function ajax_rebuildNow()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('rebuildNow');
+    $cc = new CapabilityCheck('rebuildNow', $_POST);
     if (!$cc->checkCapability()) {
         return;
     }
@@ -393,7 +393,7 @@ function ajax_serverActions()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('serverActions');
+    $cc = new CapabilityCheck('serverActions', $_POST);
     if (!$cc->checkCapability()) {
         return;
     }
@@ -411,7 +411,7 @@ function ajax_rebootNow()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('rebootNow');
+    $cc = new CapabilityCheck('rebootNow', $_POST);
     if (!$cc->checkCapability()) {
         return;
     }
