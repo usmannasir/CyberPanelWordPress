@@ -624,24 +624,52 @@ function wpcp_servers_fetch($atts = [], $content = null)
     // do something to $content
     // always return
 
-    $contentPre = '<!-- wp:table -->
+    if (is_user_logged_in()) {
+        $userID = get_current_user_id();
+
+        if (current_user_can('manage_options')) {
+            $query = new WP_Query(array(
+                'post_type' => 'wpcp_server',
+                'post_status' => 'publish',
+                'posts_per_page' => -1
+            ));
+        } else {
+            $query = new WP_Query(array(
+                'post_type' => 'wpcp_server',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'author__in' => array($userID),
+            ));
+        }
+
+        $finalData = '';
+
+        while ($query->have_posts()) {
+
+            $query->the_post();
+            $postTitle = get_the_title();
+
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="https://cyberwp.cloud/my-account/view-order/136/">View</a></td></tr>', $postTitle);
+
+        }
+
+        wp_reset_query();
+
+        $content = sprintf('<!-- wp:table -->
 <figure class="wp-block-table">
 <table>
 <thead>
 <tr><th>ID</th><th>Date</th><th>Status</th><th>Product</th><th>Manage</th></tr>
 </thead>
 <tbody>
-<tr><td>6656604</td><td>July 11, 2020</td><td>Completed</td><td>CyberPanel</td><td><a href="https://cyberwp.cloud/my-account/view-order/136/">View</a></td></tr>
+%s
 </tbody>
 </table>
 </figure>
-<!-- /wp:table -->';
+<!-- /wp:table -->', $finalData);
 
-    if(is_user_logged_in()){
-        return $contentPre;
+        return $content;
     }
 
-    $content = 'hello world';
-
-    return $content;
+    return 'You must be logged in to view this page';
 }
