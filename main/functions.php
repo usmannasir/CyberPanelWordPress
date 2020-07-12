@@ -649,8 +649,9 @@ function wpcp_servers_fetch($atts = [], $content = null)
             $query->the_post();
             $postTitle = get_the_title();
             $date = get_the_date("F j, Y, g:i a", get_the_id());
+            $link = get_the_permalink();
 
-            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td><td>Completed</td><td>CyberPanel</td><td><a href="/wpcp_server/%s/">View</a></td></tr>', $postTitle, $date, $postTitle);
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td><td>Completed</td><td>CyberPanel</td><td><a href="%s">View</a></td></tr>', $postTitle, $date, $link);
 
         }
 
