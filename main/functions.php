@@ -2,6 +2,7 @@
 
 require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
+require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 /// Load all required JS and CSS files for this plugin
 
@@ -53,8 +54,6 @@ function Main_CyberPanel()
         'cyberpanel_main_html' //Callback to print html
     );
 }
-
-// This function will generate HTML for Main Screen
 
 function cyberpanel_main_html()
 {
@@ -118,12 +117,8 @@ function ajax_jobStatus()
 
 function cyberpanel_provider_html()
 {
-    // check user capabilities
-    if (!current_user_can('manage_options')) {
-        return;
-    }
 
-    $cc = new CapabilityCheck('cyberpanel_hetzner_html');
+    $cc = new CapabilityCheck('cyberpanel_provider_html');
     if (!$cc->checkCapability()) {
         return;
     }
@@ -186,9 +181,9 @@ function wpcp_custom_box_html($post)
     $wpcp_provider = get_post_meta($post->ID, WPCP_PROVIDER, true);
     $wpcp_providerplan = get_post_meta($post->ID, WPCP_PROVIDERPLANS, true);
 
-    error_log(sprintf('WPCP_CUSTOM_BOX POSTID: %s', $post->ID), 3, CPWP_ERROR_LOGS);
-    error_log(sprintf('WPCP_CUSTOM_BOX wpcp_provider: %s', $wpcp_provider), 3, CPWP_ERROR_LOGS);
-    error_log(sprintf('WPCP_CUSTOM_BOX wpcp_providerplan: %s', $wpcp_providerplan), 3, CPWP_ERROR_LOGS);
+    CommonUtils::writeLogs(sprintf('WPCP_CUSTOM_BOX POSTID: %s', $post->ID), CPWP_ERROR_LOGS);
+    CommonUtils::writeLogs(sprintf('WPCP_CUSTOM_BOX wpcp_provider: %s', $wpcp_provider), CPWP_ERROR_LOGS);
+    CommonUtils::writeLogs(sprintf('WPCP_CUSTOM_BOX wpcp_providerplan: %s', $wpcp_providerplan), CPWP_ERROR_LOGS);
 
     ?>
 
@@ -252,12 +247,12 @@ function wpcp_save_postdata($post_id)
 
         update_post_meta(
             $post_id,
-            'wpcp_provider',
+            WPCP_PROVIDER,
             $wpcp_provider
         );
         update_post_meta(
             $post_id,
-            'wpcp_providerplans',
+            WPCP_PROVIDERPLANS,
             $wpcp_providerplans
         );
     }
@@ -290,7 +285,7 @@ function woocommerce_payment_complete_order_status($order_id)
 
     if ($wpcp_invoice != 'yes') {
 
-        error_log(sprintf('Order status: %s', $order->data['status']), 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs(sprintf('Order status: %s', $order->data['status']), CPWP_ERROR_LOGS);
 
         if ($order->data['status'] == 'processing') {
             $message = sprintf('Processing order %s', $order_id);
@@ -329,7 +324,7 @@ function ajax_fetchProviderAPIs()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('fetchProviderPlans');
+    $cc = new CapabilityCheck('fetchProviderAPIs');
     if (!$cc->checkCapability()) {
         return;
     }
@@ -346,7 +341,7 @@ function ajax_deleteAPIDetails()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('fetchProviderPlans');
+    $cc = new CapabilityCheck('deleteAPIDetails');
     if (!$cc->checkCapability()) {
         return;
     }
@@ -363,7 +358,9 @@ function ajax_cancelNow()
 {
     // Handle the ajax request
 
-    $cc = new CapabilityCheck('cancelNow');
+
+
+    $cc = new CapabilityCheck('cancelNow', $_POST);
     if (!$cc->checkCapability()) {
         return;
     }

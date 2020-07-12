@@ -4,13 +4,34 @@
 class CapabilityCheck
 {
     protected $function;
+    protected $data;
 
-    function __construct($function)
+    function __construct($function, $data = null)
     {
         $this->function = $function;
+        $this->data = $data;
     }
 
-    function checkCapability(){return 1;}
+    function checkCapability(){
+
+        if($this->function == 'saveSettings' || $this->function == 'jobStatus' || $this->function == 'cyberpanel_provider_html'
+        || $this->function == 'connectProvider' || $this->function == 'fetchProviderPlans' || $this->function == 'fetchProviderAPIs'
+        || $this->function == 'deleteAPIDetails'){
+            if(current_user_can('manage_options'))
+                return 1;
+        }else if ($this->function == 'cancelNow'){
+            if(current_user_can('manage_options'))
+                return 1;
+            else{
+                $post = get_page_by_title(sanitize_text_field($this->data['serverID']),OBJECT, 'wpcp_server');
+                if($post->post_author == get_current_user_id()){
+                    return 1;
+                }
+            }
+        }
+
+        return 0;
+    }
 
     function jobOwnerShipCheck($jobid){return 1;}
 

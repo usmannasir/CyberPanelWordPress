@@ -77,6 +77,7 @@ class ProviderHandler
     }
 
     function cancelNow(){
+
         if($this->findProvider() == 'Hetzner'){
             $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
             $cph->cancelNow();

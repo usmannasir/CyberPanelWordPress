@@ -244,7 +244,7 @@ runcmd:
         $response = $this->HTTPPostCall($this->token, 'DELETE');
         $respData = wp_remote_retrieve_body($response);
 
-        error_log($respData, 3, CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
 
         $respData = json_decode(wp_remote_retrieve_body($response));
 
