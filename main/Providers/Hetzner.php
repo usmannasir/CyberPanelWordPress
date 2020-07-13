@@ -244,7 +244,11 @@ runcmd:
 
         $this->url = 'https://api.hetzner.cloud/v1/servers/' . $serverID;
 
+        CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
+
         $this->setupTokenImagePostID();
+
+        CommonUtils::writeLogs('Credentials set.', CPWP_ERROR_LOGS);
 
         $response = $this->HTTPPostCall($this->token, 'DELETE');
         $respData = wp_remote_retrieve_body($response);
