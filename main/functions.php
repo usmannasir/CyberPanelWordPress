@@ -493,13 +493,13 @@ function wpcp_cron_exec()
 
                 CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                $finalTimeStamp = $orderTimeStamp + $WPCP_AUTOSUSPEND;
+                $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
 
-                if ($finalTimeStamp > $now->getTimestamp()) {
+                if ($finalTimeStamp < $now->getTimestamp()) {
 
                     $dataToSend = array('serverID' => get_the_title());
 
-                    $cpjm = new CPJobManager('shutDown', $dataToSend);
+                    $cpjm = new CPJobManager('rebuildNow', $dataToSend);
                     $cpjm->RunJob();
                 }
                 delete_post_meta($post_id, WPCP_PAYMENTID);
@@ -508,9 +508,9 @@ function wpcp_cron_exec()
 
                 CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                $finalTimeStamp = $orderTimeStamp + $WPCP_TERMINATE;
+                $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
 
-                if ($finalTimeStamp > $now->getTimestamp()) {
+                if ($finalTimeStamp < $now->getTimestamp()) {
                     $cpjm = new CPJobManager('cancelNow', $dataToSend);
                     $cpjm->RunJob();
                 }
