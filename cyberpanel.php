@@ -33,6 +33,10 @@ define('WPCP_StartingJob', 0);
 define('WPCP_JobFailed', 1);
 define('WPCP_JobSuccess', 2);
 define('WPCP_JobRunning', 3);
+define('WPCP_ACTIVE', 1);
+define('WPCP_SUSPENDED', 2);
+define('WPCP_TERMINATED', 3);
+define('WPCP_CANCELLED', 4);
 
 ## META VALUES
 
@@ -50,7 +54,7 @@ define('WPCP_PRODUCTNAME', 'wpcp_productname');
 define('WPCP_AUTOSUSPEND', 'wpcp_auto_suspend');
 define('WPCP_TERMINATE', 'wpcp_terminate');
 define('WPCP_DATEFORMAT', 'Y-m-d H:i:s');
-
+define('WPCP_STATE', 'wp_state');
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 

@@ -214,7 +214,8 @@ runcmd:
         add_post_meta( $post_id, WPCP_DUEDATE, (string) $dueDate->getTimestamp(), true );
         add_post_meta( $post_id, WPCP_ACTIVEINVOICE, 0, true );
         add_post_meta( $post_id, WPCP_ORDERID, $order->id, true );
-        add_post_meta( $post_id, wpcp_productname, $productName, true );
+        add_post_meta( $post_id, WPCP_PRODUCTNAME, $productName, true );
+        add_post_meta( $post_id, WPCP_STATE, WPCP_ACTIVE, true );
 
         update_post_meta(
             $post_id,
@@ -275,12 +276,11 @@ runcmd:
     function shutDown()
     {
 
-
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/poweroff', $this->data);
 
         $this->setupTokenImagePostID();
 
-        $response = $this->HTTPPostCall($this->token);
+        $response = $this->HTTPPostCall($this->token, null, 0);
         $respData = wp_remote_retrieve_body($response);
 
         CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
@@ -395,7 +395,7 @@ runcmd:
         $this->body = null;
         $this->setupTokenImagePostID();
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
-        $response = $this->HTTPPostCall($this->token);
+        $response = $this->HTTPPostCall($this->token, null, 0);
         $respData = wp_remote_retrieve_body($response);
         CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));

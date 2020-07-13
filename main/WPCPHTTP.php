@@ -115,7 +115,7 @@ class WPCPHTTP
     protected $url;
     protected $body;
 
-    function HTTPPostCall($token, $method = null)
+    function HTTPPostCall($token, $method = null, $body = 1)
     {
 
         $headers = array(
@@ -124,16 +124,28 @@ class WPCPHTTP
         );
 
         if ($method == null) {
-            $args = array(
-                'body' => json_encode($this->body),
-                'timeout' => '5',
-                'redirection' => '5',
-                'httpversion' => '1.0',
-                'blocking' => true,
-                'headers' => $headers,
-                'cookies' => array(),
-                'sslverify' => false
-            );
+            if ($body) {
+                $args = array(
+                    'body' => json_encode($this->body),
+                    'timeout' => '5',
+                    'redirection' => '5',
+                    'httpversion' => '1.0',
+                    'blocking' => true,
+                    'headers' => $headers,
+                    'cookies' => array(),
+                    'sslverify' => false
+                );
+            }else{
+                $args = array(
+                    'timeout' => '5',
+                    'redirection' => '5',
+                    'httpversion' => '1.0',
+                    'blocking' => true,
+                    'headers' => $headers,
+                    'cookies' => array(),
+                    'sslverify' => false
+                );
+            }
             return wp_remote_post($this->url, $args);
         } else if ($method == 'GET') {
             $args = array(
