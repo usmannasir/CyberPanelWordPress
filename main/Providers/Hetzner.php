@@ -292,11 +292,6 @@ runcmd:
             if( ! isset($status) ){
                 throw new Exception('Failed to shutdown server.');
             }
-            $post = array(
-                'ID' => $this->postIDServer,
-                'post_content' => WPCPHTTP::$cancelled,
-            );
-            wp_update_post($post, true);
             $data = array(
                 'status' => 1,
             );

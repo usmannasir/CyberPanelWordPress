@@ -460,9 +460,9 @@ function wpcp_cron_exec()
 
         $now = new DateTime();
         $diff = $wpcp_duedate - $now->getTimestamp();
-        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
-        $WPCP_AUTOSUSPEND = (int)get_option(WPCP_AUTOSUSPEND, '3') * 86400;
-        $WPCP_TERMINATE = (int)get_option(WPCP_TERMINATE, '10') * 86400;
+        $autoInvoice = (int) get_option(WPCP_INVOICE, '14') * 86400;
+        $WPCP_AUTOSUSPEND = (int) get_option(WPCP_AUTOSUSPEND, '3') * 86400;
+        $WPCP_TERMINATE = (int) get_option(WPCP_TERMINATE, '10') * 86400;
 
         CommonUtils::writeLogs(sprintf('Original Server ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
 
@@ -505,6 +505,7 @@ function wpcp_cron_exec()
                         $dataToSend = array('serverID' => get_the_title());
                         $cpjm = new CPJobManager('shutDown', $dataToSend);
                         $cpjm->RunJob();
+                        CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
                         update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
                     }
                 } else {
@@ -516,6 +517,8 @@ function wpcp_cron_exec()
                 CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
                 $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
+
+                CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
                 if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
                     if ($finalTimeStamp < $now->getTimestamp()) {
