@@ -501,12 +501,12 @@ function wpcp_cron_exec()
                     if ($finalTimeStamp < $now->getTimestamp()) {
 
                         CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                        CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
+                        update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
 
                         $dataToSend = array('serverID' => get_the_title());
                         $cpjm = new CPJobManager('shutDown', $dataToSend);
                         $cpjm->RunJob();
-                        CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
-                        update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
                     }
                 } else {
                     CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
