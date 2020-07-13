@@ -269,7 +269,6 @@ runcmd:
             );
 
             wp_update_post($post, true);
-            //wp_trash_post(  $this->postIDServer );
 
             $data = array(
                 'status' => 1,
