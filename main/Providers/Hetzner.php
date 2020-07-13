@@ -432,14 +432,19 @@ runcmd:
             $data = array(
                 'status' => 1,
             );
-            wp_send_json($data);
+
+            if( !wp_doing_cron()) {
+                wp_send_json($data);
+            }
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to reboot server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
-            wp_send_json($data);
+            if( !wp_doing_cron()) {
+                wp_send_json($data);
+            }
         }
     }
 }
