@@ -290,17 +290,16 @@ function woocommerce_payment_complete_order_status($order_id)
         }
 
     }else{
-
         if ($order->data['status'] == 'processing') {
 
-//            $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
-//            $data = array('serverID' => get_the_title($server_post_id));
-//            update_post_meta($server_post_id, WPCP_STATE, WPCP_ACTIVE);
-//            update_post_meta($server_post_id, WPCP_ACTIVEINVOICE, 0, true);
-//            delete_post_meta($server_post_id, WPCP_PAYMENTID);
-//            $order->update_status('wc-completed');
-//            $cpjm = new CPJobManager('rebootNow', $data);
-//            $cpjm->RunJob();
+            $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
+            $data = array('serverID' => get_the_title($server_post_id));
+            update_post_meta($server_post_id, WPCP_STATE, WPCP_ACTIVE);
+            update_post_meta($server_post_id, WPCP_ACTIVEINVOICE, 0, true);
+            delete_post_meta($server_post_id, WPCP_PAYMENTID);
+            $order->update_status('wc-completed');
+            $cpjm = new CPJobManager('rebootNow', $data);
+            $cpjm->RunJob();
 
         }
     }
