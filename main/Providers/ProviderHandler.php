@@ -38,6 +38,8 @@ class ProviderHandler
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
+        CommonUtils::writeLogs(sprintf('Provider currently being used: %s', $result->provider), CPWP_ERROR_LOGS);
+
         return $result->provider;
     }
 
