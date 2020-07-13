@@ -274,7 +274,7 @@ runcmd:
             $data = array(
                 'status' => 1,
             );
-            if( wp_doing_cron()) {
+            if( !wp_doing_cron()) {
                 wp_send_json($data);
             }
         }
