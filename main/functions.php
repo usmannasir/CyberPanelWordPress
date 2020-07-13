@@ -469,7 +469,7 @@ function wpcp_cron_exec()
 
         CommonUtils::writeLogs(sprintf('Value of payment order is %s for order id %s.', $paymentOrderID, $post_id), CPWP_ERROR_LOGS);
 
-        if (isset($paymentOrderID)) {
+        if ($paymentOrderID != '') {
 
             $dataToSend = array('serverID' => get_the_title());
 
