@@ -472,7 +472,7 @@ function wpcp_cron_exec()
 
         if ($paymentOrderID != '') {
 
-            $dataToSend = array('serverID' => get_the_title());
+            $dataToSend = array('serverID' => get_the_title(), 'cron' => 1);
             CommonUtils::writeLogs(sprintf('Server Title being checked for suspension/termination %s.', get_the_title()), CPWP_ERROR_LOGS);
             $order = wc_get_order($paymentOrderID);
             $orderTimeStamp = (int)get_post_meta($order->id, WPCP_DUEDATE, true);
@@ -481,10 +481,10 @@ function wpcp_cron_exec()
 
             if ($order->data['status'] == 'processing') {
 
-                $order->update_status('wc-completed');
                 update_post_meta($post_id, WPCP_ACTIVEINVOICE, 0, true);
                 update_post_meta($post_id, WPCP_STATE, WPCP_ACTIVE, true);
                 delete_post_meta($post_id, WPCP_PAYMENTID);
+                $order->update_status('wc-completed');
                 continue;
 
             }
@@ -502,11 +502,11 @@ function wpcp_cron_exec()
 
                         CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
                         CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
-                        update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
 
                         $dataToSend = array('serverID' => get_the_title());
                         $cpjm = new CPJobManager('shutDown', $dataToSend);
                         $cpjm->RunJob();
+                        update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
                     }
                 } else {
                     CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
@@ -523,9 +523,11 @@ function wpcp_cron_exec()
                 if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
                     if ($finalTimeStamp < $now->getTimestamp()) {
                         CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+
                         $cpjm = new CPJobManager('cancelNow', $dataToSend);
                         $cpjm->RunJob();
                         update_post_meta($post_id, WPCP_STATE, WPCP_TERMINATED);
+
                     }
                 } else {
                     CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);

@@ -238,7 +238,9 @@ runcmd:
     function cancelNow()
     {
 
-        $this->url = 'https://api.hetzner.cloud/v1/servers/' . $this->data;
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $this->url = 'https://api.hetzner.cloud/v1/servers/' . $serverID;
 
         $this->setupTokenImagePostID();
 
@@ -262,21 +264,27 @@ runcmd:
             $data = array(
                 'status' => 1,
             );
-            wp_send_json($data);
+            if(! isset($this->data['cron'])) {
+                wp_send_json($data);
+            }
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
-            wp_send_json($data);
+            if(! isset($this->data['cron'])) {
+                wp_send_json($data);
+            }
         }
     }
 
     function shutDown()
     {
 
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/poweroff', $this->data);
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/poweroff', $serverID);
 
         $this->setupTokenImagePostID();
 
@@ -295,14 +303,19 @@ runcmd:
             $data = array(
                 'status' => 1,
             );
-            wp_send_json($data);
+
+            if(! isset($this->data['cron'])) {
+                wp_send_json($data);
+            }
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to shutdown server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );
-            wp_send_json($data);
+            if(! isset($this->data['cron'])) {
+                wp_send_json($data);
+            }
         }
     }
 

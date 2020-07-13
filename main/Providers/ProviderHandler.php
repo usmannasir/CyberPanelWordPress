@@ -80,15 +80,14 @@ class ProviderHandler
     function cancelNow(){
 
         if($this->findProvider() == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph = new CyberPanelHetzner($this, $this->data);
             $cph->cancelNow();
         }
     }
 
     function shutDown(){
-
         if($this->findProvider() == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph = new CyberPanelHetzner($this, $this->data);
             $cph->shutDown();
         }
     }
