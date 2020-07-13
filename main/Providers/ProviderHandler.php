@@ -94,21 +94,21 @@ class ProviderHandler
 
     function rebuildNow(){
         if($this->findProvider() == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph = new CyberPanelHetzner($this, $this->data);
             $cph->rebuildNow();
         }
     }
 
     function serverActions(){
         if($this->findProvider() == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph = new CyberPanelHetzner($this, $this->data);
             $cph->serverActions();
         }
     }
 
     function rebootNow(){
         if($this->findProvider() == 'Hetzner'){
-            $cph = new CyberPanelHetzner($this, sanitize_text_field($this->data['serverID']));
+            $cph = new CyberPanelHetzner($this, $this->data);
             $cph->rebootNow();
         }
     }

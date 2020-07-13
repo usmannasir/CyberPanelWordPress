@@ -19,7 +19,9 @@ class CyberPanelHetzner extends WPCPHTTP
 
     function setupTokenImagePostID(){
 
-        $page = get_page_by_title($this->data,OBJECT, 'wpcp_server'); // enter your page title
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $page = get_page_by_title($serverID,OBJECT, 'wpcp_server'); // enter your page title
         $this->postIDServer = $page->ID;
 
         ## Get product id of this server.
@@ -253,6 +255,7 @@ runcmd:
 
         try{
             $status = $respData->action->status;
+
             if( ! isset($status) ){
                 throw new Exception('Failed to cancel server.');
             }
@@ -328,7 +331,9 @@ runcmd:
             'image' => $this->image,
         );
 
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/rebuild', $this->data);
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/rebuild', $serverID);
         $response = $this->HTTPPostCall($this->token);
         $respData = wp_remote_retrieve_body($response);
         CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
@@ -357,7 +362,9 @@ runcmd:
     {
         $this->setupTokenImagePostID();
 
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $this->data);
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $serverID);
         $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = wp_remote_retrieve_body($response);
         CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
@@ -401,7 +408,10 @@ runcmd:
     function rebootNow()
     {
         $this->setupTokenImagePostID();
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $this->data);
+
+        $serverID = sanitize_text_field($this->data['serverID']);
+
+        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $serverID);
         $response = $this->HTTPPostCall($this->token, null, 0);
         $respData = wp_remote_retrieve_body($response);
         CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
