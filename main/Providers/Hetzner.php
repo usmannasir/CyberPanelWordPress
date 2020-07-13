@@ -263,7 +263,10 @@ runcmd:
                 'ID' => $this->postIDServer,
                 'post_content' => WPCPHTTP::$cancelled,
             );
+
             wp_update_post($post, true);
+            wp_trash_post(  $this->postIDServer );
+
             $data = array(
                 'status' => 1,
             );
