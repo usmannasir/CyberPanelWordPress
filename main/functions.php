@@ -486,7 +486,7 @@ function wpcp_cron_exec()
                 continue;
 
             }
-            if ($WPCP_AUTOSUSPEND) {
+            if (1) {
 
                 CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
