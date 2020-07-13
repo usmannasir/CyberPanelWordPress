@@ -290,10 +290,12 @@ function woocommerce_payment_complete_order_status($order_id)
 
     }else{
         if ($order->data['status'] == 'processing') {
+
             $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
             $data = array('serverID' => $server_post_id);
             $cpjm = new CPJobManager('rebootNow', $data);
             $cpjm->RunJob();
+
         }
     }
 }
