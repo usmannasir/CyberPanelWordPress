@@ -460,55 +460,63 @@ function wpcp_cron_exec()
         $now = new DateTime();
         $diff = $wpcp_duedate - $now->getTimestamp();
         $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
-        $WPCP_AUTOSUSPEND = (int)get_option(WPCP_AUTOSUSPEND, '3') * 86400;
-        $WPCP_TERMINATE = (int)get_option(WPCP_TERMINATE, '10') * 86400;
+        $WPCP_AUTOSUSPEND = (int) get_option(WPCP_AUTOSUSPEND, '3') * 86400;
+        $WPCP_TERMINATE = (int) get_option(WPCP_TERMINATE, '10') * 86400;
 
-        CommonUtils::writeLogs(sprintf('WPCP ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs(sprintf('Original Server ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
 
-        if (!$wpcp_activeinvoice) {
+        $paymentOrderID = get_post_meta($post_id, WPCP_PAYMENTID, true);
 
-            $paymentOrderID = get_post_meta($post_id, WPCP_PAYMENTID, true);
+        CommonUtils::writeLogs(sprintf('Value of payment order is %s for order id %s.', $paymentOrderID, $post_id), CPWP_ERROR_LOGS);
 
-            if (isset($paymentOrderID)) {
+        if (isset($paymentOrderID)) {
 
-                $order = wc_get_order($paymentOrderID);
-                if ($order->data['status'] == 'processing') {
-                    $order->update_status('wc-completed');
-                    update_post_meta($post_id, 'WPCP_ACTIVEINVOICE', 0, true);
+            $dataToSend = array('serverID' => get_the_title());
+
+            $order = wc_get_order($paymentOrderID);
+
+            $orderDate = new DateTime(DATE_ATOM, $order->order_date);
+            $orderTimeStamp = $orderDate->getTimestamp();
+
+            if ($order->data['status'] == 'processing') {
+
+                $order->update_status('wc-completed');
+                update_post_meta($post_id, 'WPCP_ACTIVEINVOICE', 0, true);
+                delete_post_meta($post_id, WPCP_PAYMENTID);
+                continue;
+
+            }
+            if ($WPCP_AUTOSUSPEND) {
+
+                CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+
+                $finalTimeStamp = $orderTimeStamp + $WPCP_AUTOSUSPEND;
+
+                if ($finalTimeStamp > $now->getTimestamp()) {
+
+                    $dataToSend = array('serverID' => get_the_title());
+
+                    $cpjm = new CPJobManager('shutDown', $dataToSend);
+                    $cpjm->RunJob();
                 }
-                elseif ($WPCP_TERMINATE) {
-
-                    CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %s.', $order->id, $order->order_date), CPWP_ERROR_LOGS);
-
-                    $finalTimeStamp = (int)$order->order_date + $WPCP_TERMINATE;
-
-                    if ($finalTimeStamp > $now->getTimestamp()) {
-
-                        $dataToSend = array('serverID' => get_the_title());
-
-                        $cpjm = new CPJobManager('cancelNow', $dataToSend);
-                        $cpjm->RunJob();
-                        continue;
-                    }
-                }
-                elseif ($WPCP_AUTOSUSPEND) {
-
-                    CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %s.', $order->id, $order->order_date), CPWP_ERROR_LOGS);
-
-                    $finalTimeStamp = (int)$order->order_date + $WPCP_AUTOSUSPEND;
-
-                    if ($finalTimeStamp > $now->getTimestamp()) {
-
-                        $dataToSend = array('serverID' => get_the_title());
-
-                        $cpjm = new CPJobManager('shutDown', $dataToSend);
-                        $cpjm->RunJob();
-                        continue;
-                    }
-                }
-
                 delete_post_meta($post_id, WPCP_PAYMENTID);
             }
+            if ($WPCP_TERMINATE) {
+
+                CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+
+                $finalTimeStamp = $orderTimeStamp + $WPCP_TERMINATE;
+
+                if ($finalTimeStamp > $now->getTimestamp()) {
+                    $cpjm = new CPJobManager('cancelNow', $dataToSend);
+                    $cpjm->RunJob();
+                }
+
+            }
+            delete_post_meta($post_id, WPCP_PAYMENTID);
+        }
+
+        if (!$wpcp_activeinvoice) {
             if ($diff <= $autoInvoice) {
                 update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
                 $order = wc_get_order($wpcp_orderid);
@@ -559,26 +567,6 @@ function wpcp_cron_exec()
 
     }
     wp_reset_query();
-
-    if ($WPCP_AUTOSUSPEND && $WPCP_TERMINATE) {
-        $query = new WP_Query(array(
-            'post_type' => 'shop_order',
-            'post_status' => 'publish',
-            'posts_per_page' => -1
-        ));
-
-        while ($query->have_posts()) {
-            $query->the_post();
-            $post_id = get_the_ID();
-
-            $wpcp_invoice = get_post_meta($post_id, WPCP_INVOICE, true);
-
-            if ($wpcp_invoice == 'yes') {
-
-            }
-
-        }
-    }
 
 
 }
