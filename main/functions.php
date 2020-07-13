@@ -290,11 +290,14 @@ function woocommerce_payment_complete_order_status($order_id)
 
     }else{
         if ($order->data['status'] == 'processing') {
-
             $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
             $data = array('serverID' => $server_post_id);
             $cpjm = new CPJobManager('rebootNow', $data);
             $cpjm->RunJob();
+            update_post_meta($server_post_id, WPCP_STATE, WPCP_ACTIVE);
+            update_post_meta($server_post_id, WPCP_ACTIVEINVOICE, 0, true);
+            delete_post_meta($server_post_id, WPCP_PAYMENTID);
+            $order->update_status('wc-completed');
 
         }
     }
@@ -489,59 +492,51 @@ function wpcp_cron_exec()
 
             CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
-            if ($order->data['status'] == 'processing') {
 
-                update_post_meta($post_id, WPCP_ACTIVEINVOICE, 0, true);
-                update_post_meta($post_id, WPCP_STATE, WPCP_ACTIVE, true);
-                delete_post_meta($post_id, WPCP_PAYMENTID);
-                $order->update_status('wc-completed');
-                continue;
+            if($order->data['status'] == 'pending') {
+                if (1) {
 
-            }
-            if (1) {
+                    CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                    $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
 
-                $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
+                    CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
-                CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
+                    if ($state == WPCP_ACTIVE) {
 
-                if ($state == WPCP_ACTIVE) {
+                        if ($finalTimeStamp < $now->getTimestamp()) {
 
-                    if ($finalTimeStamp < $now->getTimestamp()) {
+                            CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                            CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
 
-                        CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
-                        CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
+                            $dataToSend = array('serverID' => get_the_title());
+                            $cpjm = new CPJobManager('shutDown', $dataToSend);
+                            $cpjm->RunJob();
+                            update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
 
-                        $dataToSend = array('serverID' => get_the_title());
-                        $cpjm = new CPJobManager('shutDown', $dataToSend);
-                        $cpjm->RunJob();
-                        update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
-
+                        }
+                    } else {
+                        CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
                     }
-                } else {
-                    CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
                 }
-            }
-            if ($WPCP_TERMINATE) {
+                if ($WPCP_TERMINATE) {
 
-                CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                    CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                    $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
+                    CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
-                $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
+                    if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
+                        if ($finalTimeStamp < $now->getTimestamp()) {
+                            CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
+                            $cpjm = new CPJobManager('cancelNow', $dataToSend);
+                            $cpjm->RunJob();
+                            update_post_meta($post_id, WPCP_STATE, WPCP_TERMINATED);
 
-                if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
-                    if ($finalTimeStamp < $now->getTimestamp()) {
-                        CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
-
-                        $cpjm = new CPJobManager('cancelNow', $dataToSend);
-                        $cpjm->RunJob();
-                        update_post_meta($post_id, WPCP_STATE, WPCP_TERMINATED);
-
+                        }
+                    } else {
+                        CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
                     }
-                } else {
-                    CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
                 }
             }
         }
