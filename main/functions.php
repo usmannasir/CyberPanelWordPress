@@ -477,8 +477,7 @@ function wpcp_cron_exec()
 
             $order = wc_get_order($paymentOrderID);
 
-            $orderDate = new DateTime(DATE_ATOM, $order->order_date);
-            $orderTimeStamp = $orderDate->getTimestamp();
+            $orderTimeStamp = DateTime::createFromFormat(WPCP_DATEFORMAT, $order->order_date)->getTimestamp();
 
             CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
