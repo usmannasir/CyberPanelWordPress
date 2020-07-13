@@ -494,7 +494,10 @@ function wpcp_cron_exec()
 
                 $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
 
+                CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
+
                 if ($state == WPCP_ACTIVE) {
+
                     if ($finalTimeStamp < $now->getTimestamp()) {
 
                         CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
