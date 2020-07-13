@@ -314,7 +314,7 @@ runcmd:
                 'status' => 1,
             );
 
-            if($this->data['cron'] == 0) {
+            if(! wp_doing_cron()) {
                 wp_send_json($data);
             }
         }
@@ -323,7 +323,7 @@ runcmd:
             $data = array(
                 'status' => 0
             );
-            if($this->data['cron'] == 0) {
+            if(! wp_doing_cron()) {
                 wp_send_json($data);
             }
         }

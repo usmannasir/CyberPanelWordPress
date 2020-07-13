@@ -507,6 +507,7 @@ function wpcp_cron_exec()
                         $cpjm = new CPJobManager('shutDown', $dataToSend);
                         $cpjm->RunJob();
                         update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
+
                     }
                 } else {
                     CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
