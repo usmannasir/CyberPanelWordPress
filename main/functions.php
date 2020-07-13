@@ -473,10 +473,14 @@ function wpcp_cron_exec()
 
             $dataToSend = array('serverID' => get_the_title());
 
+            CommonUtils::writeLogs(sprintf('Server Title being checked for suspension %s.', get_the_title()), CPWP_ERROR_LOGS);
+
             $order = wc_get_order($paymentOrderID);
 
             $orderDate = new DateTime(DATE_ATOM, $order->order_date);
             $orderTimeStamp = $orderDate->getTimestamp();
+
+            CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
             if ($order->data['status'] == 'processing') {
 
