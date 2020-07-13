@@ -287,6 +287,14 @@ function woocommerce_payment_complete_order_status($order_id)
             $cpjm = new CPJobManager('createServer', $order_id, $message);
             $cpjm->RunJob();
         }
+
+    }else{
+        if ($order->data['status'] == 'processing') {
+            $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
+            $data = array('serverID' => $server_post_id);
+            $cpjm = new CPJobManager('rebootNow', $data);
+            $cpjm->RunJob();
+        }
     }
 }
 
@@ -472,7 +480,7 @@ function wpcp_cron_exec()
 
         if ($paymentOrderID != '') {
 
-            $dataToSend = array('serverID' => get_the_title(), 'cron' => 1);
+            $dataToSend = array('serverID' => get_the_title());
             CommonUtils::writeLogs(sprintf('Server Title being checked for suspension/termination %s.', get_the_title()), CPWP_ERROR_LOGS);
             $order = wc_get_order($paymentOrderID);
             $orderTimeStamp = (int)get_post_meta($order->id, WPCP_DUEDATE, true);
@@ -536,9 +544,10 @@ function wpcp_cron_exec()
             }
         }
 
-
         if (!$wpcp_activeinvoice) {
+
             if ($diff <= $autoInvoice) {
+
                 update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
                 $order = wc_get_order($wpcp_orderid);
 
@@ -582,6 +591,7 @@ function wpcp_cron_exec()
                 add_post_meta($post_id, WPCP_PAYMENTID, $nOrder->id, true);
                 add_post_meta($nOrder->id, WPCP_INVOICE, 'yes', true);
                 add_post_meta($nOrder->id, WPCP_DUEDATE, (string)$now->getTimestamp(), true);
+                add_post_meta($nOrder->id, WPCP_INVOICESERVER, $post_id, true);
 
 
             }
