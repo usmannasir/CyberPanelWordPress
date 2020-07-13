@@ -269,6 +269,7 @@ runcmd:
             );
 
             wp_update_post($post, true);
+            update_post_meta($this->postIDServer, WPCP_STATE, WPCP_TERMINATED);
 
             $data = array(
                 'status' => 1,
