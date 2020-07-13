@@ -274,7 +274,7 @@ runcmd:
             $data = array(
                 'status' => 1,
             );
-            if(!isset($this->data['cron'])) {
+            if($this->data['cron'] == 0) {
                 wp_send_json($data);
             }
         }
@@ -283,7 +283,7 @@ runcmd:
             $data = array(
                 'status' => 0
             );
-            if(!isset($this->data['cron'])) {
+            if($this->data['cron'] == 0) {
                 wp_send_json($data);
             }
         }
@@ -314,7 +314,7 @@ runcmd:
                 'status' => 1,
             );
 
-            if(!isset($this->data['cron'])) {
+            if($this->data['cron'] == 0) {
                 wp_send_json($data);
             }
         }
@@ -323,7 +323,7 @@ runcmd:
             $data = array(
                 'status' => 0
             );
-            if(!isset($this->data['cron'])) {
+            if($this->data['cron'] == 0) {
                 wp_send_json($data);
             }
         }
