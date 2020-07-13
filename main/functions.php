@@ -472,7 +472,7 @@ function wpcp_cron_exec()
 
         if ($paymentOrderID != '') {
 
-            $dataToSend = array('serverID' => get_the_title(), 'cron' => 0);
+            $dataToSend = array('serverID' => get_the_title(), 'cron' => 1);
             CommonUtils::writeLogs(sprintf('Server Title being checked for suspension/termination %s.', get_the_title()), CPWP_ERROR_LOGS);
             $order = wc_get_order($paymentOrderID);
             $orderTimeStamp = (int)get_post_meta($order->id, WPCP_DUEDATE, true);
