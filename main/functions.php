@@ -441,7 +441,7 @@ remove_filter('the_content', 'filter_the_content_in_the_main_loop');
 function wpcp_cron_exec()
 {
 
-    $query = new WP_Query(array(
+    /*$query = new WP_Query(array(
         'post_type' => 'wpcp_server',
         'post_status' => 'publish',
         'posts_per_page' => -1
@@ -587,7 +587,7 @@ function wpcp_cron_exec()
         }
 
     }
-    wp_reset_query();
+    wp_reset_query();*/
 
 
 }
