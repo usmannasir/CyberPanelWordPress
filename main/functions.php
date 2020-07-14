@@ -535,7 +535,7 @@ function wpcp_cron_exec()
 
                     if ($state == WPCP_ACTIVE) {
 
-                        if ($finalTimeStamp < 50000000000000) {
+                        if ($finalTimeStamp < $now->getTimestamp()) {
 
                             CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
