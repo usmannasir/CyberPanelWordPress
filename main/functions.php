@@ -559,13 +559,15 @@ function wpcp_cron_exec()
 
                     if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
 
-                        if ($finalTimeStamp < $now->getTimestamp()) {
-                            CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
+                        //if ($finalTimeStamp < $now->getTimestamp()) {
+                        if ($finalTimeStamp < 1894754295) {
+                                CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                            $cpjm = new CPJobManager('cancelNow', $dataToSend);
-                            $cpjm->RunJob();
-                            update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
+                                $cpjm = new CPJobManager('cancelNow', $dataToSend);
+                                $cpjm->RunJob();
+                                update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
 
+                            }
                         }
                     } else {
                         CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $serverID), CPWP_ERROR_LOGS);
@@ -578,7 +580,7 @@ function wpcp_cron_exec()
 
             if ($diff <= $autoInvoice) {
 
-                update_post_meta($serverID, WPCP_DUEDATE, (string) ($wpcp_duedate * 30 * 86400));
+                update_post_meta($serverID, WPCP_DUEDATE, (string) ($wpcp_duedate + (30 * 86400)));
 
                 $order = wc_get_order($wpcp_orderid);
 
