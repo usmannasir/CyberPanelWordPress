@@ -559,7 +559,7 @@ function wpcp_cron_exec()
 
                     if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
 
-                        if ($finalTimeStamp < 1997345562) {
+                        if ($finalTimeStamp < $now->getTimestamp()) {
                             CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
                             $cpjm = new CPJobManager('cancelNow', $dataToSend);
