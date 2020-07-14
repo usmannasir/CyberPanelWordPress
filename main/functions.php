@@ -443,7 +443,7 @@ function filter_the_content_in_the_main_loop($content)
 
     if (get_post_type($post->id) == 'wpcp_server') {
         if ($current_user->id == $post->post_author || current_user_can('manage_options'))
-            $state = get_post_meta(get_the_id(), WPCP_STATE, true);
+            $state = get_post_meta($post->ID, WPCP_STATE, true);
             if($state == WPCP_ACTIVE)
                 return $content;
             else{
