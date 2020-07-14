@@ -442,7 +442,7 @@ runcmd:
             $data = array(
                 'status' => 0
             );
-            if( !wp_doing_cron()) {
+            if( !wp_doing_cron() || $this->data['json'] == 0) {
                 wp_send_json($data);
             }
         }
