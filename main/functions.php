@@ -289,7 +289,7 @@ function woocommerce_payment_complete_order_status($order_id)
             $cpjm->RunJob();
         }
 
-    }else{
+    } else {
         if ($order->data['status'] == 'processing') {
 
             $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
@@ -442,11 +442,11 @@ function filter_the_content_in_the_main_loop($content)
     $post = get_post();
 
     if (get_post_type($post->id) == 'wpcp_server') {
-        if ($current_user->id == $post->post_author || current_user_can('manage_options'))
+        if ($current_user->id == $post->post_author || current_user_can('manage_options')) {
             $state = get_post_meta($post->ID, WPCP_STATE, true);
-            if($state == WPCP_ACTIVE)
+            if ($state == WPCP_ACTIVE)
                 return $content;
-            else{
+            else {
                 if ($state == WPCP_ACTIVE)
                     $state = 'ACTIVE';
                 elseif ($state == WPCP_SUSPENDED)
@@ -456,7 +456,7 @@ function filter_the_content_in_the_main_loop($content)
                 else
                     $state = 'TERMINATED';
 
-                if($state == WPCP_ACTIVE)
+                if ($state == WPCP_ACTIVE)
                     return $content;
 
                 $content = sprintf('Server is currently %s. Kindly check if you have any pending invoices or contact support if this is a mistake', $state);
@@ -495,9 +495,9 @@ function wpcp_cron_exec()
 
         $now = new DateTime();
         $diff = $wpcp_duedate - $now->getTimestamp();
-        $autoInvoice = (int) get_option(WPCP_INVOICE, '14') * 86400;
-        $WPCP_AUTOSUSPEND = (int) get_option(WPCP_AUTOSUSPEND, '3') * 86400;
-        $WPCP_TERMINATE = (int) get_option(WPCP_TERMINATE, '10') * 86400;
+        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
+        $WPCP_AUTOSUSPEND = (int)get_option(WPCP_AUTOSUSPEND, '3') * 86400;
+        $WPCP_TERMINATE = (int)get_option(WPCP_TERMINATE, '10') * 86400;
 
         CommonUtils::writeLogs(sprintf('Original Server ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
 
@@ -515,7 +515,7 @@ function wpcp_cron_exec()
             CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
 
-            if($order->data['status'] == 'pending') {
+            if ($order->data['status'] == 'pending') {
                 if (1) {
 
                     CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
