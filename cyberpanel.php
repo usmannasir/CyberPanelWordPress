@@ -56,6 +56,7 @@ define('WPCP_TERMINATE', 'wpcp_terminate');
 define('WPCP_DATEFORMAT', 'Y-m-d H:i:s');
 define('WPCP_STATE', 'wp_state');
 define('WPCP_INVOICESERVER', 'wpcp_invoiceserver');
+define('WPCP_TOKEN', 'wpcp_token');
 
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 

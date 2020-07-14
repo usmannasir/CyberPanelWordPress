@@ -287,6 +287,7 @@ function woocommerce_payment_complete_order_status($order_id)
             $message = sprintf('Processing order %s', $order_id);
             $cpjm = new CPJobManager('createServer', $order_id, $message);
             $cpjm->RunJob();
+
         }
 
     } else {
@@ -300,8 +301,6 @@ function woocommerce_payment_complete_order_status($order_id)
             $order->update_status('wc-completed');
             $cpjm = new CPJobManager('rebootNow', $data);
             $cpjm->RunJob();
-
-
         }
     }
 }
@@ -485,43 +484,52 @@ function wpcp_cron_exec()
     while ($query->have_posts()) {
 
         $query->the_post();
-        $post_id = get_the_ID();
+        $serverID = get_the_ID();
 
-        $wpcp_productid = get_post_meta($post_id, WPCP_PRODUCTID, true);
-        $wpcp_duedate = (int)get_post_meta($post_id, WPCP_DUEDATE, true);
-        $wpcp_activeinvoice = get_post_meta($post_id, WPCP_ACTIVEINVOICE, true);
-        $wpcp_orderid = get_post_meta($post_id, WPCP_ORDERID, true);
-        $state = get_post_meta($post_id, WPCP_STATE, true);
+        // Get current meta values of this server id
+
+        $wpcp_productid = get_post_meta($serverID, WPCP_PRODUCTID, true);
+        $wpcp_duedate = (int) get_post_meta($serverID, WPCP_DUEDATE, true);
+        $wpcp_activeinvoice = get_post_meta($serverID, WPCP_ACTIVEINVOICE, true);
+        $wpcp_orderid = get_post_meta($serverID, WPCP_ORDERID, true);
+        $state = get_post_meta($serverID, WPCP_STATE, true);
+
+        ## Payment id is set below when invoice is generated for this server.
+
+        $paymentOrderID = get_post_meta($serverID, WPCP_PAYMENTID, true);
+
+        ## Get current timeStamp
 
         $now = new DateTime();
-        $diff = $wpcp_duedate - $now->getTimestamp();
-        $autoInvoice = (int)get_option(WPCP_INVOICE, '14') * 86400;
-        $WPCP_AUTOSUSPEND = (int)get_option(WPCP_AUTOSUSPEND, '3') * 86400;
-        $WPCP_TERMINATE = (int)get_option(WPCP_TERMINATE, '10') * 86400;
+        $nowTimeStamp = $now->getTimestamp();
+        $diff = $wpcp_duedate - $nowTimeStamp;
 
-        CommonUtils::writeLogs(sprintf('Original Server ID: %s. wpcp_productid: %s. wpcp_duedate: %d. wpcp_activeinvoice: %d. wpcp_orderid: %s  ', $post_id, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
+        ### Get site-wide option
 
-        $paymentOrderID = get_post_meta($post_id, WPCP_PAYMENTID, true);
+        $autoInvoice = (int) get_option(WPCP_INVOICE, '14') * 86400;
+        $WPCP_AUTOSUSPEND = (int) get_option(WPCP_AUTOSUSPEND, '3') * 86400;
+        $WPCP_TERMINATE = (int) get_option(WPCP_TERMINATE, '10') * 86400;
 
-        CommonUtils::writeLogs(sprintf('Value of payment order is %s for order id %s.', $paymentOrderID, $post_id), CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs(sprintf('Original Server ID: %s. Product id of this server: %s. Due date of this server: %d. Active invoice: %d. Order id from which this server was created: %s  ', $serverID, $wpcp_productid, $wpcp_duedate, $wpcp_activeinvoice, $wpcp_orderid), CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs(sprintf('If this server (%s) already have active invoice order, then id is: %s', $serverID, $paymentOrderID), CPWP_ERROR_LOGS);
 
         if ($paymentOrderID != '') {
 
             $dataToSend = array('serverID' => get_the_title());
+
             CommonUtils::writeLogs(sprintf('Server Title being checked for suspension/termination %s.', get_the_title()), CPWP_ERROR_LOGS);
+
             $order = wc_get_order($paymentOrderID);
-            $orderTimeStamp = (int)get_post_meta($order->id, WPCP_DUEDATE, true);
+            $orderTimeStamp = (int) get_post_meta($order->id, WPCP_DUEDATE, true);
 
             CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
-
             if ($order->data['status'] == 'pending') {
-                if (1) {
+                if ($WPCP_AUTOSUSPEND) {
 
                     CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                    //$finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
-                    $finalTimeStamp = $orderTimeStamp + 0 + $WPCP_AUTOSUSPEND;
+                    $finalTimeStamp = $orderTimeStamp + $WPCP_AUTOSUSPEND;
 
                     CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
@@ -530,36 +538,37 @@ function wpcp_cron_exec()
                         if ($finalTimeStamp < $now->getTimestamp()) {
 
                             CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
-                            CommonUtils::writeLogs(sprintf('Post id before update post meta: %s', $post_id), CPWP_ERROR_LOGS);
 
                             $dataToSend = array('serverID' => get_the_title());
                             $cpjm = new CPJobManager('shutDown', $dataToSend);
                             $cpjm->RunJob();
-                            update_post_meta($post_id, WPCP_STATE, WPCP_SUSPENDED);
+
+                            ## Turn server state to suspended
+
+                            update_post_meta($serverID, WPCP_STATE, WPCP_SUSPENDED);
 
                         }
                     } else {
-                        CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
+                        CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $serverID), CPWP_ERROR_LOGS);
                     }
                 }
                 if ($WPCP_TERMINATE) {
-
                     CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
-                    //$finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
-                    $finalTimeStamp = $orderTimeStamp + 0 + $WPCP_TERMINATE;
-                    CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
+                    $finalTimeStamp = $orderTimeStamp + $WPCP_TERMINATE;
+                    CommonUtils::writeLogs(sprintf('Final timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
                     if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
+
                         if ($finalTimeStamp < $now->getTimestamp()) {
                             CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
                             $cpjm = new CPJobManager('cancelNow', $dataToSend);
                             $cpjm->RunJob();
-                            update_post_meta($post_id, WPCP_STATE, WPCP_TERMINATED);
+                            update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
 
                         }
                     } else {
-                        CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $post_id), CPWP_ERROR_LOGS);
+                        CommonUtils::writeLogs(sprintf('Terminate for order id %s of server id %s is not needed as state is not active.', $order->id, $serverID), CPWP_ERROR_LOGS);
                     }
                 }
             }
@@ -569,7 +578,8 @@ function wpcp_cron_exec()
 
             if ($diff <= $autoInvoice) {
 
-                update_post_meta($post_id, WPCP_DUEDATE, (string)$now->getTimestamp());
+                update_post_meta($serverID, WPCP_DUEDATE, (string) ($wpcp_duedate * 30 * 86400));
+
                 $order = wc_get_order($wpcp_orderid);
 
                 $address = array(
@@ -590,10 +600,8 @@ function wpcp_cron_exec()
                 $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
                 $nOrder->add_product(get_product($wpcp_productid), 1);
                 ## Set custom description of order
-
-                $postTitle = get_the_title($post_id);
+                $postTitle = get_the_title($serverID);
                 $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
-
                 global $wpdb;
                 $table_name = $wpdb->prefix . 'woocommerce_order_items';
                 $sql = "UPDATE $table_name SET order_item_name = '$itemName' where order_id = $nOrder->id";
@@ -608,11 +616,11 @@ function wpcp_cron_exec()
                 $nOrder->calculate_totals();
                 $nOrder->update_status('pending');
 
-                update_post_meta($post_id, WPCP_ACTIVEINVOICE, 1);
-                add_post_meta($post_id, WPCP_PAYMENTID, $nOrder->id, true);
+                update_post_meta($serverID, WPCP_ACTIVEINVOICE, 1);
+                add_post_meta($serverID, WPCP_PAYMENTID, $nOrder->id, true);
                 add_post_meta($nOrder->id, WPCP_INVOICE, 'yes', true);
-                add_post_meta($nOrder->id, WPCP_DUEDATE, (string)$now->getTimestamp(), true);
-                add_post_meta($nOrder->id, WPCP_INVOICESERVER, $post_id, true);
+                add_post_meta($nOrder->id, WPCP_DUEDATE, (string)$wpcp_duedate, true);
+                add_post_meta($nOrder->id, WPCP_INVOICESERVER, $serverID, true);
 
 
             }
