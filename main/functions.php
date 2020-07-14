@@ -500,7 +500,8 @@ function wpcp_cron_exec()
 
                     CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                    $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
+                    //$finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_AUTOSUSPEND;
+                    $finalTimeStamp = $orderTimeStamp + 0 + $WPCP_AUTOSUSPEND;
 
                     CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
@@ -524,7 +525,8 @@ function wpcp_cron_exec()
                 if ($WPCP_TERMINATE) {
 
                     CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
-                    $finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
+                    //$finalTimeStamp = $orderTimeStamp + $autoInvoice + $WPCP_TERMINATE;
+                    $finalTimeStamp = $orderTimeStamp + 0 + $WPCP_TERMINATE;
                     CommonUtils::writeLogs(sprintf('Finale timestamp: %d. Now timestamp: %d', $finalTimeStamp, $now->getTimestamp()), CPWP_ERROR_LOGS);
 
                     if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
