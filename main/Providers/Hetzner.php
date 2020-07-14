@@ -433,6 +433,8 @@ runcmd:
                 'status' => 1,
             );
 
+            CommonUtils::writeLogs(sprintf('Value of json %d.', $this->data['json']), CPWP_ERROR_LOGS);
+
             if( !wp_doing_cron() || $this->data['json'] == 0) {
                 wp_send_json($data);
             }
