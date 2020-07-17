@@ -110,6 +110,26 @@ class WPCPHTTP
     static $cancelled = '<!-- wp:heading {"align":"center"} -->
 <h2 class="has-text-align-center"><span class="has-inline-color has-vivid-red-color"><strong>This service is cancelled.</strong></span></h2>
 <!-- /wp:heading -->';
+
+
+    static $ServerDetails = 'Hello {FullName} !
+
+{PlanName} has bee successfully activated.
+
+SSH Credentials:
+
+Server IP: {IPAddress}
+Username: root
+Password: {RootPassword}
+
+You can manage your service at:
+
+https://{IPAddressCP}:8090
+User Name: admin
+Password: {CPPassword}
+
+Kind Regards';
+
     protected $job;
     protected $data;
     protected $url;

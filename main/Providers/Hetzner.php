@@ -219,6 +219,28 @@ runcmd:
         add_post_meta( $post_id, WPCP_PRODUCTID, $product_id, true );
 
         $order->update_status('wc-completed');
+
+        /// Send Email To Customer
+
+        $replacements = array(
+            '{FullName}' =>  $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+            '{PlanName}' =>  $productName,
+            '{IPAddress}' => $ipv4,
+            '{RootPassword}' => $rootPassword,
+            '{IPAddressCP}' => $ipv4,
+            '{CPPassword}' => $CyberPanelPassword,
+        );
+
+        $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $order->id);
+
+        $content = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            WPCPHTTP::$ServerDetails
+        );
+
+        wp_mail($order->get_billing_email(), $subject, $content);
+
         return 1;
     }
 
