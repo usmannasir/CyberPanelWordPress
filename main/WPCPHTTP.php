@@ -114,7 +114,7 @@ class WPCPHTTP
 
     static $ServerDetails = 'Hello {FullName} !
 
-{PlanName} has bee successfully activated.
+{PlanName} has been successfully activated.
 
 SSH Credentials:
 
