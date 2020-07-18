@@ -236,7 +236,7 @@ runcmd:
         $content = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            WPCPHTTP::$ServerDetails
+            get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails)
         );
 
         wp_mail($order->get_billing_email(), $subject, $content);
@@ -276,6 +276,28 @@ runcmd:
 
             wp_update_post($post, true);
             update_post_meta($this->postIDServer, WPCP_STATE, WPCP_TERMINATED);
+
+            ### Send Termination Email
+
+            $orderID= get_post_meta($this->postIDServer, WPCP_ORDERID, true);
+            $order = wc_get_order($orderID);
+
+            $replacements = array(
+                '{ServerID}' => sanitize_text_field($this->data['serverID'])
+            );
+
+            $subject = sprintf('Server with ID# %s cancelled.', sanitize_text_field($this->data['serverID']));
+
+            $content = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                get_option(WPCP_SERVER_CANCELLED, WPCPHTTP::$ServerCancelled)
+            );
+
+            wp_mail($order->get_billing_email(), $subject, $content);
+
+            ##
+
 
             $data = array(
                 'status' => 1,

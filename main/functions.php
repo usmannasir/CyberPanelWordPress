@@ -644,6 +644,29 @@ function wpcp_cron_exec()
 
                             update_post_meta($serverID, WPCP_STATE, WPCP_SUSPENDED);
 
+                            ### Send Suspension Email
+
+                            $orderID= get_post_meta($serverID, WPCP_ORDERID, true);
+                            $order = wc_get_order($orderID);
+
+                            $replacements = array(
+                                '{ServerID}' => get_the_title(),
+                                '{Reason}' => 'Invoice overdue.'
+
+                            );
+
+                            $subject = sprintf('Server with ID# %s terminated.', get_the_title());
+
+                            $content = str_replace(
+                                array_keys($replacements),
+                                array_values($replacements),
+                                get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended)
+                            );
+
+                            wp_mail($order->get_billing_email(), $subject, $content);
+
+                            ##
+
                         }
                     } else {
                         CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $serverID), CPWP_ERROR_LOGS);
@@ -664,6 +687,27 @@ function wpcp_cron_exec()
                             $cpjm = new CPJobManager('cancelNow', $dataToSend);
                             $cpjm->RunJob();
                             update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
+
+                            ### Send Termination Email
+
+                            $orderID= get_post_meta($serverID, WPCP_ORDERID, true);
+                            $order = wc_get_order($orderID);
+
+                            $replacements = array(
+                                '{ServerID}' => get_the_title()
+                            );
+
+                            $subject = sprintf('Server with ID# %s terminated.', get_the_title());
+
+                            $content = str_replace(
+                                array_keys($replacements),
+                                array_values($replacements),
+                                get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated)
+                            );
+
+                            wp_mail($order->get_billing_email(), $subject, $content);
+
+                            ##
 
                         }
                     } else {
