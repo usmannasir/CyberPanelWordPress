@@ -138,7 +138,7 @@ Kind Regards';
 
     static $ServerSuspended = 'Hello {FullName} !
 
-{ServerID} has been successfully suspended. Suspension reason {Reason}
+{ServerID} has been successfully suspended. Suspension reason: {Reason}
 
 Kind Regards';
 

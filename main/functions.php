@@ -622,7 +622,7 @@ function wpcp_cron_exec()
 
                 CommonUtils::writeLogs(sprintf('Timestamp when the invoice order is created %s. Order status: %s.', $orderTimeStamp, $order->data['status']), CPWP_ERROR_LOGS);
 
-                if (1) {
+                if ($WPCP_AUTOSUSPEND) {
 
                     CommonUtils::writeLogs(sprintf('Auto suspend is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
@@ -632,7 +632,7 @@ function wpcp_cron_exec()
 
                     if ($state == WPCP_ACTIVE) {
 
-                        if (1) {
+                        if ($finalTimeStamp < $nowTimeStamp) {
 
                             CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
