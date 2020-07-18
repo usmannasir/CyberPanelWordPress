@@ -31,6 +31,20 @@ function fetchProviderPlansCallBack(data) {
     });
 }
 
+function fetchEmailTemplateContent(data) {
+
+    jQuery(document).ready(function ($) {
+        $("#WPCPSpinner").hide();
+        $("#WPCPSpinnerModal").hide();
+        $("#wpcp_providerplans_label").show();
+        $("#wpcp_providerplans").show();
+
+        if (data.status === 1) {
+            $("#templateContent").html(data.result);
+        }
+    });
+}
+
 function fetchProviderAPIs(data) {
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").hide();
@@ -133,6 +147,15 @@ jQuery(document).ready(function ($) {
             provider: $(this).children("option:selected").val(),
         }
         GlobalAjax(dataContent, fetchProviderAPIs, fetchProviderAPIs);
+    });
+
+    $("#emailTemplate").change(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'fetchTemplateContent',
+            templateName: $(this).children("option:selected").val(),
+        }
+        GlobalAjax(dataContent, fetchEmailTemplateContent, fetchEmailTemplateContent);
     });
 
 

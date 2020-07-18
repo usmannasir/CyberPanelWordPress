@@ -71,8 +71,6 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 // Add the emails page
 
-///
-
 function Main_CyberPanel_Emails()
 {
 
@@ -115,6 +113,39 @@ function ajax_saveSettings()
     check_ajax_referer('CPWP');
     $cpjm = new CPJobManager('saveSettings', $_POST, $message);
     $cpjm->RunJob();
+}
+
+// Ajax fetch email settings
+
+add_action('wp_ajax_fetchTemplateContent', 'ajax_fetchTemplateContent');
+
+function ajax_fetchTemplateContent()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('fetchTemplateContent');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $templateName = sanitize_text_field($_POST['templateName']);
+
+    if($templateName == 'New Server Created'){
+        $content = get_option(WPCP_NEW_SERVER, '3');
+    }elseif ($templateName == 'Server Cancelled') {
+        $content = get_option(WPCP_SERVER_CANCELLED, '3');
+    }elseif ($templateName == 'Server Suspended') {
+        $content = get_option(WPCP_SERVER_SUSPENDED, '3');
+    }elseif ($templateName == 'Server Terminated') {
+        $content = get_option(WPCP_SERVER_TERMINATED, '3');
+    }
+
+    $data = array('status' => 1,
+        'result' => $content);
+
+    wp_send_json(json_encode($data));
 }
 
 //// Ajax to fetch job status

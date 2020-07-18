@@ -58,6 +58,13 @@ define('WPCP_STATE', 'wp_state');
 define('WPCP_INVOICESERVER', 'wpcp_invoiceserver');
 define('WPCP_TOKEN', 'wpcp_token');
 
+// Email Templates Options
+
+define('WPCP_NEW_SERVER', 'wpcp_new_server');
+define('WPCP_SERVER_CANCELLED', 'wpcp_server_cancelled');
+define('WPCP_SERVER_SUSPENDED', 'wpcp_server_suspended');
+define('WPCP_SERVER_TERMINATED', 'wpcp_server_terminated');
+
 require_once(CPWP_PLUGIN_DIR . 'main/functions.php');
 
 // Create Table where Connected servers will be stored
