@@ -133,13 +133,13 @@ function ajax_fetchTemplateContent()
     $templateName = sanitize_text_field($_POST['templateName']);
 
     if($templateName == 'New Server Created'){
-        $content = get_option(WPCP_NEW_SERVER, '3');
+        $content = get_option(WPCP_NEW_SERVER, '1');
     }elseif ($templateName == 'Server Cancelled') {
-        $content = get_option(WPCP_SERVER_CANCELLED, '3');
+        $content = get_option(WPCP_SERVER_CANCELLED, '2');
     }elseif ($templateName == 'Server Suspended') {
         $content = get_option(WPCP_SERVER_SUSPENDED, '3');
     }elseif ($templateName == 'Server Terminated') {
-        $content = get_option(WPCP_SERVER_TERMINATED, '3');
+        $content = get_option(WPCP_SERVER_TERMINATED, '4');
     }
 
     $data = array('status' => 1,
