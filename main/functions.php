@@ -649,6 +649,7 @@ function wpcp_cron_exec()
                             $orderOriginal = wc_get_order($wpcp_orderid);
 
                             $replacements = array(
+                                '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
                                 '{ServerID}' => get_the_title(),
                                 '{Reason}' => 'Invoice overdue.'
 
@@ -692,6 +693,7 @@ function wpcp_cron_exec()
                             $orderOriginal = wc_get_order($wpcp_orderid);
 
                             $replacements = array(
+                                '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
                                 '{ServerID}' => get_the_title(),
                             );
 

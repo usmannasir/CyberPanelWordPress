@@ -283,6 +283,7 @@ runcmd:
             $order = wc_get_order($orderID);
 
             $replacements = array(
+                '{FullName}' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
                 '{ServerID}' => sanitize_text_field($this->data['serverID'])
             );
 
