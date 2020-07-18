@@ -142,10 +142,7 @@ function ajax_fetchTemplateContent()
         $content = get_option(WPCP_SERVER_TERMINATED, '4');
     }
 
-    $data = array('status' => 1,
-        'result' => $content);
-
-    wp_send_json(json_encode($data));
+    wp_send_json(array('status' => 1, 'result' => $content));
 }
 
 add_action('wp_ajax_saveTemplate', 'ajax_saveTemplate');
@@ -174,8 +171,7 @@ function ajax_saveTemplate()
         update_option(WPCP_SERVER_TERMINATED, $templateContent, 'no');
     }
 
-    $data = array('status' => 1);
-    wp_send_json(json_encode($data));
+    wp_send_json(array('status' => 1));
 }
 
 //// Ajax to fetch job status
