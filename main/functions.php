@@ -160,7 +160,7 @@ function ajax_saveTemplate()
 
     $templateName = sanitize_text_field($_POST['templateName']);
     $templateContent = sanitize_text_field($_POST['templateContent']);
-    $breaks = array("<br />","<br>","<br/>");
+    $breaks = array("<br />","<br>","<br/>", '\n\n');
 
     $templateContent = str_ireplace($breaks, "\r\n", $templateContent);
 
