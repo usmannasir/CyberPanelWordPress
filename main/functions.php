@@ -75,13 +75,12 @@ add_action('admin_menu', 'Main_CyberPanel');
 
 function Main_CyberPanel_Emails()
 {
-    add_menu_page(
-        'Configure Emails', //Page Title
-        'Email Templates', //Menu Title
-        'manage_options', //Capability
-        'wpcp_emails', //Page slug
-        'cyberpanel_main_emails_html' //Callback to print html
+
+    add_submenu_page("cyberpanel", "Configure Emails",
+        "Email Templates", "manage_options", "wpcp-emails"
+        , "cyberpanel_main_emails_html"
     );
+
 }
 
 function cyberpanel_main_emails_html()
