@@ -32,7 +32,6 @@ function fetchProviderPlansCallBack(data) {
 }
 
 function fetchEmailTemplateContent(data) {
-
     jQuery(document).ready(function ($) {
         $("#WPCPSpinner").hide();
         $("#WPCPSpinnerModal").hide();
@@ -171,7 +170,7 @@ jQuery(document).ready(function ($) {
             templateContent: $("#templateContent").val(),
             templateName: templateName
         }
-        GlobalAjax(dataContent, fetchEmailTemplateContent, fetchEmailTemplateContent);
+        GlobalAjax(dataContent, null, null);
     });
 
 });

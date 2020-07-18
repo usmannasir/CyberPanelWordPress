@@ -130,6 +130,26 @@ Password: {CPPassword}
 
 Kind Regards';
 
+    static $ServerCancelled = 'Hello {FullName} !
+
+{ServerID} has been successfully cancelled.
+
+Kind Regards';
+
+    static $ServerSuspended = 'Hello {FullName} !
+
+{ServerID} has been successfully suspended. Suspension reason {Reason}
+
+Kind Regards';
+
+    static $ServerTerminated = 'Hello {FullName} !
+
+{ServerID} has been successfully terminated.
+
+Kind Regards';
+
+
+
     protected $job;
     protected $data;
     protected $url;

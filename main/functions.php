@@ -3,6 +3,7 @@
 require_once(CPWP_PLUGIN_DIR . 'main/CPJobManager.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CapabilityCheck.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
+require_once(CPWP_PLUGIN_DIR . 'main/WPCPHTTP.php');
 
 /// Load all required JS and CSS files for this plugin
 
@@ -133,13 +134,13 @@ function ajax_fetchTemplateContent()
     $templateName = sanitize_text_field($_POST['templateName']);
 
     if($templateName == 'New Server Created'){
-        $content = get_option(WPCP_NEW_SERVER, '1');
+        $content = get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails);
     }elseif ($templateName == 'Server Cancelled') {
-        $content = get_option(WPCP_SERVER_CANCELLED, '2');
+        $content = get_option(WPCP_SERVER_CANCELLED, WPCPHTTP::$ServerCancelled);
     }elseif ($templateName == 'Server Suspended') {
-        $content = get_option(WPCP_SERVER_SUSPENDED, '3');
+        $content = get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended);
     }elseif ($templateName == 'Server Terminated') {
-        $content = get_option(WPCP_SERVER_TERMINATED, '4');
+        $content = get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated);
     }
 
     wp_send_json(array('status' => 1, 'result' => nl2br($content)));
@@ -161,6 +162,7 @@ function ajax_saveTemplate()
     $templateName = sanitize_text_field($_POST['templateName']);
     //$templateContent = sanitize_text_field($_POST['templateContent']);
     $templateContent = $_POST['templateContent'];
+
     //$breaks = array("<br />","<br>","<br/>", '\n\n');
 
     //$templateContent = str_ireplace($breaks, "\r\n", $templateContent);
