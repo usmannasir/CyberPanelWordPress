@@ -142,7 +142,7 @@ function ajax_fetchTemplateContent()
         $content = get_option(WPCP_SERVER_TERMINATED, '4');
     }
 
-    wp_send_json(array('status' => 1, 'result' => $content));
+    wp_send_json(array('status' => 1, 'result' => nl2br($content)));
 }
 
 add_action('wp_ajax_saveTemplate', 'ajax_saveTemplate');
@@ -160,6 +160,9 @@ function ajax_saveTemplate()
 
     $templateName = sanitize_text_field($_POST['templateName']);
     $templateContent = sanitize_text_field($_POST['templateContent']);
+    $breaks = array("<br />","<br>","<br/>");
+
+    $templateContent = str_ireplace($breaks, "\r\n", $templateContent);
 
     if($templateName == 'New Server Created'){
         update_option(WPCP_NEW_SERVER, $templateContent, 'no');
