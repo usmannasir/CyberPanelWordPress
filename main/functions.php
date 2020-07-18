@@ -646,8 +646,7 @@ function wpcp_cron_exec()
 
                             ### Send Suspension Email
 
-                            $orderID= get_post_meta($serverID, WPCP_ORDERID, true);
-                            $order = wc_get_order($orderID);
+                            $orderOriginal = wc_get_order($wpcp_orderid);
 
                             $replacements = array(
                                 '{ServerID}' => get_the_title(),
@@ -655,7 +654,7 @@ function wpcp_cron_exec()
 
                             );
 
-                            $subject = sprintf('Server with ID# %s terminated.', get_the_title());
+                            $subject = sprintf('Server with ID# %s suspended.', get_the_title());
 
                             $content = str_replace(
                                 array_keys($replacements),
@@ -663,7 +662,7 @@ function wpcp_cron_exec()
                                 get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended)
                             );
 
-                            wp_mail($order->get_billing_email(), $subject, $content);
+                            wp_mail($orderOriginal->get_billing_email(), $subject, $content);
 
                             ##
 
@@ -688,13 +687,12 @@ function wpcp_cron_exec()
                             $cpjm->RunJob();
                             update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
 
-                            ### Send Termination Email
+                            ### Send Suspension Email
 
-                            $orderID= get_post_meta($serverID, WPCP_ORDERID, true);
-                            $order = wc_get_order($orderID);
+                            $orderOriginal = wc_get_order($wpcp_orderid);
 
                             $replacements = array(
-                                '{ServerID}' => get_the_title()
+                                '{ServerID}' => get_the_title(),
                             );
 
                             $subject = sprintf('Server with ID# %s terminated.', get_the_title());
@@ -705,7 +703,7 @@ function wpcp_cron_exec()
                                 get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated)
                             );
 
-                            wp_mail($order->get_billing_email(), $subject, $content);
+                            wp_mail($orderOriginal->get_billing_email(), $subject, $content);
 
                             ##
 
