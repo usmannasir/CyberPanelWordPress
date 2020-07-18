@@ -148,6 +148,36 @@ function ajax_fetchTemplateContent()
     wp_send_json(json_encode($data));
 }
 
+add_action('wp_ajax_saveTemplate', 'ajax_saveTemplate');
+
+function ajax_saveTemplate()
+{
+    // Handle the ajax request
+
+    $cc = new CapabilityCheck('fetchTemplateContent');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    check_ajax_referer('CPWP');
+
+    $templateName = sanitize_text_field($_POST['templateName']);
+    $templateContent = sanitize_text_field($_POST['templateContent']);
+
+    if($templateName == 'New Server Created'){
+        update_option(WPCP_NEW_SERVER, $templateContent, 'no');
+    }elseif ($templateName == 'Server Cancelled') {
+        update_option(WPCP_SERVER_CANCELLED, $templateContent, 'no');
+    }elseif ($templateName == 'Server Suspended') {
+        update_option(WPCP_SERVER_SUSPENDED, $templateContent, 'no');
+    }elseif ($templateName == 'Server Terminated') {
+        update_option(WPCP_SERVER_TERMINATED, $templateContent, 'no');
+    }
+
+    $data = array('status' => 1);
+    wp_send_json(json_encode($data));
+}
+
 //// Ajax to fetch job status
 
 add_action('wp_ajax_jobStatus', 'ajax_jobStatus');

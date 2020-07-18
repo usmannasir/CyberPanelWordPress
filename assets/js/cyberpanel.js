@@ -40,7 +40,7 @@ function fetchEmailTemplateContent(data) {
         $("#wpcp_providerplans").show();
 
         if (data.status === 1) {
-            $("#templateContent").html(data.result);
+            $("#templateContent").val(data.result);
         }
     });
 }
@@ -149,15 +149,30 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, fetchProviderAPIs, fetchProviderAPIs);
     });
 
+    ///
+
+    var templateName;
+
     $("#emailTemplate").change(function () {
+        templateName = $(this).children("option:selected").val();
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'fetchTemplateContent',
             templateName: $(this).children("option:selected").val(),
+
         }
         GlobalAjax(dataContent, fetchEmailTemplateContent, fetchEmailTemplateContent);
     });
 
+    $("#saveTemplate").click(function () {
+        dataContent = {
+            _ajax_nonce: CPWP.nonce,
+            action: 'saveTemplate',
+            templateContent: $("#templateContent").val(),
+            templateName: templateName
+        }
+        GlobalAjax(dataContent, fetchEmailTemplateContent, fetchEmailTemplateContent);
+    });
 
 });
 

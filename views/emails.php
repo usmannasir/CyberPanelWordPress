@@ -21,7 +21,7 @@
                     <label for="templateContent">Content of template</label>
                     <textarea class="form-control" id="templateContent" rows="3"></textarea>
                 </div>
-                <button id="connectProvider" type="button" class="btn btn-primary">Save</button>
+                <button id="saveTemplate" type="button" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>
