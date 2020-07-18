@@ -69,6 +69,35 @@ function cyberpanel_main_html()
 
 add_action('admin_menu', 'Main_CyberPanel');
 
+// Add the emails page
+
+///
+
+function Main_CyberPanel_Emails()
+{
+    add_menu_page(
+        'Configure Emails', //Page Title
+        'Email Templates', //Menu Title
+        'manage_options', //Capability
+        'wpcp_emails', //Page slug
+        'cyberpanel_main_emails_html' //Callback to print html
+    );
+}
+
+function cyberpanel_main_emails_html()
+{
+
+    $cc = new CapabilityCheck('cyberpanel_main_emails_html');
+    if (!$cc->checkCapability()) {
+        return;
+    }
+
+    include(CPWP_PLUGIN_DIR . 'views/emails.php');
+
+}
+
+add_action('admin_menu', 'Main_CyberPanel_Emails');
+
 //// Ajax handler
 
 add_action('wp_ajax_saveSettings', 'ajax_saveSettings');

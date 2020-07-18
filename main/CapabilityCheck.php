@@ -14,7 +14,7 @@ class CapabilityCheck
 
     function checkCapability(){
 
-        if($this->function == 'saveSettings' || $this->function == 'jobStatus' || $this->function == 'cyberpanel_provider_html'
+        if($this->function == 'cyberpanel_main_emails_html' || $this->function == 'saveSettings' || $this->function == 'jobStatus' || $this->function == 'cyberpanel_provider_html'
         || $this->function == 'connectProvider' || $this->function == 'fetchProviderPlans' || $this->function == 'fetchProviderAPIs'
         || $this->function == 'deleteAPIDetails' || $this->function == 'cyberpanel_main_html'){
             if(current_user_can('manage_options'))
