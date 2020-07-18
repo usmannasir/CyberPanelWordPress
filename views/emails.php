@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label for="templateContent">Content of template</label>
-                    <textarea class="form-control" id="templateContent" rows="3"></textarea>
+                    <textarea class="form-control" id="templateContent" rows="5"></textarea>
                 </div>
                 <button id="saveTemplate" type="button" class="btn btn-primary">Save</button>
             </form>
