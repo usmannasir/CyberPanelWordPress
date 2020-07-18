@@ -672,7 +672,7 @@ function wpcp_cron_exec()
                         CommonUtils::writeLogs(sprintf('Shutdown for order id %s of server id %s is not needed as state is not active.', $order->id, $serverID), CPWP_ERROR_LOGS);
                     }
                 }
-                if ($WPCP_TERMINATE) {
+                if (1) {
 
                     CommonUtils::writeLogs(sprintf('Auto terminate is active for order id %s with timestamp %d.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
                     $finalTimeStamp = $orderTimeStamp + $WPCP_TERMINATE;
@@ -680,7 +680,7 @@ function wpcp_cron_exec()
 
                     if ($state == WPCP_ACTIVE || $state == WPCP_CANCELLED) {
 
-                        if ($finalTimeStamp < $nowTimeStamp) {
+                        if (1) {
 
                             CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
