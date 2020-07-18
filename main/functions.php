@@ -159,10 +159,11 @@ function ajax_saveTemplate()
     check_ajax_referer('CPWP');
 
     $templateName = sanitize_text_field($_POST['templateName']);
-    $templateContent = sanitize_text_field($_POST['templateContent']);
-    $breaks = array("<br />","<br>","<br/>", '\n\n');
+    //$templateContent = sanitize_text_field($_POST['templateContent']);
+    $templateContent = $_POST['templateContent'];
+    //$breaks = array("<br />","<br>","<br/>", '\n\n');
 
-    $templateContent = str_ireplace($breaks, "\r\n", $templateContent);
+    //$templateContent = str_ireplace($breaks, "\r\n", $templateContent);
 
     if($templateName == 'New Server Created'){
         update_option(WPCP_NEW_SERVER, $templateContent, 'no');
