@@ -5,12 +5,12 @@
         <div id="WPCPSpinner" class="spinner-border text-info" role="status">
             <span class="sr-only">Loading...</span>
         </div>
-        <a class="p-2 text-dark" href="<?php echo admin_url("admin.php?page=cyberpanel"); ?>">Add Servers</a>
+        <a class="p-2 text-dark" href="<?php echo admin_url("admin.php?page=cyberpanel"); ?>">Configure Settings</a>
         <!--<a class="p-2 text-dark" href="#">Enterprise</a>
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>-->
     </nav>
-    <a class="btn btn-outline-primary" href="<?php echo admin_url("admin.php?page=cyberpanel-manage"); ?>">Manage
+    <a class="btn btn-outline-primary" href="<?php echo admin_url("edit.php?post_type=wpcp_server"); ?>">Manage
         Servers</a>
     <a style="margin-left: 1%" id="viewJobs" class="btn btn-outline-info" href="#">View Jobs</a>
 </div>
