@@ -260,6 +260,13 @@ function wpcp_add_custom_box()
         'wpcp_custom_box_state_html',  // Content callback, must be of type callable
         'wpcp_server'                   // Post type
     );
+
+    add_meta_box(
+        'wpcp_invoice_box',           // Unique ID
+        'Invoices',  // Box title
+        'wpcp_custom_box_state_html',  // Content callback, must be of type callable
+        'wpcp_server'                   // Post type
+    );
 }
 
 add_action('add_meta_boxes', 'wpcp_add_custom_box');
