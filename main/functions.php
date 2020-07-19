@@ -345,25 +345,38 @@ function wpcp_custom_box_state_html($post)
 
 function wpcp_custom_box_invoices_html($post)
 {
-    global $wpdb;
+    $orders = wc_get_orders( array(
+        'limit'        => -1, // Query all orders
+        'orderby'      => 'date',
+        'order'        => 'DESC',
+        'meta_query' => array(
+            array(
+                'key' => 'wpcp_invoiceserver',
+                'value' => $post->ID,
+                'compare' => '='
+            )
+        )
+    ));
 
     ?>
     <table style="width:100%">
         <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Age</th>
+            <th>ID</th>
+            <th>Amount</th>
+            <th>Status</th>
         </tr>
-        <tr>
-            <td>Jill</td>
-            <td>Smith</td>
-            <td>50</td>
-        </tr>
-        <tr>
-            <td>Eve</td>
-            <td>Jackson</td>
-            <td>94</td>
-        </tr>
+        <?php
+
+        foreach ($orders as $order){
+            echo sprintf('<tr>
+            <td>%s</td>
+            <td>%s</td>
+            <td>%s</td>
+        </tr>', $order->id, get_woocommerce_currency_symbol() . $order->get_total() , $order->get_status());
+        }
+
+        ?>
+
     </table>
     <?php
 
