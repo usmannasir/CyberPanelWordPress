@@ -127,7 +127,7 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, serverActionsCB, serverActionsCB);
     }
 
-    //setInterval(fetchStatus, 3000);
+    setInterval(fetchStatus, 3000);
 
 });
 
