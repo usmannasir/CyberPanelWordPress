@@ -249,6 +249,8 @@ runcmd:
             if( ! isset($this->globalData['actions']) ){
                 throw new Exception($respData->error->message);
             }
+
+            $this->serverPostActions();
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()),CPWP_ERROR_LOGS);
