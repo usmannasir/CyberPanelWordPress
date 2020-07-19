@@ -431,7 +431,7 @@ function wpcp_custom_post_type()
             ),
             'public' => true,
             'has_archive' => false,
-            "supports" => array("title", "author", "customer"),
+            "supports" => array("title", "customer"),
             'delete_with_user' => false,
             //'capability_type' => 'product'
         )
