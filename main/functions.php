@@ -304,7 +304,6 @@ function wpcp_custom_box_html($post)
 
     <?php
 
-
 }
 
 function wpcp_custom_box_state_html($post)

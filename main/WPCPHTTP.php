@@ -148,12 +148,21 @@ Kind Regards';
 
 Kind Regards';
 
-
-
     protected $job;
     protected $data;
     protected $url;
     protected $body;
+
+    ### Added later to refactor code
+
+    protected $orderid;
+    protected $postIDServer;
+    protected $token;
+    protected $image;
+
+    ## Global data array, could be emtpy or contain data
+
+    protected $globalData;
 
     function HTTPPostCall($token, $method = null, $body = 1)
     {
@@ -213,5 +222,105 @@ Kind Regards';
         }
 
 
+    }
+
+    function fetchImageTokenProvider(){
+
+        $this->globalData['productID'] = $this->data->get_product_id();
+        $this->globalData['order'] = wc_get_order($this->orderid);
+        $product = wc_get_product( $this->globalData['productID'] );
+        $this->globalData['productName'] = $product->get_title();
+        $this->globalData['productPrice'] = $product->get_regular_price();
+        $wpcp_provider = get_post_meta($this->globalData['productID'], WPCP_PROVIDER, true);
+        $wpcp_providerplans = get_post_meta($this->globalData['productID'], WPCP_PROVIDERPLANS, true);
+
+        $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
+        $this->globalData['finalLocation'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
+
+        $message = sprintf('Backend provider for product %s is %s and provider is %s.', $this->globalData['productName'], $this->globalData['finalPlan'], $wpcp_provider);
+        CommonUtils::writeLogs($message,CPWP_ERROR_LOGS);
+
+        global $wpdb;
+
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        $this->token = json_decode($result->apidetails)->token;
+        $this->image = json_decode($result->apidetails)->image;
+
+        $message = sprintf('Token for product %s is %s', $this->globalData['productName'], $this->token);
+        CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
+    }
+
+    function serverPostProcessing(){
+        ## Store the order as server post type
+
+        $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
+
+        $replacements = array(
+            '{serverIP}' =>  $this->globalData['ipv4'],
+            '{token}' =>  $token,
+            '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
+            '{serverID}' => $this->globalData['serverID'],
+            '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
+            '{price}' => get_woocommerce_currency_symbol() . ' ' . $this->globalData['productPrice'],
+            '{ipv4}' => $this->globalData['ipv4'],
+            '{ipv6}' => $this->globalData['ipv6'],
+            '{cores}' => $this->globalData['cores'],
+            '{memory}' => $this->globalData['memory'],
+            '{disk}' => $this->globalData['disk'],
+            '{datacenter}' => $this->globalData['datacenter'],
+            '{city}' => $this->globalData['city'],
+            '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
+        );
+
+        $content = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            WPCPHTTP::$productHTML);
+
+        $my_post = array(
+            'post_author' => $this->globalData['order']->user_id,
+            'post_title'    => $this->globalData['serverID'],
+            'post_content'  => $content,
+            'post_status'   => 'publish',
+            'post_type'     => 'wpcp_server',
+        );
+
+        $post_id = wp_insert_post( $my_post );
+
+        $dueDate = new DateTime();
+        $interval = new DateInterval(WPCP_INTERVAL);
+        $dueDate->add($interval);
+
+        add_post_meta( $post_id, WPCP_DUEDATE, (string) $dueDate->getTimestamp(), true );
+        add_post_meta( $post_id, WPCP_ACTIVEINVOICE, 0, true );
+        add_post_meta( $post_id, WPCP_ORDERID, $this->globalData['order']->id, true );
+        add_post_meta( $post_id, WPCP_PRODUCTNAME, $this->globalData['productName'], true );
+        add_post_meta( $post_id, WPCP_STATE, WPCP_ACTIVE, true );
+        add_post_meta( $post_id, WPCP_TOKEN, $token, true );
+        add_post_meta( $post_id, WPCP_PRODUCTID, $this->globalData['productID'], true );
+
+        $this->globalData['order']->update_status('wc-completed');
+
+        /// Send Email To Customer
+
+        $replacements = array(
+            '{FullName}' =>  $this->globalData['order']->get_billing_first_name() . ' ' . $this->globalData['order']->get_billing_last_name(),
+            '{PlanName}' =>  $this->globalData['productName'],
+            '{IPAddress}' => $this->globalData['ipv4'],
+            '{RootPassword}' => $this->globalData['RootPassword'],
+            '{IPAddressCP}' => $this->globalData['ipv4'],
+            '{CPPassword}' => $this->globalData['CyberPanelPassword'],
+        );
+
+        $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
+
+        $content = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails)
+        );
+
+        wp_mail($this->globalData['order']->get_billing_email(), $subject, $content);
     }
 }
