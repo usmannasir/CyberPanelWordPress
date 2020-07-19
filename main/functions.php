@@ -352,7 +352,7 @@ function wpcp_custom_box_invoices_html($post)
         'meta_query' => array(
             array(
                 'key' => 'wpcp_invoiceserver',
-                'value' => $post->ID,
+                'value' => (string) $post->ID,
                 'compare' => '='
             )
         )
