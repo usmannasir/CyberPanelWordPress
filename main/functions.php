@@ -264,7 +264,7 @@ function wpcp_add_custom_box()
     add_meta_box(
         'wpcp_invoice_box',           // Unique ID
         'Invoices',  // Box title
-        'wpcp_custom_box_state_html',  // Content callback, must be of type callable
+        'wpcp_custom_box_invoices_html',  // Content callback, must be of type callable
         'wpcp_server'                   // Post type
     );
 }
@@ -339,6 +339,32 @@ function wpcp_custom_box_state_html($post)
         <option value="2">Terminated</option>
     </select>
     </select><span class="description">Current State: <?php echo $state ?></span>
+    <?php
+
+}
+
+function wpcp_custom_box_invoices_html($post)
+{
+    global $wpdb;
+
+    ?>
+    <table style="width:100%">
+        <tr>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>94</td>
+        </tr>
+    </table>
     <?php
 
 }
