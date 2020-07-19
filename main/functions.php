@@ -133,13 +133,13 @@ function ajax_fetchTemplateContent()
 
     $templateName = sanitize_text_field($_POST['templateName']);
 
-    if($templateName == 'New Server Created'){
+    if ($templateName == 'New Server Created') {
         $content = get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails);
-    }elseif ($templateName == 'Server Cancelled') {
+    } elseif ($templateName == 'Server Cancelled') {
         $content = get_option(WPCP_SERVER_CANCELLED, WPCPHTTP::$ServerCancelled);
-    }elseif ($templateName == 'Server Suspended') {
+    } elseif ($templateName == 'Server Suspended') {
         $content = get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended);
-    }elseif ($templateName == 'Server Terminated') {
+    } elseif ($templateName == 'Server Terminated') {
         $content = get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated);
     }
 
@@ -167,13 +167,13 @@ function ajax_saveTemplate()
 
     //$templateContent = str_ireplace($breaks, "\r\n", $templateContent);
 
-    if($templateName == 'New Server Created'){
+    if ($templateName == 'New Server Created') {
         update_option(WPCP_NEW_SERVER, $templateContent, 'no');
-    }elseif ($templateName == 'Server Cancelled') {
+    } elseif ($templateName == 'Server Cancelled') {
         update_option(WPCP_SERVER_CANCELLED, $templateContent, 'no');
-    }elseif ($templateName == 'Server Suspended') {
+    } elseif ($templateName == 'Server Suspended') {
         update_option(WPCP_SERVER_SUSPENDED, $templateContent, 'no');
-    }elseif ($templateName == 'Server Terminated') {
+    } elseif ($templateName == 'Server Terminated') {
         update_option(WPCP_SERVER_TERMINATED, $templateContent, 'no');
     }
 
@@ -345,18 +345,10 @@ function wpcp_custom_box_state_html($post)
 
 function wpcp_custom_box_invoices_html($post)
 {
-    $orders = wc_get_orders( array(
-        'limit'        => -1, // Query all orders
-        'orderby'      => 'date',
-        'order'        => 'DESC',
-        'meta_query' => array(
-            array(
-                'key' => WPCP_INVOICESERVER,
-                'value' => (int) $post->ID,
-                'compare' => '=',
-                'type' => 'numeric'
-            )
-        )
+    $orders = wc_get_orders(array(
+        'limit' => -1, // Query all orders
+        'orderby' => 'date',
+        'order' => 'DESC',
     ));
 
     ?>
@@ -368,12 +360,14 @@ function wpcp_custom_box_invoices_html($post)
         </tr>
         <?php
 
-        foreach ($orders as $order){
-            echo sprintf('<tr>
+        foreach ($orders as $order) {
+            if ((int)get_post_meta($order->id, WPCP_INVOICESERVER, true) == $post->ID) {
+                echo sprintf('<tr>
             <td>%s</td>
             <td>%s</td>
             <td>%s</td>
-        </tr>', $order->id, get_woocommerce_currency_symbol() . $order->get_total() , $order->get_status());
+        </tr>', $order->id, get_woocommerce_currency_symbol() . $order->get_total(), $order->get_status());
+            }
         }
 
         ?>
@@ -427,7 +421,7 @@ function wpcp_save_postdata($post_id)
 
         $state = sanitize_text_field($_POST['wpcp_server_state']);
 
-        if($state == 'Active')
+        if ($state == 'Active')
             $state = WPCP_ACTIVE;
         elseif ($state == 'Suspended')
             $state = WPCP_SUSPENDED;
