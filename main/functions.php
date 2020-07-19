@@ -326,7 +326,7 @@ function wpcp_custom_box_state_html($post)
     ?>
 
     <label class="screen-reader-text" for="post_author_override">Author</label>
-    <select name="post_author_override" id="wpcp_server_state" class="">
+    <select name="wpcp_server_state" id="wpcp_server_state" class="">
         <option value="1">Active</option>
         <option value="2">Suspended</option>
         <option value="2">Cancelled</option>
