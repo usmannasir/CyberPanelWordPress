@@ -135,7 +135,7 @@ runcmd:
             $this->globalData['datacenter'] = $respData->server->datacenter->name;
             $this->globalData['city'] = $respData->server->datacenter->location->city;
 
-            if( ! isset($serverID) ){
+            if( ! isset($this->globalData['serverID']) ){
                 throw new Exception($respData->error->message);
             }
 
