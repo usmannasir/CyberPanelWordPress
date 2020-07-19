@@ -4,12 +4,11 @@ class WPCPHTTP
 {
     static $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';
     static $productHTML = '<!-- wp:heading {"align":"center","level":4} -->
-<h4 id="jobRunning" class="has-text-align-center"><strong><span class="has-inline-color has-luminous-vivid-orange-color">Functions unavailable while job is running on the server..</span></strong></h4>
+<h4 id="jobRunning" class="has-text-align-center"><strong><span class="has-inline-color has-luminous-vivid-orange-color"><img style="display: inline"  src="{loader}"> Functions unavailable while job is running on the server..</span></strong></h4>
 <!-- /wp:heading -->
 <!-- wp:html -->
 <ul id="menu" class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine}</a></li>
-    <li class="loader"><a href="javascript:void(0)"><img style="display: inline"  src="{loader}"></a></li>
      <li id="myBtn" style="float:right; color:red"><a href="#">
      Cancel
 <!-- The Modal -->

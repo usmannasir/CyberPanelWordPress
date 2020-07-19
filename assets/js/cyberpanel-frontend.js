@@ -48,7 +48,6 @@ function cancelNOWCB(data) {
 
 function serverActionsCB(data) {
     jQuery(document).ready(function ($) {
-        $(".loader").hide();
 
         if (data.status === 1) {
             $("#serverActions").html(data.result);
@@ -70,7 +69,12 @@ function serverActionsCB(data) {
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
     jQuery(document).ready(function ($) {
-        $(".loader").show();
+
+        if(dataContent.action !== 'serverActions') {
+            $(".loader").show();
+        }else {
+            $(".loaderFunctions").show();
+        }
         $.ajax({
             type: "POST",
             url: CPWP.ajax_url,
