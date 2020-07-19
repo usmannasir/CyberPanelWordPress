@@ -257,7 +257,7 @@ function wpcp_add_custom_box()
     add_meta_box(
         'wpcp_state_box',           // Unique ID
         'Server State',  // Box title
-        'wpcp_custom_box_html',  // Content callback, must be of type callable
+        'wpcp_custom_box_state_html',  // Content callback, must be of type callable
         'wpcp_server'                   // Post type
     );
 }
@@ -301,6 +301,25 @@ function wpcp_custom_box_html($post)
             </p>
         </div>
     </div>
+
+    <?php
+
+
+}
+
+function wpcp_custom_box_state_html($post)
+{
+    global $wpdb;
+    $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
+
+    ?>
+
+    <label class="screen-reader-text" for="post_author_override">Author</label>
+    <select name="post_author_override" id="post_author_override" class="">
+        <option value="1">cyberwp (cyberwp)</option>
+        <option value="2">Muttahir Syed (muttahir)</option>
+        <option value="3" selected="selected">Rehan Nasir (rehan.nasir)</option>
+    </select>
 
     <?php
 
@@ -412,6 +431,7 @@ function wpcp_custom_post_type()
             ),
             'public' => true,
             'has_archive' => false,
+            'show_in_rest' => true,
             "supports" => array("title", "editor", "author", "customer"),
             'delete_with_user' => false,
             //'capability_type' => 'product'
