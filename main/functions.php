@@ -247,15 +247,19 @@ function ajax_connectProvider()
 
 function wpcp_add_custom_box()
 {
-    $screens = ['product'];
-    foreach ($screens as $screen) {
-        add_meta_box(
-            'wpcp_box_id',           // Unique ID
-            'Configure Backend Package for this product.',  // Box title
-            'wpcp_custom_box_html',  // Content callback, must be of type callable
-            $screen                   // Post type
-        );
-    }
+    add_meta_box(
+        'wpcp_box_id',           // Unique ID
+        'Configure Backend Package for this product.',  // Box title
+        'wpcp_custom_box_html',  // Content callback, must be of type callable
+        'product'                   // Post type
+    );
+
+    add_meta_box(
+        'wpcp_state_box',           // Unique ID
+        'Server State',  // Box title
+        'wpcp_custom_box_html',  // Content callback, must be of type callable
+        'wpcp_server'                   // Post type
+    );
 }
 
 add_action('add_meta_boxes', 'wpcp_add_custom_box');
