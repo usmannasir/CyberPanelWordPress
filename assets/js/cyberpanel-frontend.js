@@ -64,7 +64,6 @@ function serverActionsCB(data) {
             $("#jobRunning").hide();
         }
     });
-    //window.location.reload();
 }
 
 function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
@@ -128,7 +127,7 @@ jQuery(document).ready(function ($) {
         GlobalAjax(dataContent, serverActionsCB, serverActionsCB);
     }
 
-    setInterval(fetchStatus, 3000);
+    //setInterval(fetchStatus, 3000);
 
 });
 
