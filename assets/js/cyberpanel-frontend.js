@@ -48,7 +48,6 @@ function cancelNOWCB(data) {
 
 function serverActionsCB(data) {
     jQuery(document).ready(function ($) {
-
         if (data.status === 1) {
             $("#serverActions").html(data.result);
         }
