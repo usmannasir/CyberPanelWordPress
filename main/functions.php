@@ -312,17 +312,28 @@ function wpcp_custom_box_state_html($post)
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
 
+    $state = get_post_meta($post-ID, WPCP_STATE, true);
+
+    if ($state == WPCP_ACTIVE)
+        $state = 'ACTIVE';
+    elseif ($state == WPCP_SUSPENDED)
+        $state = 'SUSPENDED';
+    elseif ($state == WPCP_CANCELLED)
+        $state = 'CANCELLED';
+    else
+        $state = 'TERMINATED';
+
     ?>
 
     <label class="screen-reader-text" for="post_author_override">Author</label>
-    <select name="post_author_override" id="post_author_override" class="">
-        <option value="1">cyberwp (cyberwp)</option>
-        <option value="2">Muttahir Syed (muttahir)</option>
-        <option value="3" selected="selected">Rehan Nasir (rehan.nasir)</option>
+    <select name="post_author_override" id="wpcp_server_state" class="">
+        <option value="1">Active</option>
+        <option value="2">Suspended</option>
+        <option value="2">Cancelled</option>
+        <option value="2">Terminated</option>
     </select>
-
+    </select><span class="description">Current State: <?php echo $state ?></span>
     <?php
-
 
 }
 
@@ -363,6 +374,26 @@ function wpcp_save_postdata($post_id)
             $post_id,
             WPCP_PROVIDERPLANS,
             $wpcp_providerplans
+        );
+    }
+
+    if (array_key_exists('wpcp_server_state', $_POST)) {
+
+        $state = sanitize_text_field($_POST['wpcp_server_state']);
+
+        if($state == 'Active')
+            $state = WPCP_ACTIVE;
+        elseif ($state == 'Suspended')
+            $state = WPCP_SUSPENDED;
+        elseif ($state == 'Cancelled')
+            $state = WPCP_CANCELLED;
+        elseif ($state == 'Terminated')
+            $state = WPCP_TERMINATED;
+
+        update_post_meta(
+            $post_id,
+            WPCP_STATE,
+            $state
         );
     }
 }
