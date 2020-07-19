@@ -175,3 +175,12 @@ ul.gray li a.active {
     pointer-events: none;
     opacity: 0.5;
 }
+
+.WPCPLocationDIV{
+    margin-bottom: 4%
+}
+
+.WPCPLocationDIV label{
+    margin-bottom: 2%;
+    display: inherit;
+}

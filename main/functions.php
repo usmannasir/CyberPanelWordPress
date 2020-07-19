@@ -837,8 +837,8 @@ function wpcp_display_custom_field_locations()
     $locations = $cpjm->RunJob();
 
     printf('
-<div style="margin-bottom: 4%">
-<label style="margin-bottom: 2%;display: inherit;" for="wpcp_location">Select Location</label>
+<div class="WPCPLocationDIV">
+<label for="wpcp_location">Select Location</label>
 <select id="wpcp_location" name="wpcp_location">
     %s
 </select>
