@@ -312,7 +312,7 @@ function wpcp_custom_box_state_html($post)
     global $wpdb;
     $results = $wpdb->get_results("select * from {$wpdb->prefix}cyberpanel_providers");
 
-    $state = get_post_meta($post-ID, WPCP_STATE, true);
+    $state = get_post_meta($post->ID, WPCP_STATE, true);
 
     if ($state == WPCP_ACTIVE)
         $state = 'ACTIVE';
