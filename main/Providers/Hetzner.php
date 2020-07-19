@@ -13,24 +13,6 @@ class CyberPanelHetzner extends WPCPHTTP
         $this->orderid = $order_id;
     }
 
-    function setupTokenImagePostID(){
-
-        $serverID = sanitize_text_field($this->data['serverID']);
-        $page = get_page_by_title($serverID,OBJECT, 'wpcp_server'); // enter your page title
-        $this->postIDServer = $page->ID;
-
-        ## Get product id of this server.
-        $product_id = get_post_meta($this->postIDServer, 'wpcp_productid', true);
-        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        $this->token = json_decode($result->apidetails)->token;
-        $this->image = json_decode($result->apidetails)->image;
-
-    }
-
     function fetchPlans()
     {
         $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
@@ -155,19 +137,11 @@ runcmd:
     {
 
         $serverID = sanitize_text_field($this->data['serverID']);
-
         $this->url = 'https://api.hetzner.cloud/v1/servers/' . $serverID;
-
         CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
-
         $this->setupTokenImagePostID();
-
         CommonUtils::writeLogs('Credentials set.', CPWP_ERROR_LOGS);
-
         $response = $this->HTTPPostCall($this->token, 'DELETE');
-        //$respData = wp_remote_retrieve_body($response);
-        //CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
-
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -176,43 +150,8 @@ runcmd:
             if( ! isset($status) ){
                 throw new Exception($respData->error->message);
             }
-            $post = array(
-                'ID' => $this->postIDServer,
-                'post_content' => WPCPHTTP::$cancelled,
-            );
 
-            wp_update_post($post, true);
-            update_post_meta($this->postIDServer, WPCP_STATE, WPCP_TERMINATED);
-
-            ### Send Termination Email
-
-            $orderID= get_post_meta($this->postIDServer, WPCP_ORDERID, true);
-            $order = wc_get_order($orderID);
-
-            $replacements = array(
-                '{FullName}' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
-                '{ServerID}' => sanitize_text_field($this->data['serverID'])
-            );
-
-            $subject = sprintf('Server with ID# %s cancelled.', sanitize_text_field($this->data['serverID']));
-
-            $content = str_replace(
-                array_keys($replacements),
-                array_values($replacements),
-                get_option(WPCP_SERVER_CANCELLED, WPCPHTTP::$ServerCancelled)
-            );
-
-            wp_mail($order->get_billing_email(), $subject, $content);
-
-            ##
-
-
-            $data = array(
-                'status' => 1,
-            );
-            if( !wp_doing_cron()) {
-                wp_send_json($data);
-            }
+            $this->serverPostCancellation();
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
@@ -235,13 +174,11 @@ runcmd:
         $this->setupTokenImagePostID();
 
         $response = $this->HTTPPostCall($this->token, null, 0);
-        //$respData = wp_remote_retrieve_body($response);
-        //CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
-
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
             $status = $respData->action->status;
+
             if( ! isset($status) ){
                 throw new Exception($respData->error->message);
             }
@@ -277,8 +214,6 @@ runcmd:
 
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/rebuild', $serverID);
         $response = $this->HTTPPostCall($this->token);
-        //$respData = wp_remote_retrieve_body($response);
-        //CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
@@ -303,39 +238,17 @@ runcmd:
     function serverActions()
     {
         $this->setupTokenImagePostID();
-
         $serverID = sanitize_text_field($this->data['serverID']);
-
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $serverID);
         $response = $this->HTTPPostCall($this->token, 'GET');
-        //$respData = wp_remote_retrieve_body($response);
-        //CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
-            $actions = $respData->actions;
-            if( ! isset($actions) ){
+            $this->globalData['actions'] = $respData->actions;
+
+            if( ! isset($this->globalData['actions']) ){
                 throw new Exception($respData->error->message);
             }
-            $finalData = '';
-            $running = 0;
-
-            foreach (array_reverse($actions) as $action){
-
-                $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
-
-                if($action->status == 'running'){
-                    $running = 1;
-                }
-
-            }
-
-            $data = array(
-                'status' => 1,
-                'result' => $finalData,
-                'running' => $running
-            );
-            wp_send_json($data);
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()),CPWP_ERROR_LOGS);
@@ -354,8 +267,6 @@ runcmd:
 
         $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $serverID);
         $response = $this->HTTPPostCall($this->token, null, 0);
-        //$respData = wp_remote_retrieve_body($response);
-        //CommonUtils::writeLogs($respData, CPWP_ERROR_LOGS);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{

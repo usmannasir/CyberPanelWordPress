@@ -224,6 +224,24 @@ Kind Regards';
 
     }
 
+    function setupTokenImagePostID(){
+
+        $serverID = sanitize_text_field($this->data['serverID']);
+        $page = get_page_by_title($serverID,OBJECT, 'wpcp_server'); // enter your page title
+        $this->postIDServer = $page->ID;
+
+        ## Get product id of this server.
+        $product_id = get_post_meta($this->postIDServer, 'wpcp_productid', true);
+        $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
+
+        $this->token = json_decode($result->apidetails)->token;
+        $this->image = json_decode($result->apidetails)->image;
+
+    }
+
     function fetchImageTokenProvider(){
 
         $this->globalData['productID'] = $this->data->get_product_id();
@@ -322,5 +340,72 @@ Kind Regards';
         );
 
         wp_mail($this->globalData['order']->get_billing_email(), $subject, $content);
+    }
+
+    ## Post cancellaltion
+
+    function serverPostCancellation()
+    {
+        $post = array(
+            'ID' => $this->postIDServer,
+            'post_content' => WPCPHTTP::$cancelled,
+        );
+
+        wp_update_post($post, true);
+        update_post_meta($this->postIDServer, WPCP_STATE, WPCP_TERMINATED);
+
+        ### Send Termination Email
+
+        $orderID= get_post_meta($this->postIDServer, WPCP_ORDERID, true);
+        $order = wc_get_order($orderID);
+
+        $replacements = array(
+            '{FullName}' => $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(),
+            '{ServerID}' => sanitize_text_field($this->data['serverID'])
+        );
+
+        $subject = sprintf('Server with ID# %s cancelled.', sanitize_text_field($this->data['serverID']));
+
+        $content = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            get_option(WPCP_SERVER_CANCELLED, WPCPHTTP::$ServerCancelled)
+        );
+
+        wp_mail($order->get_billing_email(), $subject, $content);
+
+        ##
+
+
+        $data = array(
+            'status' => 1,
+        );
+        if( !wp_doing_cron()) {
+            wp_send_json($data);
+        }
+    }
+
+    ## Post actions
+
+    function serverPostActions(){
+        $finalData = '';
+        $running = 0;
+
+        foreach (array_reverse($this->globalData['actions']) as $action){
+
+            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
+
+            if($action->status == 'running'){
+                $running = 1;
+            }
+
+        }
+
+        $data = array(
+            'status' => 1,
+            'result' => $finalData,
+            'running' => $running
+        );
+        wp_send_json($data);
     }
 }
