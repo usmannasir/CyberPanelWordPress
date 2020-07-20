@@ -259,7 +259,7 @@ runcmd:
 
             $this->globalData['actions'] = $respData;
 
-            $this->serverPostActions();
+            $this->serverPostActions('DigitalOcean');
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to retrieve server actions. Error message: %s', $e->getMessage()),CPWP_ERROR_LOGS);
