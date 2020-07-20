@@ -284,6 +284,7 @@ runcmd:
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         CommonUtils::writeLogs(wp_remote_retrieve_body($response), CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs('hello world', CPWP_ERROR_LOGS);
 
         try{
 
