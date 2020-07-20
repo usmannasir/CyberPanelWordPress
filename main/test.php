@@ -23,450 +23,115 @@ $n = DateTime::createFromFormat('Y-m-d H:i:s', '2020-07-12 19:46:52');
 //echo $n->getTimestamp();
 
 $data = '{
-  "sizes": [
-    {
-      "slug": "s-1vcpu-1gb",
-      "memory": 1024,
-      "vcpus": 1,
-      "disk": 25,
-      "transfer": 1.0,
-      "price_monthly": 5.0,
-      "price_hourly": 0.00744,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
+  "droplet": {
+    "id": 3164494,
+    "name": "example.com",
+    "memory": 1024,
+    "vcpus": 1,
+    "disk": 25,
+    "locked": false,
+    "status": "active",
+    "kernel": {
+      "id": 2233,
+      "name": "Ubuntu 14.04 x64 vmlinuz-3.13.0-37-generic",
+      "version": "3.13.0-37-generic"
     },
-    {
-      "slug": "s-3vcpu-1gb",
-      "memory": 1024,
-      "vcpus": 3,
-      "disk": 60,
-      "transfer": 3.0,
-      "price_monthly": 15.0,
-      "price_hourly": 0.02232,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-1vcpu-2gb",
-      "memory": 2048,
-      "vcpus": 1,
-      "disk": 50,
-      "transfer": 2.0,
-      "price_monthly": 10.0,
-      "price_hourly": 0.01488,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-2vcpu-2gb",
-      "memory": 2048,
-      "vcpus": 2,
-      "disk": 60,
-      "transfer": 3.0,
-      "price_monthly": 15.0,
-      "price_hourly": 0.02232,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-1vcpu-3gb",
-      "memory": 3072,
-      "vcpus": 1,
-      "disk": 20,
-      "transfer": 3.0,
-      "price_monthly": 15.0,
-      "price_hourly": 0.02232,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-2",
-      "memory": 4096,
-      "vcpus": 2,
-      "disk": 25,
-      "transfer": 5.0,
-      "price_monthly": 40.0,
-      "price_hourly": 0.06,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-2vcpu-4gb",
-      "memory": 4096,
-      "vcpus": 2,
-      "disk": 80,
-      "transfer": 4.0,
-      "price_monthly": 20.0,
-      "price_hourly": 0.02976,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-4vcpu-8gb",
-      "memory": 8192,
-      "vcpus": 4,
-      "disk": 160,
-      "transfer": 5.0,
-      "price_monthly": 40.0,
-      "price_hourly": 0.05952,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-4",
-      "memory": 8192,
-      "vcpus": 4,
-      "disk": 50,
-      "transfer": 5.0,
-      "price_monthly": 80.0,
-      "price_hourly": 0.119,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-8",
-      "memory": 16384,
-      "vcpus": 8,
-      "disk": 100,
-      "transfer": 5.0,
-      "price_monthly": 160.0,
-      "price_hourly": 0.238,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-6vcpu-16gb",
-      "memory": 16384,
-      "vcpus": 6,
-      "disk": 320,
-      "transfer": 6.0,
-      "price_monthly": 80.0,
-      "price_hourly": 0.11905,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-8vcpu-32gb",
-      "memory": 32768,
-      "vcpus": 8,
-      "disk": 640,
-      "transfer": 7.0,
-      "price_monthly": 160.0,
-      "price_hourly": 0.2381,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-16",
-      "memory": 32768,
-      "vcpus": 16,
-      "disk": 200,
-      "transfer": 5.0,
-      "price_monthly": 320.0,
-      "price_hourly": 0.476,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-12vcpu-48gb",
-      "memory": 49152,
-      "vcpus": 12,
-      "disk": 960,
-      "transfer": 8.0,
-      "price_monthly": 240.0,
-      "price_hourly": 0.35714,
-      "regions": [
-        "ams2",
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo1",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-16vcpu-64gb",
-      "memory": 65536,
-      "vcpus": 16,
-      "disk": 1280,
-      "transfer": 9.0,
-      "price_monthly": 320.0,
-      "price_hourly": 0.47619,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
-        "nyc1",
-        "nyc2",
-        "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-32",
-      "memory": 65536,
-      "vcpus": 32,
-      "disk": 400,
-      "transfer": 5.0,
-      "price_monthly": 640.0,
-      "price_hourly": 0.952,
-      "regions": [
-        "fra1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "c-48",
-      "memory": 73728,
-      "vcpus": 48,
-      "disk": 20,
-      "transfer": 5.0,
-      "price_monthly": 960.0,
-      "price_hourly": 1.429,
-      "regions": [
+    "created_at": "2014-11-14T16:36:31Z",
+    "features": [
+      "ipv6",
+      "virtio"
+    ],
+    "backup_ids": [
 
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-20vcpu-96gb",
-      "memory": 98304,
-      "vcpus": 20,
-      "disk": 1920,
-      "transfer": 10.0,
-      "price_monthly": 480.0,
-      "price_hourly": 0.71429,
+    ],
+    "snapshot_ids": [
+      7938206
+    ],
+    "image": {
+      "id": 6918990,
+      "name": "14.04 x64",
+      "distribution": "Ubuntu",
+      "slug": "ubuntu-16-04-x64",
+      "public": true,
       "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
-        "lon1",
         "nyc1",
+        "ams1",
+        "sfo1",
         "nyc2",
-        "nyc3",
-        "sfo2",
+        "ams2",
         "sgp1",
-        "tor1"
-      ],
-      "available": true
-    },
-    {
-      "slug": "s-24vcpu-128gb",
-      "memory": 131072,
-      "vcpus": 24,
-      "disk": 2560,
-      "transfer": 11.0,
-      "price_monthly": 640.0,
-      "price_hourly": 0.95238,
-      "regions": [
-        "ams3",
-        "blr1",
-        "fra1",
         "lon1",
-        "nyc1",
-        "nyc2",
         "nyc3",
-        "sfo2",
-        "sgp1",
-        "tor1"
+        "ams3",
+        "nyc3"
       ],
-      "available": true
+      "created_at": "2014-10-17T20:24:33Z",
+      "type": "snapshot",
+      "min_disk_size": 20,
+      "size_gigabytes": 2.34
     },
-    {
-      "slug": "s-32vcpu-192gb",
-      "memory": 196608,
-      "vcpus": 24,
-      "disk": 3840,
-      "transfer": 12.0,
-      "price_monthly": 960.0,
-      "price_hourly": 1.42857,
-      "regions": [
+    "volume_ids": [
 
+    ],
+    "size": {
+    },
+    "size_slug": "s-1vcpu-1gb",
+    "networks": {
+      "v4": [
+        {
+          "ip_address": "104.131.186.241",
+          "netmask": "255.255.240.0",
+          "gateway": "104.131.176.1",
+          "type": "public"
+        }
+      ],
+      "v6": [
+        {
+          "ip_address": "2604:A880:0800:0010:0000:0000:031D:2001",
+          "netmask": 64,
+          "gateway": "2604:A880:0800:0010:0000:0000:0000:0001",
+          "type": "public"
+        }
+      ]
+    },
+    "region": {
+      "name": "New York 3",
+      "slug": "nyc3",
+      "sizes": [
+        "s-1vcpu-1gb",
+        "s-1vcpu-2gb",
+        "s-1vcpu-3gb",
+        "s-2vcpu-2gb",
+        "s-3vcpu-1gb",
+        "s-2vcpu-4gb",
+        "s-4vcpu-8gb",
+        "s-6vcpu-16gb",
+        "s-8vcpu-32gb",
+        "s-12vcpu-48gb",
+        "s-16vcpu-64gb",
+        "s-20vcpu-96gb",
+        "s-24vcpu-128gb",
+        "s-32vcpu-192gb"
+      ],
+      "features": [
+        "virtio",
+        "private_networking",
+        "backups",
+        "ipv6",
+        "metadata"
       ],
       "available": true
-    }
-  ],
-  "links": {
-  },
-  "meta": {
-    "total": 20
+    },
+    "tags": [
+
+    ],
+    "vpc_uuid": "f9b0769c-e118-42fb-a0c4-fed15ef69662"
   }
 }';
 
 $json = json_decode($data);
 
-foreach ($json->sizes as $size){
-    echo $size->slug;
-    echo $size->price_monthly;
+echo $json->droplet->networks->v4[0]->ip_address;
 
-}
 
 

@@ -118,6 +118,8 @@ runcmd:
             $internalResp = $this->HTTPPostCall($this->token, 'GET');
             $internalRespData = json_decode(wp_remote_retrieve_body($internalResp));
 
+            CommonUtils::writeLogs(wp_remote_retrieve_body($internalResp), CPWP_ERROR_LOGS);
+
             $this->globalData['serverID'] = $respData->droplet->id;
             $this->globalData['ipv4'] = $internalRespData->droplet->networks->v4[0]->ip_address;
             $this->globalData['ipv6'] = $internalRespData->droplet->networks->v6[0]->ip_address;
