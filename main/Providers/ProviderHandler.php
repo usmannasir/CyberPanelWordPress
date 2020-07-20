@@ -68,7 +68,7 @@ class ProviderHandler
                 $cph->createServer();
             }
             elseif ($result->provider == 'DigitalOcean'){
-                $cpd = new CyberPanelDigitalOcean($this, $this->data);
+                $cpd = new CyberPanelDigitalOcean($this, $item, $this->data);
                 $cpd->createServer();
             }
         }
