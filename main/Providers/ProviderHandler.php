@@ -1,6 +1,7 @@
 <?php
 
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/Hetzner.php');
+require_once(CPWP_PLUGIN_DIR . 'main/Providers/DigitalOcean.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class ProviderHandler
@@ -67,16 +68,6 @@ class ProviderHandler
                 $cph->createServer();
             }
         }
-
-        //$order->update_status('wc-completed');
-
-//        if ($order->data['status'] == 'wc-completed') {
-//            $payment_method = $order->get_payment_method();
-//            if ($payment_method != "cod") {
-//                $order->update_status('wc-completed');
-//            }
-//        }
-
     }
 
     function cancelNow(){
@@ -127,6 +118,10 @@ class ProviderHandler
         if ($result->provider == 'Hetzner') {
             $cph = new CyberPanelHetzner($this, $this->data);
             return $cph->fetchPlans();
+        }
+        elseif ($result->provider == 'DigitalOcean'){
+            $cpd = new CyberPanelDigitalOcean($this, $this->data);
+            return $cpd->fetchPlans();
         }
     }
 
