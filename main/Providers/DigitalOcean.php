@@ -247,16 +247,17 @@ runcmd:
     {
         $this->setupTokenImagePostID();
         $serverID = sanitize_text_field($this->data['serverID']);
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions', $serverID);
+        $this->url = sprintf('https://api.digitalocean.com/v2/droplets/%s/actions', $serverID);
         $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
-            $this->globalData['actions'] = $respData->actions;
 
-            if( ! isset($this->globalData['actions']) ){
-                throw new Exception($respData->error->message);
+            if( isset($respData->message) ){
+                throw new Exception($respData->message);
             }
+
+            $this->globalData['actions'] = $respData;
 
             $this->serverPostActions();
         }

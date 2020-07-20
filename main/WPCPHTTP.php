@@ -386,18 +386,30 @@ Kind Regards';
 
     ## Post actions
 
-    function serverPostActions(){
+    function serverPostActions($provider = null){
         $finalData = '';
         $running = 0;
 
-        foreach (array_reverse($this->globalData['actions']) as $action){
+        if($provider == null) {
 
-            $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
+            foreach (array_reverse($this->globalData['actions']) as $action) {
 
-            if($action->status == 'running'){
-                $running = 1;
+                $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->command, $action->status);
+
+                if ($action->status == 'running') {
+                    $running = 1;
+                }
+
             }
+        }
+        elseif ($provider == 'DigitalOcean'){
+            foreach (array_reverse($this->globalData['actions']) as $action) {
+                $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->type, $action->status);
 
+                if ($action->status == 'running') {
+                    $running = 1;
+                }
+            }
         }
 
         $data = array(
