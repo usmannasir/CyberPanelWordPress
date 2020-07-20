@@ -47,14 +47,14 @@ class CyberPanelDigitalOcean extends WPCPHTTP
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
         $token = json_decode($result->apidetails)->token;
-        $this->url = 'https://api.hetzner.cloud/v1/datacenters';
+        $this->url = 'https://api.digitalocean.com/v2/regions';
         $response = $this->HTTPPostCall($token, 'GET');
         $data = json_decode(wp_remote_retrieve_body($response));
 
         $finalResult = '';
 
-        foreach ($data->datacenters as $datacenter){
-            $finalResult = $finalResult . sprintf('<option>%s</option>', $datacenter->location->city . ',' . $datacenter->location->name);
+        foreach ($data->regions as $datacenter){
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $datacenter->name . ',' . $datacenter->slug);
         }
 
         return $finalResult;
