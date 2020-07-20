@@ -145,20 +145,12 @@ runcmd:
     {
 
         $serverID = sanitize_text_field($this->data['serverID']);
-        $this->url = 'https://api.hetzner.cloud/v1/servers/' . $serverID;
-        CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
+        $this->url = 'https://api.digitalocean.com/v2/droplets/' . $serverID;
+
         $this->setupTokenImagePostID();
-        CommonUtils::writeLogs('Credentials set.', CPWP_ERROR_LOGS);
-        $response = $this->HTTPPostCall($this->token, 'DELETE');
-        $respData = json_decode(wp_remote_retrieve_body($response));
+         $this->HTTPPostCall($this->token, 'DELETE');
 
         try{
-            $status = $respData->action->status;
-
-            if( ! isset($status) ){
-                throw new Exception($respData->error->message);
-            }
-
             $this->serverPostCancellation();
         }
         catch (Exception $e) {
