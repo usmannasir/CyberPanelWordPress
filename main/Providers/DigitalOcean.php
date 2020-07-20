@@ -114,6 +114,8 @@ runcmd:
 
             // Internal request to fetch ipv4
 
+            sleep(5);
+
             $this->url = 'https://api.digitalocean.com/v2/droplets/' . $respData->droplet->id;
             $internalResp = $this->HTTPPostCall($this->token, 'GET');
             $internalRespData = json_decode(wp_remote_retrieve_body($internalResp));
