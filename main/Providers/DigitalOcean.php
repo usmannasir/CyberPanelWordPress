@@ -128,10 +128,8 @@ runcmd:
             $this->globalData['cores'] = $respData->droplet->vcpus;
             $this->globalData['memory'] = $respData->droplet->memory;
             $this->globalData['disk'] = $respData->droplet->disk . 'GB SSD';
-            $this->globalData['datacenter'] = $respData->region->nyc1;
-            $this->globalData['city'] = $respData->region->name;
-
-            CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
+            $this->globalData['datacenter'] = $respData->droplet->region->slug;
+            $this->globalData['city'] = $respData->droplet->region->name;
         }
         catch (Exception $e) {
             CommonUtils::writeLogs(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $this->globalData['productID'], $this->orderid, $this->globalData['productName'], $respData->error->message), CPWP_ERROR_LOGS);
