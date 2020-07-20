@@ -405,7 +405,6 @@ Kind Regards';
         elseif ($provider == 'DigitalOcean'){
             foreach (array_reverse($this->globalData['actions']) as $action) {
                 $finalData = $finalData . sprintf('<tr><td>%s</td><td>%s</td></tr>', $action->type, $action->status);
-
                 if ($action->status == 'running') {
                     $running = 1;
                 }
