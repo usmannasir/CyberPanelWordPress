@@ -91,6 +91,10 @@ class ProviderHandler
             $cph = new CyberPanelHetzner($this, $this->data);
             $cph->shutDown();
         }
+        elseif ($this->findProvider() == 'DigitalOcean'){
+            $cpd = new CyberPanelDigitalOcean($this, $this->data);
+            $cpd->shutDown();
+        }
     }
 
     function rebuildNow(){
