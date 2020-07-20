@@ -104,6 +104,8 @@ runcmd:
         $response = $this->HTTPPostCall($this->token);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
+        CommonUtils::writeLogs(wp_remote_retrieve_body($response), CPWP_ERROR_LOGS);
+
         try{
 
             $this->globalData['serverID'] = $respData->droplet->id;
