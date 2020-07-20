@@ -251,6 +251,8 @@ runcmd:
         $response = $this->HTTPPostCall($this->token, 'GET');
         $respData = json_decode(wp_remote_retrieve_body($response));
 
+        CommonUtils::writeLogs(wp_remote_retrieve_body($response), CPWP_ERROR_LOGS);
+
         try{
 
             if( isset($respData->message) ){
