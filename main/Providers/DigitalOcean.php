@@ -74,10 +74,9 @@ class CyberPanelDigitalOcean extends WPCPHTTP
 
         $this->body = array(
             'name' => $this->globalData['serverName'],
-            'server_type' => $this->globalData['finalPlan'],
-            'start_after_create' => true,
+            'size' => $this->globalData['finalPlan'],
             'image' => $this->image,
-            'location' => $this->globalData['finalLocation'],
+            'region' => $this->globalData['finalLocation'],
             'user_data' =>  sprintf("#cloud-config
 # run commands
 # default: none
@@ -101,23 +100,23 @@ runcmd:
             'automount' => false
         );
 
-        $this->url = 'https://api.hetzner.cloud/v1/servers';
+        $this->url = 'https://api.digitalocean.com/v2/droplets';
         $response = $this->HTTPPostCall($this->token);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
 
-            $this->globalData['serverID'] = $respData->server->id;
-            $this->globalData['ipv4'] = $respData->server->public_net->ipv4->ip;
-            $this->globalData['ipv6'] = $respData->server->public_net->ipv6->ip;
-            $this->globalData['cores'] = $respData->server->server_type->cores;
-            $this->globalData['memory'] = $respData->server->server_type->memory . 'G';
-            $this->globalData['disk'] = $respData->server->server_type->disk . 'GB NVME';
-            $this->globalData['datacenter'] = $respData->server->datacenter->name;
-            $this->globalData['city'] = $respData->server->datacenter->location->city;
+            $this->globalData['serverID'] = $respData->droplet->id;
+            $this->globalData['ipv4'] = $respData->droplet->id;
+            $this->globalData['ipv6'] = $respData->droplet->id;
+            $this->globalData['cores'] = $respData->droplet->id;
+            $this->globalData['memory'] = $respData->droplet->id . 'G';
+            $this->globalData['disk'] = $respData->droplet->id . 'GB NVME';
+            $this->globalData['datacenter'] = $respData->droplet->id;
+            $this->globalData['city'] = $respData->droplet->id;
 
-            if( ! isset($this->globalData['serverID']) ){
-                throw new Exception($respData->error->message);
+            if( ! isset($respData->message) ){
+                throw new Exception($respData->message);
             }
 
             CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
