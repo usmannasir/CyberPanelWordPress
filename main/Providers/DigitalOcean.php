@@ -215,7 +215,7 @@ runcmd:
         $this->setupTokenImagePostID();
 
         $this->body = array(
-            "type" => "reboot",
+            "type" => "rebuild",
             "image" => $this->image
         );
 
