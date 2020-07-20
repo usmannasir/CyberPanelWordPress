@@ -277,15 +277,20 @@ runcmd:
 
         $serverID = sanitize_text_field($this->data['serverID']);
 
-        $this->url = sprintf('https://api.hetzner.cloud/v1/servers/%s/actions/reset', $serverID);
-        $response = $this->HTTPPostCall($this->token, null, 0);
+        $this->body = array(
+            "type" => "reboot"
+        );
+
+        $this->url = sprintf('"https://api.digitalocean.com/v2/droplets/%s/actions"', $serverID);
+        $response = $this->HTTPPostCall($this->token);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
-            $status = $respData->action->status;
-            if( ! isset($status) ){
-                throw new Exception($respData->error->message);
+
+            if( isset($respData->message) ){
+                throw new Exception($respData->message);
             }
+
             $data = array(
                 'status' => 1,
             );
