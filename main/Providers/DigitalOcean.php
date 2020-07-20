@@ -279,12 +279,11 @@ runcmd:
             "type" => "reboot"
         );
 
-        $this->url = sprintf('"https://api.digitalocean.com/v2/droplets/%s/actions"', $serverID);
+        $this->url = sprintf('https://api.digitalocean.com/v2/droplets/%s/actions', $serverID);
         $response = $this->HTTPPostCall($this->token);
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         CommonUtils::writeLogs(wp_remote_retrieve_body($response), CPWP_ERROR_LOGS);
-        CommonUtils::writeLogs('hello world', CPWP_ERROR_LOGS);
 
         try{
 
