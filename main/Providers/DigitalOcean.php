@@ -259,8 +259,7 @@ runcmd:
                 throw new Exception($respData->message);
             }
 
-            $this->globalData['actions'] = $respData;
-
+            $this->globalData['actions'] = $respData->actions;
             $this->serverPostActions('DigitalOcean');
         }
         catch (Exception $e) {
