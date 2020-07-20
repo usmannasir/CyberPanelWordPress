@@ -108,18 +108,24 @@ runcmd:
 
         try{
 
-            $this->globalData['serverID'] = $respData->droplet->id;
-            $this->globalData['ipv4'] = $respData->droplet->id;
-            $this->globalData['ipv6'] = $respData->droplet->id;
-            $this->globalData['cores'] = $respData->droplet->id;
-            $this->globalData['memory'] = $respData->droplet->id . 'G';
-            $this->globalData['disk'] = $respData->droplet->id . 'GB NVME';
-            $this->globalData['datacenter'] = $respData->droplet->id;
-            $this->globalData['city'] = $respData->droplet->id;
-
-            if( ! isset($respData->message) ){
+            if( isset($respData->message) ){
                 throw new Exception($respData->message);
             }
+
+            // Internal request to fetch ipv4
+
+            $this->url = 'https://api.digitalocean.com/v2/droplets/' . $respData->droplet->id;
+            $internalResp = $this->HTTPPostCall($this->token, 'GET');
+            $internalRespData = json_decode(wp_remote_retrieve_body($internalResp));
+
+            $this->globalData['serverID'] = $respData->droplet->id;
+            $this->globalData['ipv4'] = $internalRespData->droplet->networks->v4[0]->ip_address;
+            $this->globalData['ipv6'] = $internalRespData->droplet->networks->v6[0]->ip_address;
+            $this->globalData['cores'] = $respData->droplet->vcpus;
+            $this->globalData['memory'] = $respData->droplet->memory;
+            $this->globalData['disk'] = $respData->droplet->disk . 'GB SSD';
+            $this->globalData['datacenter'] = $respData->region->nyc1;
+            $this->globalData['city'] = $respData->region->name;
 
             CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
         }
