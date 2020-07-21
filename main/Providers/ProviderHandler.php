@@ -71,6 +71,8 @@ class ProviderHandler
                 $cpd = new CyberPanelDigitalOcean($this, $item, $this->data);
                 $cpd->createServer();
             }
+
+            CommonUtils::writeLogs('Provider not set', CPWP_ERROR_LOGS);
         }
     }
 

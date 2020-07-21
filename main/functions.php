@@ -881,7 +881,7 @@ function wpcp_add_cron_interval($schedules)
 add_action('wpcp_croncp_hook', 'wpcp_cron_exec');
 
 if (!wp_next_scheduled('wpcp_croncp_hook')) {
-    wp_schedule_event(time(), 'five_seconds', 'wpcp_croncp_hook');
+    wp_schedule_event(time(), 'daily', 'wpcp_croncp_hook');
 }
 
 /**
