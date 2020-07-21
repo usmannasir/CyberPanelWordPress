@@ -868,21 +868,17 @@ function wpcp_cron_exec()
 
 }
 
-add_filter('cron_schedules', 'wpcp_add_cron_interval');
-
-function wpcp_add_cron_interval($schedules)
-{
-    $schedules['five_seconds'] = array(
-        'interval' => 5,
-        'display' => esc_html__('Every Five Seconds'),);
-    return $schedules;
-}
-
 add_action('wpcp_croncp_hook', 'wpcp_cron_exec');
 
 if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'daily', 'wpcp_croncp_hook');
 }
+
+$timestamp = wp_next_scheduled( 'wpcp_cron_exec' );
+wp_unschedule_event( $timestamp, 'wpcp_cron_exec' );
+
+$timestamp = wp_next_scheduled( 'bl_cron_hook' );
+wp_unschedule_event( $timestamp, 'bl_cron_hook' );
 
 /**
  * Add the text field as item data to the cart object
