@@ -946,10 +946,15 @@ add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_l
 
 function wpcp_validate_custom_field($passed, $product_id, $quantity)
 {
-    if (empty($_POST['wpcp_location'])) {
-        // Fails validation
-        $passed = false;
-        wc_add_notice(__('Please select location from product page before ordering.', 'wpcp'), 'error');
+    $wpcp_provider = get_post_meta($product_id, 'wpcp_provider', true);
+
+    if(isset($wpcp_provider)) {
+        if (empty($_POST['wpcp_location'])) {
+            // Fails validation
+            $passed = false;
+            wc_add_notice(__('Please select location from product page before ordering.', 'wpcp'), 'error');
+        }
+        return $passed;
     }
     return $passed;
 }
