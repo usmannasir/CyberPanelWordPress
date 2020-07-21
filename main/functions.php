@@ -892,6 +892,7 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
  * @param Boolean $quantity Quantity
  * @since 1.0.0
  */
+
 function wpcp_add_custom_field_item_data($cart_item_data, $product_id, $variation_id, $quantity)
 {
     if (!empty($_POST['wpcp_location'])) {
