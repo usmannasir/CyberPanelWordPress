@@ -1,36 +1,41 @@
 jQuery(document).ready(function ($) {
+    
+    try {
 
-    var btn = document.getElementById("myBtn");
-    btn.onclick = function () {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "block";
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+        var btn = document.getElementById("myBtn");
+        btn.onclick = function () {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
             }
         }
-    }
 
-    var btnRebuild = document.getElementById("rebuild");
-    btnRebuild.onclick = function () {
-        var modalRebuild = document.getElementById("rebuildModal");
-        modalRebuild.style.display = "block";
-        window.onclick = function (event) {
-            if (event.target == modalRebuild) {
-                modalRebuild.style.display = "none";
+        var btnRebuild = document.getElementById("rebuild");
+        btnRebuild.onclick = function () {
+            var modalRebuild = document.getElementById("rebuildModal");
+            modalRebuild.style.display = "block";
+            window.onclick = function (event) {
+                if (event.target == modalRebuild) {
+                    modalRebuild.style.display = "none";
+                }
             }
         }
-    }
 
-    var btnReboot = document.getElementById("reboot");
-    btnReboot.onclick = function () {
-        var rebootModal = document.getElementById("rebootModal");
-        rebootModal.style.display = "block";
-        window.onclick = function (event) {
-            if (event.target == rebootModal) {
-                rebootModal.style.display = "none";
+        var btnReboot = document.getElementById("reboot");
+        btnReboot.onclick = function () {
+            var rebootModal = document.getElementById("rebootModal");
+            rebootModal.style.display = "block";
+            window.onclick = function (event) {
+                if (event.target == rebootModal) {
+                    rebootModal.style.display = "none";
+                }
             }
         }
+    }catch (e) {
+        
     }
 });
 
