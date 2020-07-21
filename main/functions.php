@@ -950,7 +950,7 @@ function wpcp_validate_custom_field($passed, $product_id, $quantity)
 
     CommonUtils::writeLogs(sprintf('Value of provider: %s', $wpcp_provider), CPWP_ERROR_LOGS);
 
-    if(isset($wpcp_provider)) {
+    if($wpcp_provider != '') {
         if (empty($_POST['wpcp_location'])) {
             // Fails validation
             $passed = false;
