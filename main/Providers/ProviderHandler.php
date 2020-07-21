@@ -2,6 +2,7 @@
 
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/Hetzner.php');
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/DigitalOcean.php');
+require_once(CPWP_PLUGIN_DIR . 'main/Providers/manual.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
 class ProviderHandler
@@ -71,6 +72,10 @@ class ProviderHandler
                 $cpd = new CyberPanelDigitalOcean($this, $item, $this->data);
                 $cpd->createServer();
             }
+            else{
+                $cpd = new CyberPanelManual($this, $item, $this->data);
+                $cpd->createServer();
+            }
 
             CommonUtils::writeLogs('Provider not set', CPWP_ERROR_LOGS);
         }
@@ -84,6 +89,10 @@ class ProviderHandler
         }
         elseif ($this->findProvider() == 'DigitalOcean'){
             $cpd = new CyberPanelDigitalOcean($this, $this->data);
+            $cpd->cancelNow();
+        }
+        else{
+            $cpd = new CyberPanelManual($this, $this->data);
             $cpd->cancelNow();
         }
     }
