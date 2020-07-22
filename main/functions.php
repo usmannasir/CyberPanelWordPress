@@ -874,12 +874,6 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
     wp_schedule_event(time(), 'daily', 'wpcp_croncp_hook');
 }
 
-$timestamp = wp_next_scheduled( 'wpcp_cron_exec' );
-wp_unschedule_event( $timestamp, 'wpcp_cron_exec' );
-
-$timestamp = wp_next_scheduled( 'bl_cron_hook' );
-wp_unschedule_event( $timestamp, 'bl_cron_hook' );
-
 /**
  * Add the text field as item data to the cart object
  * @param Array $cart_item_data Cart item meta data.
