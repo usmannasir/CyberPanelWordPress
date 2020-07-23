@@ -92,6 +92,15 @@ jQuery(document).ready(function ($) {
     document.getElementById("cancelHREF").addEventListener("click", function(event){
         event.preventDefault()
     });
+    document.getElementById("productHREF").addEventListener("click", function(event){
+        event.preventDefault()
+    });
+    document.getElementById("rebuildHREF").addEventListener("click", function(event){
+        event.preventDefault()
+    });
+    document.getElementById("rebootHREF").addEventListener("click", function(event){
+        event.preventDefault()
+    });
 
     ///
 

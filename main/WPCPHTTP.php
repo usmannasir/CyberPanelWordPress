@@ -8,7 +8,7 @@ class WPCPHTTP
 <!-- /wp:heading -->
 <!-- wp:html -->
 <ul id="menu" class="horizontal gray">
-    <li><a href="javascript:void(0)">{productLine}</a></li>
+    <li><a id="productHREF" href="#">{productLine}</a></li>
      <li id="myBtn" style="float:right; color:red"><a id="cancelHREF" href="#">
      Cancel
 <!-- The Modal -->
@@ -22,7 +22,7 @@ class WPCPHTTP
   </div>
 </div>
      </a></li>
-    <li id="rebuild" style="float:right"><a href="#">Rebuild
+    <li id="rebuild" style="float:right"><a id="rebuildHREF" href="#">Rebuild
     <!-- The Modal -->
 <div id="rebuildModal" class="modal">
   <!-- Modal content -->
@@ -34,7 +34,7 @@ class WPCPHTTP
   </div>
 </div>
     </a></li>
-    <li id="reboot" style="float:right"><a href="#">Reboot
+    <li id="reboot" style="float:right"><a id="rebootHREF" href="#">Reboot
     <!-- The Modal -->
 <div id="rebootModal" class="modal">
   <!-- Modal content -->
