@@ -504,7 +504,6 @@ function wpcp_custom_post_type()
             'has_archive' => false,
             'delete_with_user' => false,
             "supports" => array("customer", "author", "comments"),
-            //'capability_type' => 'product'
         )
     );
 }

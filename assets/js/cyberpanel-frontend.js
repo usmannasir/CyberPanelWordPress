@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-    
     try {
 
         var btn = document.getElementById("myBtn");
@@ -7,7 +6,7 @@ jQuery(document).ready(function ($) {
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             window.onclick = function (event) {
-                if (event.target == modal) {
+                if (event.target === modal) {
                     modal.style.display = "none";
                 }
             }
@@ -18,7 +17,7 @@ jQuery(document).ready(function ($) {
             var modalRebuild = document.getElementById("rebuildModal");
             modalRebuild.style.display = "block";
             window.onclick = function (event) {
-                if (event.target == modalRebuild) {
+                if (event.target === modalRebuild) {
                     modalRebuild.style.display = "none";
                 }
             }
@@ -29,14 +28,12 @@ jQuery(document).ready(function ($) {
             var rebootModal = document.getElementById("rebootModal");
             rebootModal.style.display = "block";
             window.onclick = function (event) {
-                if (event.target == rebootModal) {
+                if (event.target === rebootModal) {
                     rebootModal.style.display = "none";
                 }
             }
         }
-    }catch (e) {
-        
-    }
+    }catch (e) {}
 });
 
 function cancelNOWCB(data) {
@@ -89,6 +86,14 @@ function GlobalAjax(dataContent, callbackSuccess, callBackFailure) {
 }
 
 jQuery(document).ready(function ($) {
+
+    ///
+
+    document.getElementById("cancelHREF").addEventListener("click", function(event){
+        event.preventDefault()
+    });
+
+    ///
 
     $(".loader").hide();
     $("#jobRunning").hide();

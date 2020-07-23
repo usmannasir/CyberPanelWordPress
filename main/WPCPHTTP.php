@@ -9,7 +9,7 @@ class WPCPHTTP
 <!-- wp:html -->
 <ul id="menu" class="horizontal gray">
     <li><a href="javascript:void(0)">{productLine}</a></li>
-     <li id="myBtn" style="float:right; color:red"><a href="#">
+     <li id="myBtn" style="float:right; color:red"><a id="cancelHREF" href="#">
      Cancel
 <!-- The Modal -->
 <div id="myModal" class="modal">
