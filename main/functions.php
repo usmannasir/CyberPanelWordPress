@@ -915,12 +915,12 @@ function wpcp_display_custom_field_locations()
 {
     global $post;
 
-    $data = array('wpcp_provider' => get_post_meta($post->ID, WPCP_PROVIDER, true));
+    $data = array(WPCP_PROVIDER => get_post_meta($post->ID, WPCP_PROVIDER, true));
 
-    $cpjm = new CPJobManager('fetchLocations', $data);
-    $locations = $cpjm->RunJob();
-
-    printf('
+    if($data['WPCP_PROVIDER'] != '') {
+        $cpjm = new CPJobManager('fetchLocations', $data);
+        $locations = $cpjm->RunJob();
+        printf('
 <div class="WPCPLocationDIV">
 <label for="wpcp_location">Select Location</label>
 <select id="wpcp_location" name="wpcp_location">
@@ -928,6 +928,7 @@ function wpcp_display_custom_field_locations()
 </select>
 </div>
 ', $locations);
+    }
 }
 
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
