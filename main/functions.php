@@ -917,7 +917,7 @@ function wpcp_display_custom_field_locations()
 
     $data = array(WPCP_PROVIDER => get_post_meta($post->ID, WPCP_PROVIDER, true));
 
-    if($data['WPCP_PROVIDER'] != '') {
+    if($data[WPCP_PROVIDER] != '') {
         $cpjm = new CPJobManager('fetchLocations', $data);
         $locations = $cpjm->RunJob();
         printf('
