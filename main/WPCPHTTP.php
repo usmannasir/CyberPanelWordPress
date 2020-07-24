@@ -147,6 +147,25 @@ Kind Regards';
 
 Kind Regards';
 
+    static $productHTMLManual = '<!-- wp:html -->
+<ul id="menu" class="horizontal gray">
+    <li><a id="productHREF" href="#">{productLine}</a></li>
+     <li id="myBtn" style="float:right; color:red"><a id="cancelHREF" href="#">
+     Cancel
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  <div class="modal-body">
+    <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
+    <button type="button" id="cancelNow">Cancel Now <img style="display: inline" class="loader" src="{loader}"> </button>
+  </div>
+  </div>
+</div>
+     </a></li>
+</ul>
+<!-- /wp:html -->';
+
     protected $job;
     protected $data;
     protected $url;

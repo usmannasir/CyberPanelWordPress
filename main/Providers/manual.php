@@ -23,7 +23,7 @@ class CyberPanelManual extends WPCPHTTP
         $my_post = array(
             'post_author' => $this->globalData['order']->user_id,
             'post_title'    => $this->orderid . ' ' . $this->globalData['productName'],
-            'post_content'  => sprintf('This is a service page for %s.', $this->globalData['productName']),
+            'post_content'  => WPCPHTTP::$productHTMLManual,
             'post_status'   => 'publish',
             'post_type'     => 'wpcp_server',
         );
