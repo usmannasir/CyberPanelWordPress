@@ -57,5 +57,11 @@ class CyberPanelManual extends WPCPHTTP
     }
 
     function cancelNow()
-    {}
+    {
+        $this->globalData['json'] =  $this->data['json'];
+        $serverID = sanitize_text_field($this->data['serverID']);
+        $page = get_page_by_title($serverID,OBJECT, 'wpcp_server'); // enter your page title
+        $this->postIDServer = $page->ID;
+        $this->serverPostCancellation();
+    }
 }
