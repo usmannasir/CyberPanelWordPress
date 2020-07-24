@@ -20,10 +20,20 @@ class CyberPanelManual extends WPCPHTTP
         $product = wc_get_product( $this->globalData['productID'] );
         $this->globalData['productName'] = $product->get_title();
 
+        $replacements = array(
+            '{productLine}' =>  $this->orderid . ' ' . $this->globalData['productName'],
+            '{serverID}' =>  $this->orderid . ' ' . $this->globalData['productName']
+        );
+
+        $content = str_replace(
+            array_keys($replacements),
+            array_values($replacements),
+            WPCPHTTP::$productHTMLManual);
+
         $my_post = array(
             'post_author' => $this->globalData['order']->user_id,
             'post_title'    => $this->orderid . ' ' . $this->globalData['productName'],
-            'post_content'  => WPCPHTTP::$productHTMLManual,
+            'post_content'  => $content,
             'post_status'   => 'publish',
             'post_type'     => 'wpcp_server',
         );
