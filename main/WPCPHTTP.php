@@ -379,7 +379,8 @@ Kind Regards';
         $data = array(
             'status' => 1,
         );
-        if( !wp_doing_cron()) {
+
+        if( !wp_doing_cron() && $this->globalData['json'] == 1) {
             wp_send_json($data);
         }
     }

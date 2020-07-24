@@ -151,6 +151,8 @@ runcmd:
                 throw new Exception($respData->error->message);
             }
 
+            $this->globalData['json'] =  $this->data['json'];
+
             $this->serverPostCancellation();
         }
         catch (Exception $e) {
@@ -158,7 +160,7 @@ runcmd:
             $data = array(
                 'status' => 0
             );
-            if(! wp_doing_cron()) {
+            if( !wp_doing_cron() && $this->data['json'] == 1) {
                 wp_send_json($data);
             }
         }
