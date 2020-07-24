@@ -47,7 +47,6 @@ class WPCPHTTP
 </div>
     </a></li>
     <li style="float:right"><a target="_blank" href="https://{serverIP}:8090/cloudAPI/access?token={token}&serverUserName=admin">Access CyberPanel</a></li>
-    <li class="rightli" style="float:right"><a href="#">Manage</a></li>
 </ul>
 <!-- /wp:html -->
 
