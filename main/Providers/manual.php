@@ -22,7 +22,8 @@ class CyberPanelManual extends WPCPHTTP
 
         $replacements = array(
             '{productLine}' =>  $this->orderid . ' ' . $this->globalData['productName'],
-            '{serverID}' =>  $this->orderid . ' ' . $this->globalData['productName']
+            '{serverID}' =>  $this->orderid . ' ' . $this->globalData['productName'],
+            '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
         );
 
         $content = str_replace(
