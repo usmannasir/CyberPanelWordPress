@@ -495,6 +495,7 @@ function woocommerce_payment_complete_order_status($order_id)
             $order->update_status('wc-cancelled');
             $cpjm = new CPJobManager('cancelNow', $data);
             $cpjm->RunJob();
+
         }
     }
 }
@@ -567,6 +568,7 @@ function ajax_cancelNow()
 
     check_ajax_referer('CPWP');
 
+    $_POST['json'] = 1;
     $cpjm = new CPJobManager('cancelNow', $_POST);
     $cpjm->RunJob();
 
@@ -621,6 +623,7 @@ function ajax_rebootNow()
 
     check_ajax_referer('CPWP');
 
+    $_POST['json'] = 1;
     $cpjm = new CPJobManager('rebootNow', $_POST);
     $cpjm->RunJob();
 
@@ -715,7 +718,7 @@ function wpcp_cron_exec()
 
             if ($paymentOrderID != '') {
 
-                $dataToSend = array('serverID' => get_the_title());
+                $dataToSend = array('serverID' => get_the_title(), 'json' => 0);
 
                 CommonUtils::writeLogs(sprintf('Server Title being checked for suspension/termination %s.', get_the_title()), CPWP_ERROR_LOGS);
 

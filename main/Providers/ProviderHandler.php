@@ -83,8 +83,6 @@ class ProviderHandler
 
     function cancelNow(){
 
-        $this->data['json'] = 1;
-
         if($this->findProvider() == 'Hetzner'){
             $cph = new CyberPanelHetzner($this, $this->data);
             $cph->cancelNow();
@@ -133,8 +131,6 @@ class ProviderHandler
     }
 
     function rebootNow(){
-
-        $this->data['json'] = 1;
 
         if($this->findProvider() == 'Hetzner'){
             $cph = new CyberPanelHetzner($this, $this->data);
