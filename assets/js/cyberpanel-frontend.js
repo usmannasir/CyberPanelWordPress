@@ -141,6 +141,12 @@ jQuery(document).ready(function ($) {
     });
 
     function fetchStatus(){
+
+        if($("#serverID").text() === ''){
+            console.log('server id not set');
+            return 0;
+        }
+
         dataContent = {
             _ajax_nonce: CPWP.nonce,
             action: 'serverActions',
