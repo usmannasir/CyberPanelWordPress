@@ -354,7 +354,7 @@ function wpcp_custom_box_invoices_html($post)
 
     ?>
     <table style="width:100%">
-        <tr><th>Next invoice in</th><td><?php human_time_diff($dueDate->getTimestamp(), (int) get_post_meta($post->ID, WPCP_DUEDATE, true)) ?></td></tr>
+        <tr><th>Next invoice in</th><td><?php echo human_time_diff($dueDate->getTimestamp(), (int) get_post_meta($post->ID, WPCP_DUEDATE, true)) ?></td></tr>
         <tr>
             <th>ID</th>
             <th>Amount</th>
