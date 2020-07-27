@@ -1031,3 +1031,10 @@ function wpcp_servers_fetch($atts = [], $content = null)
 
     return 'You must be logged in to view this page';
 }
+
+function wpcp_show_monthly( $price ) {
+    $price .= ' per month';
+    return $price;
+}
+add_filter( 'woocommerce_get_price_html', 'wpcp_show_monthly' );
+add_filter( 'woocommerce_cart_item_price', 'wpcp_show_monthly' );
