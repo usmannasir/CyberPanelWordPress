@@ -126,6 +126,8 @@ https://{IPAddressCP}:8090
 User Name: admin
 Password: {CPPassword}
 
+You can manage this service at: {link}
+
 Kind Regards';
 
     static $ServerCancelled = 'Hello {FullName} !
@@ -323,6 +325,8 @@ Kind Regards';
 
         $post_id = wp_insert_post( $my_post );
 
+        $link = get_the_permalink($post_id);
+
         $dueDate = new DateTime();
         $interval = new DateInterval(WPCP_INTERVAL);
         $dueDate->add($interval);
@@ -346,6 +350,7 @@ Kind Regards';
             '{RootPassword}' => $this->globalData['RootPassword'],
             '{IPAddressCP}' => $this->globalData['ipv4'],
             '{CPPassword}' => $this->globalData['CyberPanelPassword'],
+            '{link}' => $link
         );
 
         $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
