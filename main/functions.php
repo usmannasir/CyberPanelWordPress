@@ -848,7 +848,7 @@ function wpcp_cron_exec()
                     $nOrder->add_product(get_product($wpcp_productid), 1);
                     ## Set custom description of order
                     $postTitle = get_the_title($serverID);
-                    $itemName = sprintf('Recurring payment for server id %s.', $postTitle);
+                    $itemName = sprintf('Recurring payment for service id %s.', $postTitle);
 
                     global $wpdb;
                     $table_name = $wpdb->prefix . 'woocommerce_order_items';
