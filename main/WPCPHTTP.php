@@ -274,7 +274,7 @@ Kind Regards';
         $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
         $this->globalData['finalLocation'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
 
-        $message = sprintf('Backend provider for product %s is %s and provider is %s.', $this->globalData['productName'], $this->globalData['finalPlan'], $wpcp_provider);
+        $message = sprintf('Backend provider for product %s is %s and provider is %s and location is %s.', $this->globalData['productName'], $this->globalData['finalPlan'], $wpcp_provider, $this->globalData['finalLocation']);
         CommonUtils::writeLogs($message,CPWP_ERROR_LOGS);
 
         global $wpdb;
