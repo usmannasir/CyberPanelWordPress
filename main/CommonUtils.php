@@ -4,7 +4,7 @@
 class CommonUtils
 {
     protected $json;
-    static $CurrentLog = 0;
+    static $CurrentLog = 3;
     static $DEBUG = 3;
 
     function __construct($status, $error)
