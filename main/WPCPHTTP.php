@@ -301,13 +301,19 @@ Kind Regards';
 
         $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
 
+        ### Calculate and add order price to meta to cater if there are any discount coupons used
+
+        $finalPrice = (float) $this->globalData['order']->get_subtotal() - (float) $this->globalData['order']->get_discount_total();
+
+        ##
+
         $replacements = array(
             '{serverIP}' =>  $this->globalData['ipv4'],
             '{token}' =>  $token,
             '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
             '{serverID}' => $this->globalData['serverID'],
             '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
-            '{price}' => get_woocommerce_currency_symbol() . ' ' . $this->globalData['productPrice'],
+            '{price}' => get_woocommerce_currency_symbol() . ' ' . (string) $finalPrice,
             '{ipv4}' => $this->globalData['ipv4'],
             '{ipv6}' => $this->globalData['ipv6'],
             '{cores}' => $this->globalData['cores'],
@@ -346,6 +352,8 @@ Kind Regards';
         add_post_meta( $post_id, WPCP_STATE, WPCP_ACTIVE, true );
         add_post_meta( $post_id, WPCP_TOKEN, $token, true );
         add_post_meta( $post_id, WPCP_PRODUCTID, $this->globalData['productID'], true );
+        add_post_meta( $post_id, WPCP_ORDER_PRICE, (string) $finalPrice, true );
+
 
         $this->globalData['order']->update_status('wc-completed');
 

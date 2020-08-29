@@ -57,6 +57,7 @@ define('WPCP_DATEFORMAT', 'Y-m-d H:i:s');
 define('WPCP_STATE', 'wp_state');
 define('WPCP_INVOICESERVER', 'wpcp_invoiceserver');
 define('WPCP_TOKEN', 'wpcp_token');
+define('WPCP_ORDER_PRICE', 'wpcp_order_price');
 
 // Email Templates Options
 
