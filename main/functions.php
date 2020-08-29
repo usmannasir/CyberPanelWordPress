@@ -353,8 +353,8 @@ function wpcp_custom_box_invoices_html($post)
     ));
 
     ?>
-    <label for="order_date">Date created:</label>
-    <input type="text" class="date-picker hasDatepicker" name="order_date" maxlength="10" value="2020-07-27" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" id="dp1595870973781">
+    <label for="order_date">Order Price</label>
+    <input type="text" class="date-picker hasDatepicker" name="order_date" maxlength="10" value="<?php echo (string) get_post_meta($post->ID, WPCP_ORDER_PRICE, true) ?>" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" id="dp1595870973781">
     <table style="width:100%">
         <tr><th>Next invoice in</th><td><?php echo human_time_diff($dueDate->getTimestamp(), (int) get_post_meta($post->ID, WPCP_DUEDATE, true)) ?></td></tr>
         <tr>
