@@ -43,6 +43,7 @@ class CommonUtils
             $wpcp_activeinvoice = get_post_meta($serverID, WPCP_ACTIVEINVOICE, true);
             $wpcp_orderid = get_post_meta($serverID, WPCP_ORDERID, true);
             $state = get_post_meta($serverID, WPCP_STATE, true);
+            $orderPrice = get_post_meta($serverID, WPCP_ORDER_PRICE, true);
 
             /// If state is already terminated, no need to check anything.
 
@@ -199,7 +200,10 @@ class CommonUtils
 
                         // Now we create the order
                         $nOrder = wc_create_order(array('customer_id' => $order->get_user_id()));
-                        $nOrder->add_product(get_product($wpcp_productid), 1);
+                        $nOrder->add_product(get_product($wpcp_productid), 1, [
+                            'subtotal'     => $orderPrice,
+                            'total'        => $orderPrice,
+                        ]);
                         ## Set custom description of order
                         $postTitle = get_the_title($serverID);
                         $itemName = sprintf('Recurring payment for service id %s.', $postTitle);
