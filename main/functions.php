@@ -514,7 +514,7 @@ function wpcp_custom_post_type()
                 'name' => __('Servers', 'textdomain'),
                 'singular_name' => __('Server', 'textdomain'),
             ),
-            'public' => false,
+            'public' => true,
             'has_archive' => false,
             'delete_with_user' => false,
             "supports" => array("customer", "author"),
