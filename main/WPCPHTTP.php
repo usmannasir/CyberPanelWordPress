@@ -265,6 +265,14 @@ Kind Regards';
 
         $this->globalData['productID'] = $this->data->get_product_id();
         $this->globalData['order'] = wc_get_order($this->orderid);
+
+        ### Lets Print Order Pricing Details
+
+        $message = sprintf('get_subtotal: %s. get_subtotal_to_display: %s. get_discount_total %s get_total_discount is %s.', $this->globalData['order']->get_subtotal(), $this->globalData['order']->get_subtotal_to_display(), $this->globalData['order']->get_discount_total(), $this->globalData['order']->get_total_discount());
+        CommonUtils::writeLogs($message,CPWP_ERROR_LOGS);
+
+        ###
+
         $product = wc_get_product( $this->globalData['productID'] );
         $this->globalData['productName'] = $product->get_title();
         $this->globalData['productPrice'] = $product->get_regular_price();
