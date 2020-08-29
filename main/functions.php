@@ -440,6 +440,17 @@ function wpcp_save_postdata($post_id)
             $state
         );
     }
+
+    if (array_key_exists(WPCP_ORDER_PRICE, $_POST)) {
+
+        $price = sanitize_text_field($_POST[WPCP_ORDER_PRICE]);
+
+        update_post_meta(
+            $post_id,
+            WPCP_ORDER_PRICE,
+            $price
+        );
+    }
 }
 
 add_action('save_post', 'wpcp_save_postdata');
