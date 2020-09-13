@@ -23,7 +23,7 @@ class CyberPanelProvider extends WPCPHTTP
             $localUser = explode(',', $token)[1];
             $localPass = explode(',', $token)[2];
 
-            $localToken = base64_encode($localUser . $localPass);
+            $localToken = base64_encode($localUser . ':' . $localPass);
             $token = $localIP . ":" . $localUser . ':' . $localToken;
 
         }else {
