@@ -32,7 +32,7 @@ class SharedCP extends WPCPHTTP
             'controller' => 'fetchPackages'
         );
 
-        $this->url = sprintf('%s/cloudAPI', $localIP);
+        $this->url = sprintf('https://%s/cloudAPI', $localIP);
         CommonUtils::writeLogs($this->url,CPWP_ERROR_LOGS);
         CommonUtils::writeLogs($token,CPWP_ERROR_LOGS);
 
