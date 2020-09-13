@@ -33,6 +33,9 @@ class SharedCP extends WPCPHTTP
         );
 
         $this->url = sprintf('%s/cloudAPI', $localIP);
+        CommonUtils::writeLogs($this->url,CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs($token,CPWP_ERROR_LOGS);
+
         $response = $this->HTTPPostCall($token);
         $data = json_decode(wp_remote_retrieve_body($response));
 
