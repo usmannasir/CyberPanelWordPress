@@ -73,6 +73,11 @@ class ProviderHandler
                 $cpd = new CyberPanelDigitalOcean($this, $item, $this->data);
                 $cpd->createServer();
             }
+            elseif ($result->provider == 'Shared'){
+                $cpd = new SharedCP($this, $item, $this->data);
+                $cpd->createServer();
+            }
+
             else{
                 $cpd = new CyberPanelManual($this, $item, $this->data);
                 $cpd->createServer();

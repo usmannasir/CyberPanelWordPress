@@ -33,8 +33,6 @@ class SharedCP extends WPCPHTTP
         );
 
         $this->url = sprintf('https://%s/cloudAPI', $localIP);
-        CommonUtils::writeLogs($this->url,CPWP_ERROR_LOGS);
-        CommonUtils::writeLogs($token,CPWP_ERROR_LOGS);
 
         $response = $this->HTTPPostCall($token);
         $data = json_decode(wp_remote_retrieve_body($response));
@@ -55,27 +53,6 @@ class SharedCP extends WPCPHTTP
         return $data;
     }
 
-    function fetchLocations()
-    {
-        $wpcp_provider = sanitize_text_field($this->data['wpcp_provider']);
-
-        global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
-
-        $token = json_decode($result->apidetails)->token;
-        $this->url = 'https://api.hetzner.cloud/v1/datacenters';
-        $response = $this->HTTPPostCall($token, 'GET');
-        $data = json_decode(wp_remote_retrieve_body($response));
-
-        $finalResult = '';
-
-        foreach ($data->datacenters as $datacenter){
-            $finalResult = $finalResult . sprintf('<option>%s</option>', $datacenter->location->city . ',' . $datacenter->location->name);
-        }
-
-        return $finalResult;
-    }
-
     function createServer()
     {
         ## Fetch token image and provider that can be used to create this server. This function will populate $this->globalData
@@ -89,61 +66,48 @@ class SharedCP extends WPCPHTTP
         $this->globalData['RootPassword'] = substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 15);
 
         $this->body = array(
-            'name' => $this->globalData['serverName'],
-            'server_type' => $this->globalData['finalPlan'],
-            'start_after_create' => true,
-            'image' => $this->image,
-            'location' => $this->globalData['finalLocation'],
-            'user_data' =>  sprintf("#cloud-config
-# run commands
-# default: none
-# runcmd contains a list of either lists or a string
-# each item will be executed in order at rc.local like level with
-# output to the console
-# - runcmd only runs during the first boot
-# - if the item is a list, the items will be properly executed as if
-#   passed to execve(3) (with the first arg as the command).
-# - if the item is a string, it will be simply written to the file and
-#   will be interpreted by 'sh'
-#
-# Note, that the list has to be proper yaml, so you have to quote
-# any characters yaml would eat (':' can be problematic)
-# /var/lib/cloud/instance/scripts/runcmd
-runcmd:
- - /usr/local/CyberCP/bin/python /usr/local/CyberCP/plogical/adminPass.py --password %s
- - /usr/local/CyberCP/bin/python /usr/local/CyberCP/plogical/apiAccess.py
- - echo \"root:%s\"|chpasswd
-", $this->globalData['CyberPanelPassword'], $this->globalData['RootPassword']),
-            'automount' => false
+            'serverUserName' => $this->globalData['serverUser'],
+            'serverPassword' => $this->globalData['serverPassword'],
+            'controller' => 'submitWebsiteCreation',
+            'ssl' => 0,
+            'dkimCheck' => 1,
+            'openBasedir' => 0,
+            'websiteOwner' => $this->globalData['CPUserName'],
+            'phpSelection' => 'PHP 7.2',
+            'adminEmail' => $this->globalData['email'],
+            'package' => $this->globalData['finalPlan'],
+            'UserPassword' => $this->globalData['CyberPanelPassword'],
+            'UserAccountName' => $this->globalData['CPUserName'],
+            'FullName' => $this->globalData['CPUserName'],
+            'domainName' => $this->globalData['finalDomain']
         );
 
-        $this->url = 'https://api.hetzner.cloud/v1/servers';
-        $response = $this->HTTPPostCall($this->token);
-        $respData = json_decode(wp_remote_retrieve_body($response));
+        $response = $this->HTTPPostCall($this->globalData['serverPassword']);
+        CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
 
         try{
 
-            $this->globalData['serverID'] = $respData->server->id;
-            $this->globalData['ipv4'] = $respData->server->public_net->ipv4->ip;
-            $this->globalData['ipv6'] = $respData->server->public_net->ipv6->ip;
-            $this->globalData['cores'] = $respData->server->server_type->cores;
-            $this->globalData['memory'] = $respData->server->server_type->memory . 'G';
-            $this->globalData['disk'] = $respData->server->server_type->disk . 'GB NVME';
-            $this->globalData['datacenter'] = $respData->server->datacenter->name;
-            $this->globalData['city'] = $respData->server->datacenter->location->city;
+            CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
 
-            if( ! isset($this->globalData['serverID']) ){
-                throw new Exception($respData->error->message);
-            }
+//            $this->globalData['serverID'] = $respData->server->id;
+//            $this->globalData['ipv4'] = $respData->server->public_net->ipv4->ip;
+//            $this->globalData['ipv6'] = $respData->server->public_net->ipv6->ip;
+//            $this->globalData['cores'] = $respData->server->server_type->cores;
+//            $this->globalData['memory'] = $respData->server->server_type->memory . 'G';
+//            $this->globalData['disk'] = $respData->server->server_type->disk . 'GB NVME';
+//            $this->globalData['datacenter'] = $respData->server->datacenter->name;
+//            $this->globalData['city'] = $respData->server->datacenter->location->city;
 
-            CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
+//            if( ! isset($this->globalData['serverID']) ){
+//                throw new Exception($respData->error->message);
+//            }
         }
         catch (Exception $e) {
-            CommonUtils::writeLogs(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $this->globalData['productID'], $this->orderid, $this->globalData['productName'], $respData->error->message), CPWP_ERROR_LOGS);
+  //          CommonUtils::writeLogs(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $this->globalData['productID'], $this->orderid, $this->globalData['productName'], $respData->error->message), CPWP_ERROR_LOGS);
             return 0;
         }
 
-        $this->serverPostProcessing();
+        //$this->serverPostProcessing();
 
         return 1;
     }

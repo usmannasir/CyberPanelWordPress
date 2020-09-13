@@ -265,6 +265,8 @@ Kind Regards';
 
         $this->globalData['productID'] = $this->data->get_product_id();
         $this->globalData['order'] = wc_get_order($this->orderid);
+        $this->globalData['email'] = $this->globalData['order']->billing_email;
+        $this->globalData['CPUserName'] = $this->globalData['order']->get_billing_first_name();
 
         ### Lets Print Order Pricing Details
 
@@ -279,21 +281,33 @@ Kind Regards';
         $wpcp_provider = get_post_meta($this->globalData['productID'], WPCP_PROVIDER, true);
         $wpcp_providerplans = get_post_meta($this->globalData['productID'], WPCP_PROVIDERPLANS, true);
 
-        $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
-        $this->globalData['finalLocation'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
-
-        $message = sprintf('Backend provider for product %s is %s and provider is %s and location is %s.', $this->globalData['productName'], $this->globalData['finalPlan'], $wpcp_provider, $this->globalData['finalLocation']);
-        CommonUtils::writeLogs($message,CPWP_ERROR_LOGS);
 
         global $wpdb;
 
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
-        $this->token = json_decode($result->apidetails)->token;
-        $this->image = json_decode($result->apidetails)->image;
+        if($result->provider != 'Shared') {
+            $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
+            $this->globalData['finalLocation'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
 
-        $message = sprintf('Token for product %s is %s', $this->globalData['productName'], $this->token);
-        CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
+            $message = sprintf('Backend provider for product %s is %s and provider is %s and location is %s.', $this->globalData['productName'], $this->globalData['finalPlan'], $wpcp_provider, $this->globalData['finalLocation']);
+            CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
+
+            $this->token = json_decode($result->apidetails)->token;
+            $this->image = json_decode($result->apidetails)->image;
+
+            $message = sprintf('Token for product %s is %s', $this->globalData['productName'], $this->token);
+            CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
+        }else{
+            $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
+            $this->globalData['finalDomain'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
+
+            $this->token = json_decode($result->apidetails)->token;
+
+            $this->url = sprintf('https://%s/cloudAPI', explode(';', $this->token)[0]);
+            $this->globalData['serverUser'] = explode(';', $this->token)[1];
+            $this->globalData['serverPassword'] = sprintf('Basic %s==', explode(';', $this->token)[2]);
+        }
     }
 
     function serverPostProcessing(){
