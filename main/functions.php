@@ -354,9 +354,13 @@ function wpcp_custom_box_invoices_html($post)
 
     ?>
     <label for="wpcp_order_price">Order Price</label>
-    <input type="text" name="wpcp_order_price" maxlength="10" value="<?php echo (string) get_post_meta($post->ID, WPCP_ORDER_PRICE, true) ?>" id="wpcp_order_price">
+    <input type="text" name="wpcp_order_price" maxlength="10"
+           value="<?php echo (string)get_post_meta($post->ID, WPCP_ORDER_PRICE, true) ?>" id="wpcp_order_price">
     <table style="width:100%">
-        <tr><th>Next invoice in</th><td><?php echo human_time_diff($dueDate->getTimestamp(), (int) get_post_meta($post->ID, WPCP_DUEDATE, true)) ?></td></tr>
+        <tr>
+            <th>Next invoice in</th>
+            <td><?php echo human_time_diff($dueDate->getTimestamp(), (int)get_post_meta($post->ID, WPCP_DUEDATE, true)) ?></td>
+        </tr>
         <tr>
             <th>ID</th>
             <th>Amount</th>
@@ -500,7 +504,7 @@ function woocommerce_payment_complete_order_status($order_id)
             $order->update_status('wc-completed');
             $cpjm = new CPJobManager('rebootNow', $data);
             $cpjm->RunJob();
-        }elseif ($order->data['status'] == 'cancelled'){
+        } elseif ($order->data['status'] == 'cancelled') {
 
             $server_post_id = get_post_meta($order->id, WPCP_INVOICESERVER, true);
             $data = array('serverID' => get_the_title($server_post_id), 'json' => 0);
@@ -696,14 +700,12 @@ if (!wp_next_scheduled('wpcp_croncp_hook')) {
 }
 
 /**
-
  * Add the text field as item data to the cart object
  * @param Array $cart_item_data Cart item meta data.
  * @param Integer $product_id Product ID.
  * @param Integer $variation_id Variation ID.
  * @param Boolean $quantity Quantity
  * @since 1.0.0
-
  */
 
 function wpcp_add_custom_field_item_data($cart_item_data, $product_id, $variation_id, $quantity)
@@ -741,7 +743,7 @@ function wpcp_display_custom_field_locations()
 
     $data = array(WPCP_PROVIDER => get_post_meta($post->ID, WPCP_PROVIDER, true));
 
-    if($data[WPCP_PROVIDER] != '') {
+    if ($data[WPCP_PROVIDER] != '' && $data[WPCP_PROVIDER] != 'Shared') {
         $cpjm = new CPJobManager('fetchLocations', $data);
         $locations = $cpjm->RunJob();
         printf('
@@ -752,7 +754,15 @@ function wpcp_display_custom_field_locations()
 </select>
 </div>
 ', $locations);
+    } elseif ($data[WPCP_PROVIDER] == 'Shared') {
+        printf('
+<div class="WPCPLocationDIV">
+<label for="wpcp_location">Enter Domain</label>
+<input id="wpcp_location" name="wpcp_location">
+</div>
+');
     }
+
 }
 
 add_action('woocommerce_before_add_to_cart_button', 'wpcp_display_custom_field_locations');
@@ -764,7 +774,7 @@ function wpcp_validate_custom_field($passed, $product_id, $quantity)
 
     CommonUtils::writeLogs(sprintf('Value of provider: %s', $wpcp_provider), CPWP_ERROR_LOGS);
 
-    if($wpcp_provider != '') {
+    if ($wpcp_provider != '') {
         if (empty($_POST['wpcp_location'])) {
             // Fails validation
             $passed = false;
@@ -844,9 +854,11 @@ function wpcp_servers_fetch($atts = [], $content = null)
     return 'You must be logged in to view this page';
 }
 
-function wpcp_show_monthly( $price ) {
+function wpcp_show_monthly($price)
+{
     $price .= ' per month';
     return $price;
 }
-add_filter( 'woocommerce_get_price_html', 'wpcp_show_monthly' );
-add_filter( 'woocommerce_cart_item_price', 'wpcp_show_monthly' );
+
+add_filter('woocommerce_get_price_html', 'wpcp_show_monthly');
+add_filter('woocommerce_cart_item_price', 'wpcp_show_monthly');
