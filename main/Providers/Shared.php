@@ -83,7 +83,7 @@ class SharedCP extends WPCPHTTP
             'mailDomain' => '0'
         );
 
-        CommonUtils::writeLogs($this->body,CPWP_ERROR_LOGS);
+        CommonUtils::writeLogs(json_encode($this->body),CPWP_ERROR_LOGS);
 
         $response = $this->HTTPPostCall($this->globalData['serverPassword']);
         CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
