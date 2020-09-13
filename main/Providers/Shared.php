@@ -39,13 +39,13 @@ class SharedCP extends WPCPHTTP
         $response = $this->HTTPPostCall($token);
         $data = json_decode(wp_remote_retrieve_body($response));
 
-        CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
+        $packages = json_decode($data->data);
 
         $finalResult = '';
 
-//        foreach ($types as $type) {
-//            $finalResult = $finalResult . sprintf('<option>%s</option>', $type->name . ',' . rtrim($type->prices[0]->price_monthly->net, '0'));
-//        }
+        foreach ($packages as $package) {
+            $finalResult = $finalResult . sprintf('<option>%s</option>', $package->packageName . ',' . $package->allowedDomains);
+        }
 
         $data = array(
             'status' => 1,
