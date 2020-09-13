@@ -754,7 +754,7 @@ function wpcp_display_custom_field_locations()
 </select>
 </div>
 ', $locations);
-    } elseif ($data[WPCP_PROVIDER] == 'Shared') {
+    } elseif ($data[WPCP_PROVIDER] == 'UK1') {
         printf('
 <div class="WPCPLocationDIV">
 <label for="wpcp_location">Enter Domain</label>
