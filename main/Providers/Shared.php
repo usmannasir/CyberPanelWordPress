@@ -22,9 +22,9 @@ class SharedCP extends WPCPHTTP
 
         $token = json_decode($result->apidetails)->token;
 
-        $localIP = explode(',', $token)[0];
-        $localUser = explode(',', $token)[1];
-        $token = sprintf('Basic %s==', explode(',', $token)[2]);
+        $localIP = explode(';', $token)[0];
+        $localUser = explode(';', $token)[1];
+        $token = sprintf('Basic %s==', explode(';', $token)[2]);
 
         $this->body = array(
             'serverUserName' => $localUser,
