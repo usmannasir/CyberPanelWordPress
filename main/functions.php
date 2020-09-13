@@ -743,7 +743,7 @@ function wpcp_display_custom_field_locations()
 
     $data = array(WPCP_PROVIDER => get_post_meta($post->ID, WPCP_PROVIDER, true));
 
-    if ($data[WPCP_PROVIDER] != '' && $data[WPCP_PROVIDER] != 'Shared') {
+    if ($data[WPCP_PROVIDER] != '' && $data[WPCP_PROVIDER] != 'UK1') {
         $cpjm = new CPJobManager('fetchLocations', $data);
         $locations = $cpjm->RunJob();
         printf('
