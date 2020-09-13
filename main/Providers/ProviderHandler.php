@@ -2,6 +2,7 @@
 
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/Hetzner.php');
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/DigitalOcean.php');
+require_once(CPWP_PLUGIN_DIR . 'main/Providers/Shared.php');
 require_once(CPWP_PLUGIN_DIR . 'main/Providers/manual.php');
 require_once(CPWP_PLUGIN_DIR . 'main/CommonUtils.php');
 
@@ -154,6 +155,9 @@ class ProviderHandler
         }
         elseif ($result->provider == 'DigitalOcean'){
             $cpd = new CyberPanelDigitalOcean($this, $this->data);
+            return $cpd->fetchPlans();
+        }elseif ($result->provider == 'Shared'){
+            $cpd = new SharedCP($this, $this->data);
             return $cpd->fetchPlans();
         }
     }
