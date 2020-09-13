@@ -79,8 +79,11 @@ class SharedCP extends WPCPHTTP
             'UserPassword' => $this->globalData['CyberPanelPassword'],
             'UserAccountName' => $this->globalData['CPUserName'],
             'FullName' => $this->globalData['CPUserName'],
-            'domainName' => $this->globalData['finalDomain']
+            'domainName' => $this->globalData['finalDomain'],
+            'mailDomain' => '0'
         );
+
+        CommonUtils::writeLogs($this->body,CPWP_ERROR_LOGS);
 
         $response = $this->HTTPPostCall($this->globalData['serverPassword']);
         CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
