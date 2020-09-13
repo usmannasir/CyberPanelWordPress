@@ -12,6 +12,7 @@
                         <option>Select</option>
                         <option>Hetzner</option>
                         <option>DigitalOcean</option>
+                        <option>Shared</option>
                     </select>
                     <small id="Name" class="form-text text-muted">Select cloud provider from the list.</small>
                 </div>

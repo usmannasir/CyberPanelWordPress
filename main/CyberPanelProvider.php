@@ -17,12 +17,23 @@ class CyberPanelProvider extends WPCPHTTP
         $token = sanitize_text_field($this->data['token']);
         $imageID = sanitize_text_field($this->data['imageID']);
 
-        $token = 'Bearer ' . $token;
+        if($provider == 'Shared'){
+
+            $localIP = explode(',', $token)[0];
+            $localUser = explode(',', $token)[1];
+            $localPass = explode(',', $token)[2];
+
+            $localToken = base64_encode($localUser . $localPass);
+            $token = $localIP . ":" . $localUser . ':' . $localToken;
+
+        }else {
+            $token = 'Bearer ' . $token;
+        }
 
         $finalDetails = json_encode(array('token'=> $token,
                                           'image'=> $imageID));
 
-        /// Check if hostname alrady exists
+        /// Check if hostname already exists
         global $wpdb;
 
         $result = $wpdb->get_row( "SELECT name FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$name'" );
