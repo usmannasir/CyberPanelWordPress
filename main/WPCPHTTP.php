@@ -300,7 +300,7 @@ Kind Regards';
             CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
         }else{
             $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
-            $this->globalData['finalDomain'] = explode(',', $this->data->get_meta(WPCP_LOCATION, true, 'view'))[1];
+            $this->globalData['finalDomain'] = $this->data->get_meta(WPCP_LOCATION, true, 'view');
 
             $this->token = json_decode($result->apidetails)->token;
 
