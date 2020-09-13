@@ -30,7 +30,7 @@ class CyberPanelProvider extends WPCPHTTP
 
             CommonUtils::writeLogs($localToken,CPWP_ERROR_LOGS);
 
-            $token = $localIP . ":" . $localUser . ':' . $localToken;
+            $token = $localIP . ":" . $localUser . ':' . rtrim($localToken, '==');
 
         }else {
             $token = 'Bearer ' . $token;

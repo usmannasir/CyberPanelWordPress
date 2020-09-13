@@ -297,6 +297,7 @@ Kind Regards';
     }
 
     function serverPostProcessing(){
+
         ## Store the order as server post type
 
         $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
