@@ -413,7 +413,7 @@ Kind Regards';
                 '{serverIP}' => explode(';', $this->token)[0],
                 '{token}' => rtrim($token, '=='),
                 '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
-                '{serverID}' => $this->globalData['serverID'],
+                '{serverID}' => $this->globalData['finalDomain'] . ' - ' . $this->orderid,
                 '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
                 '{userName}' => $this->globalData['CPUserName'],
                 '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
