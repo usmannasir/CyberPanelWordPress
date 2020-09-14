@@ -82,7 +82,8 @@ class SharedCP extends WPCPHTTP
             'domainName' => $this->globalData['finalDomain'],
             'mailDomain' => '0',
             'websitesLimit' => $this->globalData['allowedWebsites'],
-            'acl' => 'reseller'
+            'acl' => 'reseller',
+            'api' => 1
         );
 
         CommonUtils::writeLogs(json_encode($this->body),CPWP_ERROR_LOGS);
