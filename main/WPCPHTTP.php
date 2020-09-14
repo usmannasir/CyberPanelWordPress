@@ -391,7 +391,7 @@ Kind Regards';
         else{
             $replacements = array(
                 '{serverIP}' => explode(';', $this->token)[0],
-                '{token}' => explode(';', $this->token)[2],
+                '{token}' => rtrim($token, '=='),
                 '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
                 '{serverID}' => $this->globalData['serverID'],
                 '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
@@ -463,7 +463,7 @@ Kind Regards';
         $content = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails)
+            get_option(WPCP_NEW_SERVER, WPCPHTTP::$SharedDetails)
         );
 
         wp_mail($this->globalData['order']->get_billing_email(), $subject, $content);
