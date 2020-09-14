@@ -404,9 +404,7 @@ Kind Regards';
                 '{serverID}' => $this->globalData['serverID'],
                 '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
                 '{userName}' => $this->globalData['CPUserName'],
-                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif',
-                '{ns1}' => $this->globalData['ns1'],
-                '{ns2}' => $this->globalData['ns2']
+                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
             );
 
             $content = str_replace(
@@ -464,7 +462,9 @@ Kind Regards';
                 '{IPAddressCP}' => explode(';', $this->token)[0],
                 '{userName}' => $this->globalData['CPUserName'],
                 '{CPPassword}' => $this->globalData['CyberPanelPassword'],
-                '{link}' => $link
+                '{link}' => $link,
+                '{ns1}' => $this->globalData['ns1'],
+                '{ns2}' => $this->globalData['ns2']
             );
         }
 
