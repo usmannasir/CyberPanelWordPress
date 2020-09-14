@@ -125,6 +125,8 @@ class SharedCP extends WPCPHTTP
 
         $response = $this->HTTPPostCall($this->globalData['serverPassword']);
 
+        CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
+
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
