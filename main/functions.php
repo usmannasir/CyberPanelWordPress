@@ -747,7 +747,9 @@ function wpcp_display_custom_field_locations()
 
         global $wpdb;
 
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$data[WPCP_PROVIDER]'");
+        $localProvider = $data[WPCP_PROVIDER];
+
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$localProvider'");
 
         CommonUtils::writeLogs($data[WPCP_PROVIDER],CPWP_ERROR_LOGS);
         CommonUtils::writeLogs($result->provider,CPWP_ERROR_LOGS);
