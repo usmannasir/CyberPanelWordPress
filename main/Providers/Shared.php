@@ -86,27 +86,19 @@ class SharedCP extends WPCPHTTP
         CommonUtils::writeLogs(json_encode($this->body),CPWP_ERROR_LOGS);
 
         $response = $this->HTTPPostCall($this->globalData['serverPassword']);
+        $respData = json_decode(wp_remote_retrieve_body($response));
         CommonUtils::writeLogs(wp_remote_retrieve_body($response),CPWP_ERROR_LOGS);
 
         try{
 
             CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
 
-//            $this->globalData['serverID'] = $respData->server->id;
-//            $this->globalData['ipv4'] = $respData->server->public_net->ipv4->ip;
-//            $this->globalData['ipv6'] = $respData->server->public_net->ipv6->ip;
-//            $this->globalData['cores'] = $respData->server->server_type->cores;
-//            $this->globalData['memory'] = $respData->server->server_type->memory . 'G';
-//            $this->globalData['disk'] = $respData->server->server_type->disk . 'GB NVME';
-//            $this->globalData['datacenter'] = $respData->server->datacenter->name;
-//            $this->globalData['city'] = $respData->server->datacenter->location->city;
-
-//            if( ! isset($this->globalData['serverID']) ){
-//                throw new Exception($respData->error->message);
-//            }
+            if( ! isset( $respData->tempStatusPath) ){
+                throw new Exception($respData->error_message);
+            }
         }
         catch (Exception $e) {
-  //          CommonUtils::writeLogs(sprintf('Failed to create server for product id: %s, order id was %s and product name %s. Error message: %s.', $this->globalData['productID'], $this->orderid, $this->globalData['productName'], $respData->error->message), CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to create website for product id: %s, order id was %s and product name %s. Error message: %s.', $this->globalData['productID'], $this->orderid, $this->globalData['productName'], $respData->error_message), CPWP_ERROR_LOGS);
             return 0;
         }
 

@@ -167,6 +167,40 @@ Kind Regards';
 </ul>
 <!-- /wp:html -->';
 
+    static $productHTMLShared = '<!-- wp:html -->
+<ul id="menu" class="horizontal gray">
+    <li><a id="productHREF" href="#">{productLine}</a></li>
+     <li id="myBtn" style="float:right; color:red"><a id="cancelHREF" href="#">
+     Cancel
+<!-- The Modal -->
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content">
+  <div class="modal-body">
+    <p>Are you sure you want to cancel <span id="serverID">{serverID}</span>?</p>
+    <button type="button" id="cancelNow">Cancel Now <img style="display: inline" class="loader" src="{loader}"> </button>
+  </div>
+  </div>
+</div>
+     </a></li>
+     <li style="float:right"><a target="_blank" href="https://{serverIP}/cloudAPI/access?token={token}&serverUserName={userName}">Access CyberPanel</a></li>
+</ul>
+<!-- /wp:html -->';
+
+    static $SharedDetails = 'Hello {FullName} !
+
+{PlanName} has been successfully activated.
+
+You can manage your service at:
+
+https://{IPAddressCP}
+User Name: {userName}
+Password: {CPPassword}
+
+You can manage this service at: {link}
+
+Kind Regards';
+
     protected $job;
     protected $data;
     protected $url;
@@ -266,7 +300,7 @@ Kind Regards';
         $this->globalData['productID'] = $this->data->get_product_id();
         $this->globalData['order'] = wc_get_order($this->orderid);
         $this->globalData['email'] = $this->globalData['order']->billing_email;
-        $this->globalData['CPUserName'] = $this->globalData['order']->get_billing_first_name();
+        $this->globalData['CPUserName'] = $this->globalData['order']->get_billing_first_name() . substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 4);;
 
         ### Lets Print Order Pricing Details
 
@@ -322,35 +356,63 @@ Kind Regards';
 
         ##
 
-        $replacements = array(
-            '{serverIP}' =>  $this->globalData['ipv4'],
-            '{token}' =>  $token,
-            '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
-            '{serverID}' => $this->globalData['serverID'],
-            '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
-            '{price}' => get_woocommerce_currency_symbol() . ' ' . (string) $finalPrice,
-            '{ipv4}' => $this->globalData['ipv4'],
-            '{ipv6}' => $this->globalData['ipv6'],
-            '{cores}' => $this->globalData['cores'],
-            '{memory}' => $this->globalData['memory'],
-            '{disk}' => $this->globalData['disk'],
-            '{datacenter}' => $this->globalData['datacenter'],
-            '{city}' => $this->globalData['city'],
-            '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
-        );
+        if( ! isset($this->globalData['finalDomain'])) {
 
-        $content = str_replace(
-            array_keys($replacements),
-            array_values($replacements),
-            WPCPHTTP::$productHTML);
+            $replacements = array(
+                '{serverIP}' => $this->globalData['ipv4'],
+                '{token}' => $token,
+                '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
+                '{serverID}' => $this->globalData['serverID'],
+                '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
+                '{price}' => get_woocommerce_currency_symbol() . ' ' . (string)$finalPrice,
+                '{ipv4}' => $this->globalData['ipv4'],
+                '{ipv6}' => $this->globalData['ipv6'],
+                '{cores}' => $this->globalData['cores'],
+                '{memory}' => $this->globalData['memory'],
+                '{disk}' => $this->globalData['disk'],
+                '{datacenter}' => $this->globalData['datacenter'],
+                '{city}' => $this->globalData['city'],
+                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
+            );
 
-        $my_post = array(
-            'post_author' => $this->globalData['order']->user_id,
-            'post_title'    => $this->globalData['serverID'],
-            'post_content'  => $content,
-            'post_status'   => 'publish',
-            'post_type'     => 'wpcp_server',
-        );
+            $content = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                WPCPHTTP::$productHTML);
+
+            $my_post = array(
+                'post_author' => $this->globalData['order']->user_id,
+                'post_title' => $this->globalData['serverID'],
+                'post_content' => $content,
+                'post_status' => 'publish',
+                'post_type' => 'wpcp_server',
+            );
+        }
+        else{
+            $replacements = array(
+                '{serverIP}' => explode(';', $this->token)[0],
+                '{token}' => explode(';', $this->token)[2],
+                '{productLine}' => $this->globalData['productName'] . ' - ' . $this->globalData['serverID'],
+                '{serverID}' => $this->globalData['serverID'],
+                '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
+                '{userName}' => $this->globalData['CPUserName'],
+                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
+            );
+
+            $content = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                WPCPHTTP::$productHTMLShared);
+
+            $my_post = array(
+                'post_author' => $this->globalData['order']->user_id,
+                'post_title' => $this->globalData['finalDomain'] . ' - ' . $this->orderid,
+                'post_content' => $content,
+                'post_status' => 'publish',
+                'post_type' => 'wpcp_server',
+            );
+
+        }
 
         $post_id = wp_insert_post( $my_post );
 
@@ -374,15 +436,27 @@ Kind Regards';
 
         /// Send Email To Customer
 
-        $replacements = array(
-            '{FullName}' =>  $this->globalData['order']->get_billing_first_name() . ' ' . $this->globalData['order']->get_billing_last_name(),
-            '{PlanName}' =>  $this->globalData['productName'],
-            '{IPAddress}' => $this->globalData['ipv4'],
-            '{RootPassword}' => $this->globalData['RootPassword'],
-            '{IPAddressCP}' => $this->globalData['ipv4'],
-            '{CPPassword}' => $this->globalData['CyberPanelPassword'],
-            '{link}' => $link
-        );
+        if( ! isset($this->globalData['finalDomain'])) {
+            $replacements = array(
+                '{FullName}' => $this->globalData['order']->get_billing_first_name() . ' ' . $this->globalData['order']->get_billing_last_name(),
+                '{PlanName}' => $this->globalData['productName'],
+                '{IPAddress}' => $this->globalData['ipv4'],
+                '{RootPassword}' => $this->globalData['RootPassword'],
+                '{IPAddressCP}' => $this->globalData['ipv4'],
+                '{CPPassword}' => $this->globalData['CyberPanelPassword'],
+                '{link}' => $link
+            );
+        }
+        else{
+            $replacements = array(
+                '{FullName}' => $this->globalData['order']->get_billing_first_name() . ' ' . $this->globalData['order']->get_billing_last_name(),
+                '{PlanName}' => $this->globalData['productName'],
+                '{IPAddressCP}' => explode(';', $this->token)[0],
+                '{userName}' => $this->globalData['CPUserName'],
+                '{CPPassword}' => $this->globalData['CyberPanelPassword'],
+                '{link}' => $link
+            );
+        }
 
         $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
 
