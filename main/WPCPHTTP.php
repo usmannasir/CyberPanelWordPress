@@ -364,7 +364,7 @@ Kind Regards';
 
         ##
 
-        if( ! isset($this->globalData['finalDomain'])) {
+        if( isset($this->globalData['ipv4'])) {
 
             $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
 
