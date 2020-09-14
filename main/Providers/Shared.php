@@ -119,7 +119,8 @@ class SharedCP extends WPCPHTTP
 
         $this->body = array(
             'accountUsername' => $CyberPanelUser,
-            'force' => 1
+            'force' => 1,
+            'controller' => 'submitUserDeletion'
         );
 
         $response = $this->HTTPPostCall($this->globalData['serverPassword']);
