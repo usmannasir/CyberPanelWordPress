@@ -356,7 +356,7 @@ Kind Regards';
 
         ## Store the order as server post type
 
-        $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
+
 
         ### Calculate and add order price to meta to cater if there are any discount coupons used
 
@@ -365,6 +365,8 @@ Kind Regards';
         ##
 
         if( ! isset($this->globalData['finalDomain'])) {
+
+            $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
 
             $replacements = array(
                 '{serverIP}' => $this->globalData['ipv4'],
@@ -397,6 +399,9 @@ Kind Regards';
             );
         }
         else{
+
+            $token = base64_encode($this->globalData['CPUserName'] . ':' . $this->globalData['CyberPanelPassword']);
+
             $replacements = array(
                 '{serverIP}' => explode(';', $this->token)[0],
                 '{token}' => rtrim($token, '=='),
