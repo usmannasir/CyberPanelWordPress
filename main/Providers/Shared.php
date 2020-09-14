@@ -102,7 +102,7 @@ class SharedCP extends WPCPHTTP
             return 0;
         }
 
-        //$this->serverPostProcessing();
+        $this->serverPostProcessing();
 
         return 1;
     }
