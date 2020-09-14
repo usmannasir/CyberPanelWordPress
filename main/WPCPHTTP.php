@@ -364,7 +364,7 @@ Kind Regards';
 
         ##
 
-        if( isset($this->globalData['ipv4'])) {
+        if( ! isset($this->globalData['finalDomain'])) {
 
             $token = base64_encode('admin:' . $this->globalData['CyberPanelPassword']);
 
@@ -459,6 +459,14 @@ Kind Regards';
                 '{CPPassword}' => $this->globalData['CyberPanelPassword'],
                 '{link}' => $link
             );
+
+            $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
+
+            $content = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                get_option(WPCP_NEW_SERVER, WPCPHTTP::$ServerDetails)
+            );
         }
         else{
             $replacements = array(
@@ -471,15 +479,17 @@ Kind Regards';
                 '{ns1}' => $this->globalData['ns1'],
                 '{ns2}' => $this->globalData['ns2']
             );
+
+            $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
+
+            $content = str_replace(
+                array_keys($replacements),
+                array_values($replacements),
+                get_option(WPCP_NEW_SERVER, WPCPHTTP::$SharedDetails)
+            );
         }
 
-        $subject = sprintf('Managed CyberPanel service for Order# %s successfully activated.', $this->globalData['order']->id);
 
-        $content = str_replace(
-            array_keys($replacements),
-            array_values($replacements),
-            get_option(WPCP_NEW_SERVER, WPCPHTTP::$SharedDetails)
-        );
 
         wp_mail($this->globalData['order']->get_billing_email(), $subject, $content);
     }
