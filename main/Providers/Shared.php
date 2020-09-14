@@ -112,7 +112,7 @@ class SharedCP extends WPCPHTTP
 
     function cancelNow()
     {
-
+        CommonUtils::writeLogs('shared cacnel',CPWP_ERROR_LOGS);
         $this->setupTokenImagePostID();
 
         $CyberPanelUser = get_post_meta($this->postIDServer, WPCP_CYBERPANEL_USER, true);
