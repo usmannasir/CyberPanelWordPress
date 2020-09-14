@@ -340,7 +340,7 @@ Kind Regards';
         }else{
             $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
             $this->globalData['allowedWebsites'] = explode(',', $wpcp_providerplans)[1];
-            $this->globalData['finalDomain'] = $this->data->get_meta(WPCP_LOCATION, true, 'view');
+            $this->globalData['finalDomain'] = sanitize_text_field($this->data->get_meta(WPCP_LOCATION, true, 'view'));
 
             $this->token = json_decode($result->apidetails)->token;
 
