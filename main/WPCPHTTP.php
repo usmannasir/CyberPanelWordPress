@@ -356,8 +356,6 @@ Kind Regards';
 
         ## Store the order as server post type
 
-
-
         ### Calculate and add order price to meta to cater if there are any discount coupons used
 
         $finalPrice = (float) $this->globalData['order']->get_subtotal() - (float) $this->globalData['order']->get_discount_total();

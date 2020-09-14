@@ -743,10 +743,17 @@ function wpcp_display_custom_field_locations()
 
     $data = array(WPCP_PROVIDER => get_post_meta($post->ID, WPCP_PROVIDER, true));
 
-    if ($data[WPCP_PROVIDER] != '' && $data[WPCP_PROVIDER] != 'UK1') {
-        $cpjm = new CPJobManager('fetchLocations', $data);
-        $locations = $cpjm->RunJob();
-        printf('
+    if ($data[WPCP_PROVIDER] != '') {
+
+        global $wpdb;
+
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$data[WPCP_PROVIDER]'");
+
+        if ($result->provider != 'Shared') {
+
+            $cpjm = new CPJobManager('fetchLocations', $data);
+            $locations = $cpjm->RunJob();
+            printf('
 <div class="WPCPLocationDIV">
 <label for="wpcp_location">Select Location</label>
 <select id="wpcp_location" name="wpcp_location">
@@ -754,13 +761,14 @@ function wpcp_display_custom_field_locations()
 </select>
 </div>
 ', $locations);
-    } elseif ($data[WPCP_PROVIDER] == 'UK1') {
-        printf('
+        } else {
+            printf('
 <div class="WPCPLocationDIV">
 <label for="wpcp_location">Enter Domain</label>
 <input id="wpcp_location" name="wpcp_location">
 </div>
 ');
+        }
     }
 
 }
