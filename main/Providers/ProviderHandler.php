@@ -97,6 +97,10 @@ class ProviderHandler
             $cpd = new CyberPanelDigitalOcean($this, $this->data);
             $cpd->cancelNow();
         }
+        elseif ($this->findProvider() == 'Shared'){
+            $cpd = new SharedCP($this, $this->data);
+            $cpd->cancelNow();
+        }
         else{
             $cpd = new CyberPanelManual($this, $this->data);
             $cpd->cancelNow();

@@ -58,6 +58,7 @@ define('WPCP_STATE', 'wp_state');
 define('WPCP_INVOICESERVER', 'wpcp_invoiceserver');
 define('WPCP_TOKEN', 'wpcp_token');
 define('WPCP_ORDER_PRICE', 'wpcp_order_price');
+define('WPCP_CYBERPANEL_USER', 'wpcp_cyberpanel_user');
 
 // Email Templates Options
 

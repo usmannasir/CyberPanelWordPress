@@ -113,19 +113,23 @@ class SharedCP extends WPCPHTTP
     function cancelNow()
     {
 
-        $serverID = sanitize_text_field($this->data['serverID']);
-        $this->url = 'https://api.hetzner.cloud/v1/servers/' . $serverID;
-        CommonUtils::writeLogs('Setup credentials.', CPWP_ERROR_LOGS);
         $this->setupTokenImagePostID();
-        CommonUtils::writeLogs('Credentials set.', CPWP_ERROR_LOGS);
-        $response = $this->HTTPPostCall($this->token, 'DELETE');
+
+        $CyberPanelUser = get_post_meta($this->postIDServer, WPCP_CYBERPANEL_USER, true);
+
+        $this->body = array(
+            'accountUsername' => $CyberPanelUser,
+            'force' => 1
+        );
+
+        $response = $this->HTTPPostCall($this->globalData['serverPassword']);
+
         $respData = json_decode(wp_remote_retrieve_body($response));
 
         try{
-            $status = $respData->action->status;
 
-            if( ! isset($status) ){
-                throw new Exception($respData->error->message);
+            if( $respData->status == 0 ){
+                throw new Exception($respData->error_message);
             }
 
             $this->globalData['json'] =  $this->data['json'];
@@ -133,7 +137,7 @@ class SharedCP extends WPCPHTTP
             $this->serverPostCancellation();
         }
         catch (Exception $e) {
-            CommonUtils::writeLogs(sprintf('Failed to cancel server. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
+            CommonUtils::writeLogs(sprintf('Failed to delete website. Error message: %s', $e->getMessage()), CPWP_ERROR_LOGS);
             $data = array(
                 'status' => 0
             );

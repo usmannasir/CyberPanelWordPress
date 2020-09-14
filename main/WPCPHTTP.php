@@ -295,8 +295,17 @@ Kind Regards';
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$wpcp_provider'");
 
-        $this->token = json_decode($result->apidetails)->token;
-        $this->image = json_decode($result->apidetails)->image;
+        if ($result->provider != 'Shared') {
+            $this->token = json_decode($result->apidetails)->token;
+            $this->image = json_decode($result->apidetails)->image;
+        }
+        else{
+            $this->token = json_decode($result->apidetails)->token;
+
+            $this->url = sprintf('https://%s/cloudAPI', explode(';', $this->token)[0]);
+            $this->globalData['serverUser'] = explode(';', $this->token)[1];
+            $this->globalData['serverPassword'] = sprintf('Basic %s==', explode(';', $this->token)[2]);
+        }
 
     }
 
@@ -467,6 +476,11 @@ Kind Regards';
             );
         }
         else{
+
+            ### Save CyberPanel USER ID In Meta
+
+            add_post_meta( $post_id, WPCP_CYBERPANEL_USER, $this->globalData['CPUserName'], true );
+
             $replacements = array(
                 '{FullName}' => $this->globalData['order']->get_billing_first_name() . ' ' . $this->globalData['order']->get_billing_last_name(),
                 '{PlanName}' => $this->globalData['productName'],
@@ -486,7 +500,6 @@ Kind Regards';
                 get_option(WPCP_NEW_SERVER, WPCPHTTP::$SharedDetails)
             );
         }
-
 
 
         wp_mail($this->globalData['order']->get_billing_email(), $subject, $content);
