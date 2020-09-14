@@ -749,8 +749,9 @@ function wpcp_display_custom_field_locations()
 
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}cyberpanel_providers WHERE name = '$data[WPCP_PROVIDER]'");
 
-        if ($result->provider != 'Shared') {
+        CommonUtils::writeLogs($result->provider,CPWP_ERROR_LOGS);
 
+        if ($result->provider != 'Shared') {
             $cpjm = new CPJobManager('fetchLocations', $data);
             $locations = $cpjm->RunJob();
             printf('
