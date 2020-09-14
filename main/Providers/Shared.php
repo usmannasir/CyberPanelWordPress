@@ -118,6 +118,8 @@ class SharedCP extends WPCPHTTP
         $CyberPanelUser = get_post_meta($this->postIDServer, WPCP_CYBERPANEL_USER, true);
 
         $this->body = array(
+            'serverUserName' => $this->globalData['serverUser'],
+            'serverPassword' => $this->globalData['serverPassword'],
             'accountUsername' => $CyberPanelUser,
             'force' => 1,
             'controller' => 'submitUserDeletion'
