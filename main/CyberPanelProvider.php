@@ -22,10 +22,12 @@ class CyberPanelProvider extends WPCPHTTP
             $localIP = explode(',', $token)[0];
             $localUser = explode(',', $token)[1];
             $localPass = explode(',', $token)[2];
+            $ns1 = explode(',', $token)[3];
+            $ns2 = explode(',', $token)[4];
 
             $localToken = base64_encode($localUser . ':' . $localPass);
 
-            $token = $localIP . ";" . $localUser . ';' . rtrim($localToken, '==');
+            $token = $localIP . ";" . $localUser . ';' . rtrim($localToken, '==') . ";" . $ns1 . ";" . $ns2;
 
         }else {
             $token = 'Bearer ' . $token;

@@ -197,6 +197,11 @@ https://{IPAddressCP}
 User Name: {userName}
 Password: {CPPassword}
 
+Nameservers:
+
+{ns1}
+{ns2}
+
 You can manage this service at: {link}
 
 Kind Regards';
@@ -334,6 +339,7 @@ Kind Regards';
             CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
         }else{
             $this->globalData['finalPlan'] = explode(',', $wpcp_providerplans)[0];
+            $this->globalData['allowedWebsites'] = explode(',', $wpcp_providerplans)[1];
             $this->globalData['finalDomain'] = $this->data->get_meta(WPCP_LOCATION, true, 'view');
 
             $this->token = json_decode($result->apidetails)->token;
@@ -341,6 +347,8 @@ Kind Regards';
             $this->url = sprintf('https://%s/cloudAPI', explode(';', $this->token)[0]);
             $this->globalData['serverUser'] = explode(';', $this->token)[1];
             $this->globalData['serverPassword'] = sprintf('Basic %s==', explode(';', $this->token)[2]);
+            $this->globalData['ns1'] = explode(';', $this->token)[3];
+            $this->globalData['ns2'] = explode(';', $this->token)[4];
         }
     }
 
@@ -396,7 +404,9 @@ Kind Regards';
                 '{serverID}' => $this->globalData['serverID'],
                 '{orderDate}' => get_the_date("F j, Y, g:i a", $this->orderid),
                 '{userName}' => $this->globalData['CPUserName'],
-                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif'
+                '{loader}' => CPWP_PLUGIN_DIR_URL . 'assets/images/loading.gif',
+                '{ns1}' => $this->globalData['ns1'],
+                '{ns2}' => $this->globalData['ns2']
             );
 
             $content = str_replace(
