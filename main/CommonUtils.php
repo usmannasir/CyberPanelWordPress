@@ -96,9 +96,9 @@ class CommonUtils
 
                                 CommonUtils::writeLogs(sprintf('Performing suspension for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                                $dataToSend = array('serverID' => get_the_title());
-                                $cpjm = new CPJobManager('shutDown', $dataToSend);
-                                $cpjm->RunJob();
+//                                $dataToSend = array('serverID' => get_the_title());
+//                                $cpjm = new CPJobManager('shutDown', $dataToSend);
+//                                $cpjm->RunJob();
 
                                 ## Turn server state to suspended
 
@@ -144,9 +144,9 @@ class CommonUtils
 
                                 CommonUtils::writeLogs(sprintf('Performing termination for order id %d with timestamp of %s.', $order->id, $orderTimeStamp), CPWP_ERROR_LOGS);
 
-                                $cpjm = new CPJobManager('cancelNow', $dataToSend);
-                                $cpjm->RunJob();
-                                update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
+//                                $cpjm = new CPJobManager('cancelNow', $dataToSend);
+//                                $cpjm->RunJob();
+//                                update_post_meta($serverID, WPCP_STATE, WPCP_TERMINATED);
 
                                 ### Send Suspension Email
 
