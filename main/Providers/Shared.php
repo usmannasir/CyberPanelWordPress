@@ -82,7 +82,7 @@ class SharedCP extends WPCPHTTP
             'domainName' => $this->globalData['finalDomain'],
             'mailDomain' => '0',
             'websitesLimit' => $this->globalData['allowedWebsites'],
-            'acl' => 'reseller',
+            'acl' => 'user',
             'api' => 1
         );
 
