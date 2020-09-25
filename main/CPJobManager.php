@@ -155,10 +155,12 @@ class CPJobManager
                 $cpp->createServer();
             }
             elseif ($this->function == 'cancelNow') {
+                return 0;
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->cancelNow();
             }
             elseif ($this->function == 'shutDown') {
+                return 0;
                 $cpp = new ProviderHandler($this, $this->data);
                 $cpp->shutDown();
             }

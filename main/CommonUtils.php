@@ -102,28 +102,28 @@ class CommonUtils
 
                                 ## Turn server state to suspended
 
-                                update_post_meta($serverID, WPCP_STATE, WPCP_SUSPENDED);
-
-                                ### Send Suspension Email
-
-                                $orderOriginal = wc_get_order($wpcp_orderid);
-
-                                $replacements = array(
-                                    '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
-                                    '{ServerID}' => get_the_title(),
-                                    '{Reason}' => 'Invoice overdue.'
-
-                                );
-
-                                $subject = sprintf('Server with ID# %s suspended.', get_the_title());
-
-                                $content = str_replace(
-                                    array_keys($replacements),
-                                    array_values($replacements),
-                                    get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended)
-                                );
-
-                                wp_mail($orderOriginal->get_billing_email(), $subject, $content);
+//                                update_post_meta($serverID, WPCP_STATE, WPCP_SUSPENDED);
+//
+//                                ### Send Suspension Email
+//
+//                                $orderOriginal = wc_get_order($wpcp_orderid);
+//
+//                                $replacements = array(
+//                                    '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
+//                                    '{ServerID}' => get_the_title(),
+//                                    '{Reason}' => 'Invoice overdue.'
+//
+//                                );
+//
+//                                $subject = sprintf('Server with ID# %s suspended.', get_the_title());
+//
+//                                $content = str_replace(
+//                                    array_keys($replacements),
+//                                    array_values($replacements),
+//                                    get_option(WPCP_SERVER_SUSPENDED, WPCPHTTP::$ServerSuspended)
+//                                );
+//
+//                                wp_mail($orderOriginal->get_billing_email(), $subject, $content);
 
                                 ##
 
@@ -150,22 +150,22 @@ class CommonUtils
 
                                 ### Send Suspension Email
 
-                                $orderOriginal = wc_get_order($wpcp_orderid);
-
-                                $replacements = array(
-                                    '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
-                                    '{ServerID}' => get_the_title(),
-                                );
-
-                                $subject = sprintf('Server with ID# %s terminated.', get_the_title());
-
-                                $content = str_replace(
-                                    array_keys($replacements),
-                                    array_values($replacements),
-                                    get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated)
-                                );
-
-                                wp_mail($orderOriginal->get_billing_email(), $subject, $content);
+//                                $orderOriginal = wc_get_order($wpcp_orderid);
+//
+//                                $replacements = array(
+//                                    '{FullName}' => $orderOriginal->get_billing_first_name() . ' ' . $orderOriginal->get_billing_last_name(),
+//                                    '{ServerID}' => get_the_title(),
+//                                );
+//
+//                                $subject = sprintf('Server with ID# %s terminated.', get_the_title());
+//
+//                                $content = str_replace(
+//                                    array_keys($replacements),
+//                                    array_values($replacements),
+//                                    get_option(WPCP_SERVER_TERMINATED, WPCPHTTP::$ServerTerminated)
+//                                );
+//
+//                                wp_mail($orderOriginal->get_billing_email(), $subject, $content);
 
                                 ##
 
