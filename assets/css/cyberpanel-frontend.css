@@ -184,3 +184,7 @@ ul.gray li a.active {
     margin-bottom: 2%;
     display: inherit;
 }
+
+.nav-links{
+    display: none;
+}
