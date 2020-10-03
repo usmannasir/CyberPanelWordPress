@@ -688,17 +688,6 @@ function filter_the_content_in_the_main_loop($content)
 
 remove_filter('the_content', 'filter_the_content_in_the_main_loop');
 
-function wpcp_cron_exec()
-{
-    CommonUtils::RunCron();
-}
-
-add_action('wpcp_croncp_hook', 'wpcp_cron_exec');
-
-if (!wp_next_scheduled('wpcp_croncp_hook')) {
-    wp_schedule_event(time(), 'daily', 'wpcp_croncp_hook');
-}
-
 /**
  * Add the text field as item data to the cart object
  * @param Array $cart_item_data Cart item meta data.
@@ -866,11 +855,20 @@ function wpcp_servers_fetch($atts = [], $content = null)
     return 'You must be logged in to view this page';
 }
 
-function wpcp_show_monthly($price)
+/*function wpcp_show_monthly($price)
 {
     $price .= ' per month';
     return $price;
 }
 
 add_filter('woocommerce_get_price_html', 'wpcp_show_monthly');
-add_filter('woocommerce_cart_item_price', 'wpcp_show_monthly');
+add_filter('woocommerce_cart_item_price', 'wpcp_show_monthly');*/
+
+function wpcp_suspend_activate_service($subscription)
+{
+    CommonUtils::writeLogs('Sub status changed',CPWP_ERROR_LOGS);
+    CommonUtils::writeLogs($subscription,CPWP_ERROR_LOGS);
+
+}
+
+add_action('woocommerce_subscription_status_updated', 'wpcp_suspend_activate_service');

@@ -77,7 +77,6 @@ class ProviderHandler
                 $cpd = new SharedCP($this, $item, $this->data);
                 $cpd->createServer();
             }
-
             else{
                 $cpd = new CyberPanelManual($this, $item, $this->data);
                 $cpd->createServer();

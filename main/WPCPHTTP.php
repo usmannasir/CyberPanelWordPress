@@ -316,6 +316,16 @@ Kind Regards';
         $this->globalData['email'] = $this->globalData['order']->billing_email;
         $this->globalData['CPUserName'] = $this->globalData['order']->get_billing_first_name() . substr(str_shuffle(WPCPHTTP::$permitted_chars), 0, 4);;
 
+        ### Gets the subscription id
+
+        $subscriptions_ids = wcs_get_subscriptions_for_order( $this->orderid );
+        foreach( $subscriptions_ids as $subscription_id => $subscription_obj )
+            if($subscription_obj->order->id == $this->orderid)
+            {
+                $this->globalData['subscription_id'] = (string) $subscription_id;
+                break;
+            }
+
         ### Lets Print Order Pricing Details
 
         $message = sprintf('get_subtotal: %s. get_subtotal_to_display: %s. get_discount_total %s get_total_discount is %s.', $this->globalData['order']->get_subtotal(), $this->globalData['order']->get_subtotal_to_display(), $this->globalData['order']->get_discount_total(), $this->globalData['order']->get_total_discount());
@@ -450,6 +460,7 @@ Kind Regards';
         add_post_meta( $post_id, WPCP_TOKEN, $token, true );
         add_post_meta( $post_id, WPCP_PRODUCTID, $this->globalData['productID'], true );
         add_post_meta( $post_id, WPCP_ORDER_PRICE, (string) $finalPrice, true );
+        add_post_meta( $post_id, WPCP_SUB_ID , $this->globalData['subscription_id'], true);
 
 
         $this->globalData['order']->update_status('wc-completed');
