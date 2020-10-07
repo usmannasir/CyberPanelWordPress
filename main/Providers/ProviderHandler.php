@@ -52,6 +52,9 @@ class ProviderHandler
         CommonUtils::writeLogs($message, CPWP_ERROR_LOGS);
 
         $order = wc_get_order($this->data);
+
+        if($order->get_created_via() == 'subscription') return 0;
+
         $items = $order->get_items();
 
         foreach ($items as $item) {
