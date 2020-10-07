@@ -786,7 +786,7 @@ function wpcp_validate_custom_field($passed, $product_id, $quantity)
     return $passed;
 }
 
-add_filter('woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3);
+//add_filter('woocommerce_add_to_cart_validation', 'wpcp_validate_custom_field', 10, 3);
 
 /* */
 
